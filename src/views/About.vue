@@ -1,5 +1,13 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+	<div>About 페이지</div>
 </template>
+
+<script>
+export default {
+	setup() {
+		return {}
+	}
+}
+</script>
+
+<style lang="scss" scoped></style>
