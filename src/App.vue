@@ -1,30 +1,31 @@
 <template>
-	<div id="nav">
-		<router-link to="/">Home</router-link> |
-		<router-link to="/about">About</router-link>
+	<div class="row">
+		<div class="col-12 col-sm-3">
+			<SideMenu />
+		</div>
+		<div class="col-12 col-sm-6">.col-6 .col-md-4</div>
+		<div class="col-12 col-sm-3">.col-6 .col-md-4</div>
 	</div>
-	<router-view />
 </template>
 
-<style>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
+<script>
+import SideMenu from '@/components/menus/SideMenu'
 
-#nav {
-	padding: 30px;
+export default {
+	components: {
+		SideMenu
+	}
 }
+</script>
 
-#nav a {
-	font-weight: bold;
-	color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-	color: #42b983;
+<style lang="scss">
+body {
+	background-color: #eee;
+	font-family: 'Noto Sans KR', sans-serif;
+	line-height: 1.4;
+	box-sizing: border-box;
+	.col-12 {
+		padding: 0;
+	}
 }
 </style>

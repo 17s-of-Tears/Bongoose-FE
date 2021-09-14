@@ -3,11 +3,19 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
 	{
 		path: '/',
-		component: () => import('@/views/Home')
+		component: () => import('@/views/HomePage')
 	},
 	{
-		path: '/about',
-		component: () => import('@/views/About')
+		path: '/chat',
+		component: () => import('@/views/ChatPage')
+	},
+	{
+		path: '/friends_list',
+		component: () => import('@/views/FriendsListPage')
+	},
+	{
+		path: '/friends_find',
+		component: () => import('@/views/FriendsFindPage')
 	}
 ]
 
