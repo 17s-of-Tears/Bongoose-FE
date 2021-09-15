@@ -1,38 +1,39 @@
 <template>
-	<div class="user-card card">
-		<div class="user">
-			<div class="user-img"></div>
-			<div class="user-content">
-				<div class="user-info">
-					<div class="user-nickname">제봉팍</div>
-					<div class="user-id">@jebong2323</div>
+	<main>
+		<div v-for="index in 10" :key="index" class="user-card card">
+			<div class="user">
+				<div class="user-img"></div>
+				<div class="user-content">
+					<div class="user-info">
+						<div class="user-nickname">제봉팍</div>
+						<div class="user-id">@jebong2323</div>
+					</div>
+					<div class="user-date">9월 5일 오후 3:55</div>
 				</div>
-				<div class="user-date">9월 5일 오후 3:55</div>
+			</div>
+			<div class="content">
+				<span> 오늘은 벤치프레스를 했어요! 너무 좋아요 😆 </span>
+				<div class="content-hash">
+					<span class="content-hashtag"># 제봉잉</span>
+					<span class="content-hashtag"># 벤치프레스</span>
+				</div>
+				<div class="content-img"></div>
+				<div class="content-footer">
+					<div class="content-like">
+						<i class="bi bi-emoji-smile-fill"></i>
+						<p>320 &nbsp;</p>
+						<i class="bi bi-emoji-frown-fill"></i>
+						<p>1</p>
+					</div>
+					<div @click="openComment" class="content-comment">
+						<i class="bi bi-chat-text-fill"></i>
+						<p>5</p>
+					</div>
+				</div>
+				<div>댓글 부분 입니다! 만들어야해요!</div>
 			</div>
 		</div>
-		<div class="content">
-			<span class="content-text">
-				오늘은 벤치프레스를 했어요! 너무 좋아요 😆
-			</span>
-			<div class="content-hash">
-				<span class="content-hashtag"># 제봉잉</span>
-				<span class="content-hashtag"># 벤치프레스</span>
-			</div>
-			<div class="content-img"></div>
-			<div class="content-footer">
-				<div class="content-like">
-					<i class="bi bi-emoji-smile-fill"></i>
-					<p>320 &nbsp;</p>
-					<i class="bi bi-emoji-frown-fill"></i>
-					<p>1</p>
-				</div>
-				<div class="content-comment">
-					<i class="bi bi-chat-text-fill"></i>
-					<p>5</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	</main>
 </template>
 
 <script>
@@ -87,18 +88,17 @@ export default {
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
-		.content-text {
-		}
 		.content-hash {
 			display: flex;
 			gap: 10px;
 			color: $primary;
 			.content-hashtag {
+				cursor: pointer;
 			}
 		}
 		.content-img {
 			width: 100%;
-			height: 250px;
+			height: 350px;
 			border-radius: 20px;
 			background-color: $gray-500;
 		}

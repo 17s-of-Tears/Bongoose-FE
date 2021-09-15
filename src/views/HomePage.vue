@@ -20,6 +20,7 @@ export default {
 <style lang="scss" scoped>
 section {
 	margin: 40px;
+	position: relative;
 	.sub-card {
 		padding: 10px 20px;
 		border-radius: 20px;

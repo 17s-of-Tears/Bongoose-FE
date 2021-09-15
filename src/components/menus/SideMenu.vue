@@ -25,7 +25,10 @@ export default {
 
 <style lang="scss" scoped>
 .side-box {
-	margin: 40px 0 0 40px;
+	padding: 40px 0 0 40px;
 	box-sizing: border-box;
+	top: 0;
+	left: 0;
+	position: sticky;
 }
 </style>
