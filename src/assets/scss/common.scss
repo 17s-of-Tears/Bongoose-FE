@@ -7,3 +7,14 @@ $primary-light: #6A00FF;
 @import "../../../node_modules/bootstrap/scss/mixins";
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
+body {
+	background-color: #eee;
+	font-family: 'Noto Sans KR', sans-serif;
+	line-height: 1.4;
+	box-sizing: border-box;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { 
+    display: none !important; 
+  }
+}

@@ -3,29 +3,42 @@
 		<div class="col-12 col-sm-3">
 			<SideMenu />
 		</div>
-		<div class="col-12 col-sm-6">.col-6 .col-md-4</div>
-		<div class="col-12 col-sm-3">.col-6 .col-md-4</div>
+		<div class="col-12 col-sm-6">
+			<RouterView v-slot="{ Component }">
+				<transition name="fade" mode="out-in">
+					<component :is="Component" :key="$route.path" />
+				</transition>
+			</RouterView>
+		</div>
+		<div class="col-12 col-sm-3">
+			<Aside />
+		</div>
 	</div>
 </template>
 
 <script>
 import SideMenu from '@/components/menus/SideMenu'
+import Aside from '@/components/Aside'
 
 export default {
 	components: {
-		SideMenu
+		SideMenu,
+		Aside
 	}
 }
 </script>
 
 <style lang="scss">
-body {
-	background-color: #eee;
-	font-family: 'Noto Sans KR', sans-serif;
-	line-height: 1.4;
-	box-sizing: border-box;
-	.col-12 {
-		padding: 0;
-	}
+.col-12 {
+	padding: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.5s, transform 0.5s;
+}
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
 }
 </style>

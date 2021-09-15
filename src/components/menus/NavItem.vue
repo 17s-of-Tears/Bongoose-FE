@@ -50,7 +50,7 @@ export default {
 		text-decoration: none;
 	}
 	.card {
-		width: 390px;
+		width: 100%;
 		height: 50px;
 		border-radius: 15px;
 		display: flex;

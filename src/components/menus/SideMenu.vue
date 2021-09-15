@@ -1,6 +1,6 @@
 <template>
 	<nav class="side-box">
-		<Logo class="logo" />
+		<Logo />
 		<ProfileCard />
 		<NavItem />
 		<Footer />
@@ -25,10 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .side-box {
-	margin: 60px;
+	margin: 40px 0 0 40px;
 	box-sizing: border-box;
-	.logo {
-		margin-bottom: 60px;
-	}
 }
 </style>
