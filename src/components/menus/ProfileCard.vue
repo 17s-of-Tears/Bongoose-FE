@@ -21,15 +21,16 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-	width: 390px;
+	width: 100%;
+	margin-top: 40px;
 	display: flex;
-	gap: 30px;
-	padding: 30px;
+	gap: 20px;
+	padding: 20px;
 	flex-direction: row !important;
 	border-radius: 20px !important;
 	.profile-img {
-		width: 130px;
-		height: 130px;
+		width: 100px;
+		height: 100px;
 		background-color: $gray-500;
 		border-radius: 15px;
 		flex-shrink: 0;
@@ -42,10 +43,10 @@ export default {
 		.profile-text {
 			color: $gray-700;
 			:nth-child(1) {
-				font-size: 25px;
+				font-size: 20px;
 			}
 			:nth-child(2) {
-				font-size: 18px;
+				font-size: 15px;
 			}
 		}
 	}
