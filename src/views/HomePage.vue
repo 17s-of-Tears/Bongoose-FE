@@ -34,5 +34,8 @@ section {
 			margin: 0;
 		}
 	}
+	@include media-breakpoint-down(sm) {
+		margin: 20px;
+	}
 }
 </style>

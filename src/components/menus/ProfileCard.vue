@@ -43,10 +43,10 @@ export default {
 		.profile-text {
 			color: $gray-700;
 			:nth-child(1) {
-				font-size: 20px;
+				@include rem(20);
 			}
 			:nth-child(2) {
-				font-size: 15px;
+				@include rem(15);
 			}
 		}
 	}

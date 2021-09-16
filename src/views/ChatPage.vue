@@ -1,5 +1,5 @@
 <template>
-	<div>About 페이지</div>
+	<div>채팅 페이지 입니다!</div>
 </template>
 
 <script>

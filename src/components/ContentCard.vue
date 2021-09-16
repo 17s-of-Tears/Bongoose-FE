@@ -51,6 +51,11 @@ export default {
 	padding: 30px;
 	display: flex;
 	gap: 30px;
+	@include media-breakpoint-down(sm) {
+		margin-top: 20px;
+		padding: 20px;
+		gap: 15px;
+	}
 	&.card {
 		border-radius: 20px;
 	}
@@ -63,6 +68,11 @@ export default {
 			height: 60px;
 			background-color: $gray-800;
 			border-radius: 15px;
+			@include media-breakpoint-down(sm) {
+				width: 40px;
+				height: 40px;
+				border-radius: 10px;
+			}
 		}
 		.user-content {
 			display: flex;
@@ -74,20 +84,23 @@ export default {
 			align-items: center;
 			gap: 10px;
 			.user-nickname {
-				font-size: 20px;
+				@include rem(20);
 			}
 			.user-id {
-				font-size: 15px;
+				@include rem(15);
 			}
 		}
 		.user-date {
-			font-size: 15px;
+			@include rem(15);
 		}
 	}
 	.content {
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
+		@include media-breakpoint-down(sm) {
+			gap: 10px;
+		}
 		.content-hash {
 			display: flex;
 			gap: 10px;
@@ -98,9 +111,13 @@ export default {
 		}
 		.content-img {
 			width: 100%;
-			height: 350px;
 			border-radius: 20px;
 			background-color: $gray-500;
+			&::before {
+				content: '';
+				display: block;
+				padding-top: 50%;
+			}
 		}
 		.content-footer {
 			display: flex;

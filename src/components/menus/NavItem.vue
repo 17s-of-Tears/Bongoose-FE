@@ -1,5 +1,12 @@
 <template>
-	<div v-for="nav in navs" :key="nav.name" class="navitem">
+	<div
+		v-for="nav in navs"
+		:key="nav.name"
+		class="navitem"
+		type="button btn-close"
+		data-bs-dismiss="offcanvas"
+		aria-label="Close"
+	>
 		<RouterLink :to="nav.to">
 			<div class="card">
 				<i :class="`bi ${nav.icon}`"></i>
@@ -56,7 +63,7 @@ export default {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		font-size: 20px;
+		@include rem(20);
 		color: $primary-light;
 		cursor: pointer;
 		transition: 0.5s;
