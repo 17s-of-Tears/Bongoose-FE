@@ -73,7 +73,7 @@ aside {
 		gap: 20px;
 		> span {
 			color: $white;
-			font-size: 25px;
+			@include rem(25);
 		}
 		.hash-card {
 			width: 100%;
@@ -83,12 +83,12 @@ aside {
 				display: flex;
 				flex-direction: column;
 				.hash-rank {
-					font-size: 20px;
+					@include rem(20);
 				}
 				.hash-item {
 					display: flex;
 					justify-content: space-between;
-					font-size: 18px;
+					@include rem(18);
 					:nth-child(1) {
 						color: $primary;
 					}
@@ -111,7 +111,7 @@ aside {
 			display: flex;
 			justify-content: space-between;
 			color: $white;
-			font-size: 25px;
+			@include rem(25);
 			:last-child {
 				cursor: pointer;
 			}
@@ -135,10 +135,10 @@ aside {
 					flex-direction: column;
 					color: $white;
 					:nth-child(1) {
-						font-size: 20px;
+						@include rem(20);
 					}
 					:nth-child(2) {
-						font-size: 15px;
+						@include rem(15);
 					}
 				}
 			}

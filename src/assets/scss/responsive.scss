@@ -1,0 +1,18 @@
+html { font-size: 100%; }
+body { font-size: 1em;}
+
+@media (min-width: 300px) {
+  html { font-size: 60%; }
+}
+
+@media (min-width: 500px) {
+  html { font-size: 75%; }
+}
+
+@media (min-width: 700px) {
+  html { font-size: 90%; }
+}
+
+@media (min-width: 1200px) {
+  html { font-size: 100%; }
+}
