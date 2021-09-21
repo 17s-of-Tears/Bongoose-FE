@@ -11,7 +11,6 @@
 			>
 				<i class="bi bi-list nav-icon"></i>
 			</button>
-
 			<div
 				class="offcanvas offcanvas-end nav-box"
 				id="offcanvasRight"

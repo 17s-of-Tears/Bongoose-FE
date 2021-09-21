@@ -1,20 +1,30 @@
 <template>
 	<Header class="responsive-header" />
-	<div class="row">
-		<div class="col-12 col-lg-3 responsive-side">
-			<SideMenu />
+	<template v-if="!isLoginPage">
+		<div class="row">
+			<div class="col-12 col-lg-3 responsive-side">
+				<SideMenu />
+			</div>
+			<div id="header" class="col-12 col-lg-6">
+				<RouterView v-slot="{ Component }">
+					<transition name="fade" mode="out-in">
+						<component :is="Component" :key="$route.path" />
+					</transition>
+				</RouterView>
+			</div>
+			<div class="col-12 col-lg-3 responsive-side">
+				<Aside />
+			</div>
 		</div>
-		<div id="header" class="col-12 col-lg-6">
-			<RouterView v-slot="{ Component }">
-				<transition name="fade" mode="out-in">
-					<component :is="Component" :key="$route.path" />
-				</transition>
-			</RouterView>
-		</div>
-		<div class="col-12 col-lg-3 responsive-side">
-			<Aside />
-		</div>
-	</div>
+	</template>
+	<!-- 로그인 페이지 -->
+	<template v-else>
+		<RouterView v-slot="{ Component }">
+			<transition name="fade" mode="out-in">
+				<component :is="Component" :key="$route.path" />
+			</transition>
+		</RouterView>
+	</template>
 	<TopBtn />
 </template>
 
@@ -30,6 +40,12 @@ export default {
 		SideMenu,
 		Aside,
 		TopBtn
+	},
+
+	computed: {
+		isLoginPage() {
+			return this.$route.name === 'login'
+		}
 	}
 }
 </script>
