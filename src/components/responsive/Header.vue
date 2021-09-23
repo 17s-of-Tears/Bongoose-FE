@@ -26,7 +26,7 @@
 				</div>
 				<div class="offcanvas-body">
 					<ProfileCard />
-					<NavItem />
+					<NavItem offcanvas="offcanvas" />
 				</div>
 			</div>
 		</div>
@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import Logo from '@/components/menus/Logo'
-import NavItem from '@/components/menus/NavItem.vue'
-import ProfileCard from '@/components/menus/ProfileCard'
+import Logo from '@/components/left_menu/Logo'
+import NavItem from '@/components/left_menu/NavItem'
+import ProfileCard from '@/components/left_menu/ProfileCard'
 
 export default {
 	components: {

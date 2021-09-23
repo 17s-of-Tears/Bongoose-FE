@@ -1,6 +1,6 @@
 <template>
 	<main>
-		<div v-for="index in 10" :key="index" class="user-card card">
+		<div class="user-card card">
 			<div class="user">
 				<div class="user-img"></div>
 				<div class="user-content">
@@ -25,12 +25,12 @@
 						<i class="bi bi-emoji-frown-fill"></i>
 						<p>1</p>
 					</div>
-					<div @click="openComment" class="content-comment">
+					<div @click="toggleComment(index)" class="content-comment">
 						<i class="bi bi-chat-text-fill"></i>
 						<p>5</p>
 					</div>
 				</div>
-				<div>댓글 부분 입니다! 만들어야해요!</div>
+				<div v-if="openComment[index]">댓글 부분 입니다! 만들어야해요!</div>
 			</div>
 		</div>
 	</main>
@@ -38,8 +38,16 @@
 
 <script>
 export default {
-	setup() {
-		return {}
+	data() {
+		return {
+			openComment: [false]
+		}
+	},
+
+	methods: {
+		toggleComment(index) {
+			this.openComment[index] = !this.openComment[index]
+		}
 	}
 }
 </script>
@@ -125,6 +133,7 @@ export default {
 			.content-like {
 				display: flex;
 				gap: 5px;
+				cursor: pointer;
 				p {
 					color: $gray-600;
 				}
@@ -133,6 +142,7 @@ export default {
 				display: flex;
 				gap: 10px;
 				color: $primary;
+				cursor: pointer;
 				p {
 					color: $gray-600;
 				}

@@ -4,10 +4,9 @@
 		:key="nav.name"
 		class="navitem"
 		type="button btn-close"
-		data-bs-dismiss="offcanvas"
 		aria-label="Close"
 	>
-		<RouterLink :to="nav.to">
+		<RouterLink :to="nav.to" :data-bs-dismiss="offcanvas">
 			<div class="card">
 				<i :class="`bi ${nav.icon}`"></i>
 				<span>{{ nav.name }}</span>
@@ -18,6 +17,13 @@
 
 <script>
 export default {
+	props: {
+		offcanvas: {
+			type: String,
+			default: ''
+		}
+	},
+
 	data() {
 		return {
 			navs: [

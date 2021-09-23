@@ -6,7 +6,7 @@
 export default {
 	methods: {
 		toHome() {
-			this.$router.push('/')
+			this.$router.push('/home')
 		}
 	}
 }

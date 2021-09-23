@@ -3,12 +3,12 @@
 		<div class="sub-card card">
 			<p>제봉님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
-		<ContentCard />
+		<ContentCard v-for="index in 10" :key="index" />
 	</section>
 </template>
 
 <script>
-import ContentCard from '@/components/ContentCard'
+import ContentCard from '@/components/home/ContentCard'
 
 export default {
 	components: {

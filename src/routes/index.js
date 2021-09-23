@@ -3,10 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
 	{
 		path: '/',
-		redirect: 'login'
+		redirect: 'home'
 	},
 	{
 		path: '/home',
+		name: 'home',
 		component: () => import('@/views/HomePage')
 	},
 	{
@@ -15,9 +16,9 @@ const routes = [
 		component: () => import('@/views/LoginPage')
 	},
 	{
-		path: '/memberjoin',
-		name: 'memberjoin',
-		component: () => import('@/views/MemberJoinPage')
+		path: '/join',
+		name: 'join',
+		component: () => import('@/views/JoinPage')
 	},
 	{
 		path: '/profile',

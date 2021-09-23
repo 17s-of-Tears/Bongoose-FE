@@ -21,7 +21,7 @@ export default {
 				},
 				{
 					name: '회원가입',
-					link: '/memberjoin'
+					link: '/join'
 				}
 			]
 		}

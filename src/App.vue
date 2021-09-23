@@ -3,7 +3,7 @@
 	<template v-if="!isLoginPage">
 		<div class="row">
 			<div class="col-12 col-lg-3 responsive-side">
-				<SideMenu />
+				<LeftSideMenu />
 			</div>
 			<div id="header" class="col-12 col-lg-6">
 				<RouterView v-slot="{ Component }">
@@ -13,7 +13,7 @@
 				</RouterView>
 			</div>
 			<div class="col-12 col-lg-3 responsive-side">
-				<Aside />
+				<RightSideMenu />
 			</div>
 		</div>
 	</template>
@@ -25,26 +25,29 @@
 			</transition>
 		</RouterView>
 	</template>
-	<TopBtn />
+	<TopBtn v-if="isTopBtn" />
 </template>
 
 <script>
 import Header from '@/components/responsive/Header'
-import SideMenu from '@/components/menus/SideMenu'
-import Aside from '@/components/Aside'
-import TopBtn from '@/components/TopBtn'
+import LeftSideMenu from '@/components/left_menu/LeftSideMenu'
+import RightSideMenu from '@/components/common/RightSideMenu'
+import TopBtn from '@/components/common/TopBtn'
 
 export default {
 	components: {
 		Header,
-		SideMenu,
-		Aside,
+		LeftSideMenu,
+		RightSideMenu,
 		TopBtn
 	},
 
 	computed: {
 		isLoginPage() {
-			return this.$route.name === 'login' || this.$route.name === 'memberjoin'
+			return this.$route.name === 'login' || this.$route.name === 'join'
+		},
+		isTopBtn() {
+			return this.$route.name === 'home'
 		}
 	}
 }

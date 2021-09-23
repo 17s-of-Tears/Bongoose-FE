@@ -8,7 +8,7 @@
 export default {
 	methods: {
 		toTop() {
-			this.$router.push('/')
+			this.$router.push('/home')
 		}
 	}
 }
