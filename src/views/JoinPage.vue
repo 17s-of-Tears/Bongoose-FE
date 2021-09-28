@@ -1,17 +1,17 @@
 <template>
 	<header>
 		<LoginNav />
-		<Join />
+		<SignUp />
 	</header>
 </template>
 
 <script>
 import LoginNav from '@/components/login/LoginNav'
-import Join from '@/components/login/Join'
+import SignUp from '@/components/login/SignUp'
 export default {
 	components: {
 		LoginNav,
-		Join
+		SignUp
 	}
 }
 </script>

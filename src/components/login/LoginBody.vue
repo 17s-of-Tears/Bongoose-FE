@@ -68,6 +68,7 @@ export default {
 			display: flex;
 			justify-content: space-between;
 			> * {
+				margin-top: 30px;
 				width: 300px;
 				border-radius: 20px;
 			}
