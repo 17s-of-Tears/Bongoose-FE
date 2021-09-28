@@ -1,49 +1,41 @@
 <template>
-	<div class="profile-card card">
-		<div class="profile-img"></div>
-		<p>제봉 님</p>
-		<p>jebong55@gmail.com</p>
-		<p>1줄 자기소개 영역 입니다!</p>
+	<div class="card">
+		<img
+			class="profile-img"
+			src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGs_KszpHeCbaFnahklqFXq-wuZonZ6AeMFA&usqp=CAU"
+			alt="user"
+		/>
+		<span>제봉 님</span>
+		<span>jebong55@gmail.com</span>
+		<span>1줄 자기소개 영역 입니다!</span>
 		<div class="btn btn-primary">프로필 수정</div>
 	</div>
 </template>
 
 <script>
-export default {
-	setup() {
-		return {}
-	}
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
-.profile-card {
-	width: 310px;
-	padding: 25px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 20px;
-	color: $gray-600;
+.card {
+	@include rem(20);
+	color: $gray-700;
+	padding: 15px 30px;
 	border-radius: 20px !important;
+	display: flex;
+	align-items: center;
+	gap: 15px;
 	.profile-img {
 		width: 100px;
 		height: 100px;
-		background: $gray-500;
+		display: block;
 		border-radius: 50%;
-		margin-bottom: 10px;
-	}
-	:nth-child(2) {
-		margin-bottom: 5px;
-	}
-	:nth-child(3) {
-		margin-bottom: 20px;
-	}
-	:nth-child(4) {
-		margin-bottom: 30px;
+		background: $gray-500;
+		flex-grow: 0 !important;
 	}
 	:last-child {
-		width: 80%;
+		min-width: 60%;
+		flex-grow: 0 !important;
 	}
 }
 </style>

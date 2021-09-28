@@ -25,31 +25,19 @@
 						<i class="bi bi-emoji-frown-fill"></i>
 						<p>1</p>
 					</div>
-					<div @click="toggleComment(index)" class="content-comment">
+					<div class="content-comment">
 						<i class="bi bi-chat-text-fill"></i>
 						<p>5</p>
 					</div>
 				</div>
-				<div v-if="openComment[index]">댓글 부분 입니다! 만들어야해요!</div>
+				<div>댓글 부분 입니다! 만들어야해요!</div>
 			</div>
 		</div>
 	</main>
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			openComment: [false]
-		}
-	},
-
-	methods: {
-		toggleComment(index) {
-			this.openComment[index] = !this.openComment[index]
-		}
-	}
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>

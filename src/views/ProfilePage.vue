@@ -1,4 +1,3 @@
-d
 <template>
 	<div class="container">
 		<div class="profile-box">
@@ -29,7 +28,19 @@ export default {
 	.profile-box {
 		display: flex;
 		justify-content: space-between;
-		height: 370px;
+		gap: 30px;
+		:first-child {
+			flex: 1 1 0;
+		}
+		:last-child {
+			flex: 2 1 0;
+		}
+		@include media-breakpoint-down(sm) {
+			display: block;
+			:first-child {
+				margin-bottom: 30px;
+			}
+		}
 	}
 }
 </style>
