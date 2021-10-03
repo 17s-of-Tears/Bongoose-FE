@@ -35,6 +35,14 @@ const routes = [
 	{
 		path: '/friends_find',
 		component: () => import('@/views/FriendsFindPage')
+	},
+	{
+		path: '/hashtag/:id',
+		component: () => import('@/views/HashTagPage')
+	},
+	{
+		path: '/user/:id',
+		component: () => import('@/views/UserSearchPage')
 	}
 ]
 

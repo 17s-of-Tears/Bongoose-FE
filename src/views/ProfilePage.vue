@@ -4,20 +4,20 @@
 			<ProfileCard />
 			<ProfileImgCard />
 		</div>
-		<ContentCard v-for="index in 5" :key="index" />
+		<PostCard v-for="index in 5" :key="index" />
 	</div>
 </template>
 
 <script>
 import ProfileCard from '@/components/users/ProfileCard'
 import ProfileImgCard from '@/components/users/ProfileImgCard'
-import ContentCard from '@/components/home/ContentCard'
+import PostCard from '@/components/posts/PostCard'
 
 export default {
 	components: {
 		ProfileCard,
 		ProfileImgCard,
-		ContentCard
+		PostCard
 	}
 }
 </script>

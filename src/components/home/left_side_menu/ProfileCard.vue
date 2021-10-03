@@ -1,6 +1,10 @@
 <template>
 	<div class="card">
-		<div class="profile-img"></div>
+		<img
+			src="http://placeimg.com/400/400/any"
+			alt="프로필 이미지"
+			class="profile-img"
+		/>
 		<div class="profile-content">
 			<div class="profile-text">
 				<div>제봉 님</div>
@@ -31,7 +35,6 @@ export default {
 	.profile-img {
 		width: 100px;
 		height: 100px;
-		background-color: $gray-500;
 		border-radius: 15px;
 		flex-shrink: 0;
 	}

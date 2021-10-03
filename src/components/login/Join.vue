@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import Logo from '@/components/left_menu/Logo'
+import Logo from '@/components/home/left_side_menu/Logo'
 
 export default {
 	components: {

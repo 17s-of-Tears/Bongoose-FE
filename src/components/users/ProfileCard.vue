@@ -1,10 +1,6 @@
 <template>
 	<div class="card">
-		<img
-			class="profile-img"
-			src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGs_KszpHeCbaFnahklqFXq-wuZonZ6AeMFA&usqp=CAU"
-			alt="user"
-		/>
+		<img class="profile-img" src="http://placeimg.com/400/400/any" alt="user" />
 		<span>제봉 님</span>
 		<span>jebong55@gmail.com</span>
 		<span>1줄 자기소개 영역 입니다!</span>

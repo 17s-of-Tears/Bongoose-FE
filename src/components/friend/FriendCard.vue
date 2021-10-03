@@ -1,17 +1,31 @@
 <template>
 	<div class="profile-card card">
-		<div class="profile-img"></div>
+		<img
+			src="http://placeimg.com/400/400/any"
+			alt="프로필 이미지"
+			class="profile-img"
+		/>
 		<p>제봉 님</p>
 		<p>jebong55@gmail.com</p>
 		<p>1줄 자기소개 영역 입니다!</p>
-		<div class="btn btn-primary">프로필 수정</div>
+		<button class="btn btn-primary">{{ btnType }}</button>
+		<button v-if="subBtnType" class="btn btn-secondary">
+			{{ subBtnType }}
+		</button>
 	</div>
 </template>
 
 <script>
 export default {
-	setup() {
-		return {}
+	props: {
+		btnType: {
+			type: String,
+			default: ''
+		},
+		subBtnType: {
+			type: String,
+			default: ''
+		}
 	}
 }
 </script>
@@ -32,15 +46,13 @@ export default {
 	.profile-img {
 		width: 80px;
 		height: 80px;
-		background: $gray-500;
 		border-radius: 50%;
 	}
 	:nth-child(4) {
 		margin-bottom: 10px;
 	}
-	:last-child {
+	:is(:nth-child(5), :last-child) {
 		width: 80%;
-		margin: 0;
 	}
 }
 </style>

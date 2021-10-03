@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import Logo from '@/components/left_menu/Logo'
-import NavItem from '@/components/left_menu/NavItem'
-import ProfileCard from '@/components/left_menu/ProfileCard'
+import Logo from '@/components/home/left_side_menu/Logo'
+import NavItem from '@/components/home/left_side_menu/NavItem'
+import ProfileCard from '@/components/home/left_side_menu/ProfileCard'
 
 export default {
 	components: {

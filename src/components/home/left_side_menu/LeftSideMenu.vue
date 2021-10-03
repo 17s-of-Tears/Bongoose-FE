@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Logo from '@/components/left_menu/Logo'
-import ProfileCard from '@/components/left_menu/ProfileCard'
-import NavItem from '@/components/left_menu/NavItem'
-import Footer from '@/components/left_menu/Footer'
+import Logo from '@/components/home/left_side_menu/Logo'
+import ProfileCard from '@/components/home/left_side_menu/ProfileCard'
+import NavItem from '@/components/home/left_side_menu/NavItem'
+import Footer from '@/components/home/left_side_menu/Footer'
 
 export default {
 	components: {

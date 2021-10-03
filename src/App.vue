@@ -30,9 +30,9 @@
 
 <script>
 import Header from '@/components/responsive/Header'
-import LeftSideMenu from '@/components/left_menu/LeftSideMenu'
-import RightSideMenu from '@/components/common/RightSideMenu'
-import TopBtn from '@/components/common/TopBtn'
+import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu'
+import RightSideMenu from '@/components/home/RightSideMenu'
+import TopBtn from '@/components/home/TopBtn'
 
 export default {
 	components: {

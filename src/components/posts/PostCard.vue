@@ -2,7 +2,11 @@
 	<main>
 		<div class="user-card card">
 			<div class="user">
-				<div class="user-img"></div>
+				<img
+					src="http://placeimg.com/400/400/any"
+					alt="프로필 사진"
+					class="user-img"
+				/>
 				<div class="user-content">
 					<div class="user-info">
 						<div class="user-nickname">제봉팍</div>
@@ -17,7 +21,11 @@
 					<span class="content-hashtag"># 제봉잉</span>
 					<span class="content-hashtag"># 벤치프레스</span>
 				</div>
-				<div class="content-img"></div>
+				<img
+					src="http://placeimg.com/400/200/any"
+					alt="게시물 사진"
+					class="content-img"
+				/>
 				<div class="content-footer">
 					<div class="content-like">
 						<i class="bi bi-emoji-smile-fill"></i>
@@ -25,19 +33,44 @@
 						<i class="bi bi-emoji-frown-fill"></i>
 						<p>1</p>
 					</div>
-					<div class="content-comment">
+					<div @click="toggleOnComment" class="content-comment">
 						<i class="bi bi-chat-text-fill"></i>
 						<p>5</p>
 					</div>
 				</div>
-				<div>댓글 부분 입니다! 만들어야해요!</div>
+				<transition name="fade">
+					<div v-if="onComment">
+						<CommentForm />
+						<CommentList />
+					</div>
+				</transition>
 			</div>
 		</div>
 	</main>
 </template>
 
 <script>
-export default {}
+import CommentForm from '@/components/posts/CommentForm'
+import CommentList from '@/components/posts/CommentList'
+
+export default {
+	components: {
+		CommentForm,
+		CommentList
+	},
+
+	data() {
+		return {
+			onComment: false
+		}
+	},
+
+	methods: {
+		toggleOnComment() {
+			this.onComment = !this.onComment
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -107,6 +140,7 @@ export default {}
 		}
 		.content-img {
 			width: 100%;
+			height: 400px;
 			border-radius: 20px;
 			background-color: $gray-500;
 			&::before {
@@ -137,5 +171,19 @@ export default {}
 			}
 		}
 	}
+}
+
+.fade-enter-active {
+	transition: all 0.4s ease-out;
+}
+
+.fade-leave-active {
+	transition: all 0.3s cubic-bezier(1, 0.5, 0.5, 1);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	transform: translateY(10px);
+	opacity: 0;
 }
 </style>

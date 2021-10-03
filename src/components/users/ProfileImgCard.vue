@@ -7,7 +7,7 @@
 				:key="index"
 				class="col-lg-3 col-sm-4 image-box"
 			>
-				<img src="http://placeimg.com/100/100/any" alt="dd" />
+				<img src="http://placeimg.com/100/100/any" alt="최근사진" />
 			</div>
 		</div>
 	</div>
