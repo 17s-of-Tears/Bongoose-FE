@@ -1,18 +1,26 @@
 <template>
 	<section>
-		<div class="sub-card card">
+		<div
+			@click="showModal = true"
+			class="sub-card card"
+			data-bs-toggle="modal"
+			data-bs-target="#exampleModal"
+		>
 			<p>제봉님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
-		<PostCard v-for="index in 10" :key="index" />
+		<Modal />
+		<ContentCard v-for="index in 10" :key="index" />
 	</section>
 </template>
 
 <script>
-import PostCard from '@/components/posts/PostCard'
+import ContentCard from '@/components/home/ContentCard'
+import Modal from '@/components/home/Modal'
 
 export default {
 	components: {
-		PostCard
+		ContentCard,
+		Modal
 	}
 }
 </script>
