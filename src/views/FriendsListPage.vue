@@ -5,7 +5,7 @@
 			<p>총 16명</p>
 		</div>
 		<div class="friends-list-box">
-			<FriendCard v-for="index in 16" :key="index" />
+			<FriendCard v-for="index in 16" :key="index" :btn-type="'프로필보기'" />
 		</div>
 	</div>
 </template>

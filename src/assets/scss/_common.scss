@@ -1,0 +1,10 @@
+body {
+	background-color: #eee;
+	font-family: 'Noto Sans KR', sans-serif;
+	line-height: 1.4;
+	box-sizing: border-box;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { 
+    display: none !important; 
+  }
+}

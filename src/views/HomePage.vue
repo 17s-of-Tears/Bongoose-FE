@@ -16,6 +16,7 @@
 <script>
 import ContentCard from '@/components/home/ContentCard'
 import Modal from '@/components/home/Modal'
+
 export default {
 	components: {
 		ContentCard,

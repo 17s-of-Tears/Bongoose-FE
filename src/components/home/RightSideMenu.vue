@@ -1,13 +1,20 @@
 <template>
 	<aside>
 		<div class="aside-search">
-			<select class="form-select">
-				<option selected>#</option>
-				<option value="1">사용자</option>
+			<select v-model="selected" class="form-select">
+				<option disabled value="">선택</option>
+				<option value="hashtag">#</option>
+				<option value="user">사용자</option>
 			</select>
-			<input type="text" class="form-control" placeholder="검색하기" />
-			<button class="btn btn-dark">
-				<i class="bi bi-search"></i>
+			<input
+				v-model="search"
+				@keyup.enter="toSearchPage"
+				type="text"
+				class="form-control"
+				placeholder="검색하기"
+			/>
+			<button class="btn btn-dark" :disabled="!selected">
+				<i @click="toSearchPage" class="bi bi-search" />
 			</button>
 		</div>
 		<div class="aside-hash">
@@ -16,8 +23,8 @@
 				<div v-for="index in 3" :key="index" class="hash-box">
 					<div class="hash-rank">{{ index }}위</div>
 					<div class="hash-item">
-						<span># 제봉잉</span>
-						<span>514회</span>
+						<span># 제봉잉{{ index }}</span>
+						<span>{{ 100 - index }}회</span>
 					</div>
 					<hr v-if="!(index === 3)" />
 				</div>
@@ -27,12 +34,16 @@
 			<div class="friend-header">
 				<span>친구 추천</span>
 				<span>
-					<i class="bi bi-chevron-right"></i>
+					<i class="bi bi-chevron-right" @click="toFriendPage" />
 				</span>
 			</div>
 			<div v-for="index in 3" :key="index" class="friend-items">
 				<div class="friend-item">
-					<div class="friend-img"></div>
+					<img
+						src="http://placeimg.com/400/400/any"
+						alt="프로필 이미지"
+						class="friend-img"
+					/>
 					<div class="friend-info">
 						<span>제봉팍</span>
 						<span>@jebong2323</span>
@@ -45,7 +56,25 @@
 </template>
 
 <script>
-export default {}
+export default {
+	data() {
+		return {
+			selected: '',
+			search: ''
+		}
+	},
+
+	methods: {
+		toFriendPage() {
+			this.$router.push('/friends_find')
+		},
+		toSearchPage() {
+			if (this.selected !== '') {
+				this.$router.push(`/${this.selected}/${this.search}`)
+			}
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -128,7 +157,6 @@ aside {
 					width: 80px;
 					height: 80px;
 					border-radius: 15px;
-					background-color: $gray-500;
 				}
 				.friend-info {
 					display: flex;

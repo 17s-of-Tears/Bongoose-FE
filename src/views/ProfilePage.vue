@@ -1,24 +1,23 @@
-d
 <template>
 	<div class="container">
 		<div class="profile-box">
 			<ProfileCard />
 			<ProfileImgCard />
 		</div>
-		<ContentCard v-for="index in 5" :key="index" />
+		<PostCard v-for="index in 5" :key="index" />
 	</div>
 </template>
 
 <script>
 import ProfileCard from '@/components/users/ProfileCard'
 import ProfileImgCard from '@/components/users/ProfileImgCard'
-import ContentCard from '@/components/home/ContentCard'
+import PostCard from '@/components/posts/PostCard'
 
 export default {
 	components: {
 		ProfileCard,
 		ProfileImgCard,
-		ContentCard
+		PostCard
 	}
 }
 </script>
@@ -29,7 +28,19 @@ export default {
 	.profile-box {
 		display: flex;
 		justify-content: space-between;
-		height: 370px;
+		gap: 30px;
+		:first-child {
+			flex: 1 1 0;
+		}
+		:last-child {
+			flex: 2 1 0;
+		}
+		@include media-breakpoint-down(sm) {
+			display: block;
+			:first-child {
+				margin-bottom: 30px;
+			}
+		}
 	}
 }
 </style>

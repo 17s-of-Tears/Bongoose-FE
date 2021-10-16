@@ -2,9 +2,9 @@
 	<div class="login-box">
 		<div class="login-inner">
 			<Logo />
-			<p>로그인이 필요한 서비스 입니다.</p>
+			<p>회원 정보를 입력해주세요!</p>
 			<div class="login-input form-floating">
-				<div class="form-floating mb-3">
+				<div class="form-floating">
 					<input
 						type="email"
 						class="form-control"
@@ -13,6 +13,17 @@
 					/>
 					<label for="floatingInput">이메일을 입력해주세요.</label>
 				</div>
+				<div class="login-input form-floating">
+					<input
+						type="nickname"
+						class="form-control"
+						id="floatingNick"
+						placeholder="닉네임을 입력해주세요!"
+					/>
+					<label for="floatingNickname">닉네임을 입력해주세요.</label>
+				</div>
+			</div>
+			<div class="login-input form-floating">
 				<div class="form-floating">
 					<input
 						type="password"
@@ -22,10 +33,30 @@
 					/>
 					<label for="floatingPassword">비밀번호를 입력해주세요.</label>
 				</div>
+				<div class="login-input form-floating">
+					<input
+						type="passwordCheck"
+						class="form-control"
+						id="floatingPasswordCheck"
+						placeholder="비밀번호를 확인해주세요."
+					/>
+					<label for="floatingPasswordCheck">비밀번호를 확인해주세요.</label>
+				</div>
+				<div class="form-check">
+					<input
+						class="form-check-input"
+						type="checkbox"
+						value=""
+						id="flexCheckDefault"
+					/>
+					<label class="form-check-label" for="flexCheckDefault">
+						이용약관에 동의합니다
+					</label>
+				</div>
 			</div>
+
 			<div class="login-btn">
-				<div class="btn btn-primary">로그인</div>
-				<div class="btn btn-primary">회원가입</div>
+				<div class="btn btn-primary">가입하기</div>
 			</div>
 		</div>
 	</div>
@@ -42,11 +73,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.mb-3 {
+	margin-bottom: 0;
+}
 .login-box {
 	margin: 100px auto 0;
 	width: 1000px;
 	border-radius: 20px;
 	background: #fff;
+
 	.login-inner {
 		padding: 50px 180px 100px;
 		display: flex;
@@ -66,10 +101,8 @@ export default {
 		.login-btn {
 			width: 100%;
 			display: flex;
-			justify-content: space-between;
 			> * {
-				margin-top: 30px;
-				width: 300px;
+				width: 635px;
 				border-radius: 20px;
 			}
 		}

@@ -4,6 +4,8 @@
 > 개발 기간: 2021.09.13 ~ ing <br />
 > 개발 인원: 3명
 
+[Bongoose-BE 리포지토리](https://github.com/codingjoa/Bongoose-BE)
+
 ## Index 📖
 1. 팀 포지션
 1. 사용기술
