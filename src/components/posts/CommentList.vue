@@ -8,7 +8,7 @@
 						<span>제봉</span>
 						<span>@jebong55</span>
 					</div>
-					<span>잉 기모띠 댓글띠</span>
+					<span>이이잉 댓글 {{ index }}</span>
 				</div>
 			</div>
 		</li>

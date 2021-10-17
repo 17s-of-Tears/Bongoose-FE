@@ -10,15 +10,17 @@
 				<div>제봉 님</div>
 				<div>@jebong55</div>
 			</div>
-			<div class="btn btn-primary">로그아웃</div>
+			<div @click="logout" class="btn btn-primary">로그아웃</div>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
-	setup() {
-		return {}
+	methods: {
+		logout() {
+			this.$router.push('/login')
+		}
 	}
 }
 </script>

@@ -19,6 +19,7 @@
 	</template>
 	<!-- 로그인 페이지 -->
 	<template v-else>
+		<LoginNav />
 		<RouterView v-slot="{ Component }">
 			<transition name="fade" mode="out-in">
 				<component :is="Component" :key="$route.path" />
@@ -31,20 +32,22 @@
 <script>
 import Header from '@/components/responsive/Header'
 import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu'
-import RightSideMenu from '@/components/home/RightSideMenu'
+import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
 import TopBtn from '@/components/home/TopBtn'
+import LoginNav from '@/components/login/LoginNav'
 
 export default {
 	components: {
 		Header,
 		LeftSideMenu,
 		RightSideMenu,
-		TopBtn
+		TopBtn,
+		LoginNav
 	},
 
 	computed: {
 		isLoginPage() {
-			return this.$route.name === 'login' || this.$route.name === 'join'
+			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},
 		isTopBtn() {
 			return this.$route.name === 'home'

@@ -2,20 +2,20 @@
 	<div class="login-box">
 		<div class="login-inner">
 			<Logo class="login-logo" />
-			<p>로그인이 필요한 서비스 입니다.</p>
-			<LoginForm />
+			<p>회원 정보를 입력해주세요!</p>
+			<SignUpForm />
 		</div>
 	</div>
 </template>
 
 <script>
 import Logo from '@/components/home/left_side_menu/Logo'
-import LoginForm from '@/components/login/LoginForm'
+import SignUpForm from '@/components/login/SignUpForm'
 
 export default {
 	components: {
 		Logo,
-		LoginForm
+		SignUpForm
 	}
 }
 </script>

@@ -9,17 +9,17 @@
 			<p>제봉님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
 		<Modal />
-		<ContentCard v-for="index in 10" :key="index" />
+		<PostCard v-for="index in 10" :key="index" />
 	</section>
 </template>
 
 <script>
-import ContentCard from '@/components/home/ContentCard'
+import PostCard from '@/components/posts/PostCard'
 import Modal from '@/components/home/Modal'
 
 export default {
 	components: {
-		ContentCard,
+		PostCard,
 		Modal
 	}
 }

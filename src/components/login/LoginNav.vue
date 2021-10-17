@@ -1,14 +1,14 @@
 <template>
-	<nav>
+	<header>
 		<Logo />
-		<ul>
-			<li v-for="nav in navs" :key="nav.name">
-				<RouterLink :to="nav.link">
+		<div class="nav nav-pills">
+			<div v-for="nav in navs" :key="nav.name" class="nav-item">
+				<RouterLink :to="nav.link" active-class="active" class="nav-link">
 					{{ nav.name }}
 				</RouterLink>
-			</li>
-		</ul>
-	</nav>
+			</div>
+		</div>
+	</header>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
 				},
 				{
 					name: '회원가입',
-					link: '/join'
+					link: '/signup'
 				}
 			]
 		}
@@ -37,19 +37,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-nav {
+header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px 40px;
-	ul {
-		margin: 0;
-		display: flex;
-		gap: 15px;
-		a {
-			@include rem(20);
-			text-decoration: none;
-		}
-	}
+	padding: 40px 40px 0 28px;
 }
 </style>
