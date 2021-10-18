@@ -53,10 +53,17 @@ export default {
 		toSignUpPage() {
 			this.$router.push('/signup')
 		},
-		onSubmitForm() {
-			alert(
-				`email: ${this.formDatas[0].model},password: ${this.formDatas[1].model}로그인 테스트 성공!`
-			)
+		async onSubmitForm() {
+			try {
+				const userData = {
+					email: this.formDatas[0].model,
+					password: this.formDatas[1].model
+				}
+				const { data } = await this.$store.dispatch('auth/LOGIN', userData)
+				console.log(data)
+			} catch (error) {
+				console.error(error)
+			}
 		}
 	}
 }
