@@ -59,10 +59,13 @@ export default {
 					email: this.formDatas[0].model,
 					password: this.formDatas[1].model
 				}
-				const { data } = await this.$store.dispatch('auth/LOGIN', userData)
-				console.log(data)
+				await this.$store.dispatch('auth/LOGIN', userData)
+				this.$store.commit('SET_MESSAGE', '로그인이 되었습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$router.push('/home')
 			} catch (error) {
-				console.error(error)
+				this.$store.commit('SET_MESSAGE', '로그인에 실패했습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
 			}
 		}
 	}

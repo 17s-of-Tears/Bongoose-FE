@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store'
 
 const routes = [
 	{
@@ -8,41 +9,54 @@ const routes = [
 	{
 		path: '/home',
 		name: 'home',
-		component: () => import('@/views/HomePage')
+		component: () => import('@/views/HomePage'),
+		beforeEnter
 	},
 	{
 		path: '/login',
 		name: 'login',
-		component: () => import('@/views/LoginPage')
+		component: () => import('@/views/LoginPage'),
+		beforeEnter: (to, from, next) => {
+			store.getters['auth/isLogged'] ? next('/home') : next()
+		}
 	},
 	{
 		path: '/signup',
 		name: 'signup',
-		component: () => import('@/views/SignUpPage')
+		component: () => import('@/views/SignUpPage'),
+		beforeEnter: (to, from, next) => {
+			store.getters['auth/isLogged'] ? next('/home') : next()
+		}
 	},
 	{
 		path: '/profile',
-		component: () => import('@/views/ProfilePage')
+		component: () => import('@/views/ProfilePage'),
+		beforeEnter
 	},
 	{
 		path: '/chat',
-		component: () => import('@/views/ChatPage')
+		component: () => import('@/views/ChatPage'),
+		beforeEnter
 	},
 	{
 		path: '/friends_list',
-		component: () => import('@/views/FriendsListPage')
+		component: () => import('@/views/FriendsListPage'),
+		beforeEnter
 	},
 	{
 		path: '/friends_find',
-		component: () => import('@/views/FriendsFindPage')
+		component: () => import('@/views/FriendsFindPage'),
+		beforeEnter
 	},
 	{
 		path: '/hashtag/:id',
-		component: () => import('@/views/HashTagPage')
+		component: () => import('@/views/HashTagPage'),
+		beforeEnter
 	},
 	{
 		path: '/user/:id',
-		component: () => import('@/views/UserSearchPage')
+		component: () => import('@/views/UserSearchPage'),
+		beforeEnter
 	}
 ]
 
@@ -53,5 +67,9 @@ const router = createRouter({
 	},
 	routes
 })
+
+function beforeEnter(to, from, next) {
+	store.getters['auth/isLogged'] ? next() : next('/login')
+}
 
 export default router

@@ -21,20 +21,24 @@
 	<template v-else>
 		<LoginNav />
 		<RouterView v-slot="{ Component }">
-			<transition name="fade" mode="out-in">
-				<component :is="Component" :key="$route.path" />
-			</transition>
+			<component :is="Component" :key="$route.path" />
 		</RouterView>
 	</template>
+	<!-- 공통 컴포넌트 -->
 	<TopBtn v-if="isTopBtn" />
+	<transition name="fade">
+		<Alerts v-if="alert" />
+	</transition>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Header from '@/components/responsive/Header'
 import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu'
 import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
 import TopBtn from '@/components/home/TopBtn'
 import LoginNav from '@/components/login/LoginNav'
+import Alerts from '@/components/common/Alerts'
 
 export default {
 	components: {
@@ -42,7 +46,8 @@ export default {
 		LeftSideMenu,
 		RightSideMenu,
 		TopBtn,
-		LoginNav
+		LoginNav,
+		Alerts
 	},
 
 	computed: {
@@ -51,7 +56,8 @@ export default {
 		},
 		isTopBtn() {
 			return this.$route.name === 'home'
-		}
+		},
+		...mapState(['alert'])
 	}
 }
 </script>

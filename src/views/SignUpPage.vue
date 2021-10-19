@@ -1,11 +1,13 @@
 <template>
-	<div class="login-box">
-		<div class="login-inner">
-			<Logo class="login-logo" />
-			<p>회원 정보를 입력해주세요!</p>
-			<SignUpForm />
+	<transition name="slide-fade">
+		<div v-if="show" class="login-box">
+			<div class="login-inner">
+				<Logo class="login-logo" />
+				<p>회원 정보를 입력해주세요!</p>
+				<SignUpForm />
+			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
@@ -16,6 +18,24 @@ export default {
 	components: {
 		Logo,
 		SignUpForm
+	},
+
+	data() {
+		return {
+			show: false
+		}
+	},
+
+	methods: {
+		isShow() {
+			setTimeout(() => {
+				this.show = true
+			}, 200)
+		}
+	},
+
+	created() {
+		this.isShow()
 	}
 }
 </script>
@@ -41,5 +61,19 @@ export default {
 			color: $primary;
 		}
 	}
+}
+
+.slide-fade-enter-active {
+	transition: all 0.5s ease-out;
+}
+
+.slide-fade-leave-active {
+	transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+	transform: translateY(40px);
+	opacity: 0;
 }
 </style>
