@@ -18,8 +18,16 @@
 <script>
 export default {
 	methods: {
-		logout() {
-			this.$router.push('/login')
+		async logout() {
+			try {
+				await this.$store.commit('auth/LOGOUT')
+				this.$store.commit('SET_MESSAGE', '로그아웃에 성공하였습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$router.push('/login')
+			} catch (error) {
+				this.$store.commit('SET_MESSAGE', '로그아웃에 실패했습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+			}
 		}
 	}
 }

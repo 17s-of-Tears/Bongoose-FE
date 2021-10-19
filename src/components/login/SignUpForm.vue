@@ -20,7 +20,6 @@
 			<label class="form-check-label" for="checkInput">
 				이용약관에 동의합니다
 			</label>
-			{{ dataInfo }}
 		</div>
 		<div class="login-btn">
 			<button type="submit" class="btn btn-primary" :disabled="!valid">
@@ -31,6 +30,8 @@
 </template>
 
 <script>
+import { signupUser } from '@/api/auth'
+
 export default {
 	data() {
 		return {
@@ -72,11 +73,21 @@ export default {
 	},
 
 	methods: {
-		onSubmitForm() {
-			alert(
-				`email: ${this.formDatas[0].model}, nickname: ${this.formDatas[1].model}, password: ${this.formDatas[2].model}회원가입 테스트 성공!`
-			)
-			this.$router.push('/login')
+		async onSubmitForm() {
+			try {
+				const userInfo = {
+					email: this.formDatas[0].model,
+					nickname: this.formDatas[1].model,
+					password: this.formDatas[2].model
+				}
+				await signupUser(userInfo)
+				this.$store.commit('SET_MESSAGE', '회원가입에 성공하였습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$router.push('/login')
+			} catch (error) {
+				this.$store.commit('SET_MESSAGE', '회원가입에 실패했습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+			}
 		}
 	}
 }
