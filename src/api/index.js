@@ -2,7 +2,7 @@ import axios from 'axios'
 import { setInterceptors } from './interceptors'
 
 // 로그인전 요청
-function create(url, options) {
+const create = (url, options) => {
 	const instance = axios.create(Object.assign({ baseURL: url }, options))
 	return instance
 }

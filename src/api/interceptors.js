@@ -1,7 +1,7 @@
 import store from '@/store'
 import { getAuthCookie } from '@/utils/cookies'
 
-function setInterceptors(instance) {
+const setInterceptors = instance => {
 	instance.interceptors.request.use(
 		config => {
 			config.headers.Authorization = store.state.auth.token || getAuthCookie()
