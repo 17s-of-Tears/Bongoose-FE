@@ -20,9 +20,7 @@
 	<!-- 로그인 페이지 -->
 	<template v-else>
 		<LoginNav />
-		<RouterView v-slot="{ Component }">
-			<component :is="Component" :key="$route.path" />
-		</RouterView>
+		<RouterView />
 	</template>
 	<!-- 공통 컴포넌트 -->
 	<TopBtn v-if="isTopBtn" />
@@ -57,7 +55,8 @@ export default {
 		isTopBtn() {
 			return this.$route.name === 'home'
 		},
-		...mapState(['alert'])
+		...mapState(['alert']),
+		...mapState('auth', ['user'])
 	}
 }
 </script>

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { signupUser } from '@/api/auth'
+import { signupUser } from '@/api/sign'
 
 export default {
 	data() {
