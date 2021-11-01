@@ -57,6 +57,9 @@ export default {
 		isTopBtn() {
 			return this.$route.name === 'home'
 		},
+		NotFound() {
+			return this.$route.name === ':pathMatch(.*)*'
+		},
 		...mapState(['alert'])
 	}
 }
