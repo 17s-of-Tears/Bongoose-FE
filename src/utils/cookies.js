@@ -1,9 +1,7 @@
-const saveAuthCookie = value => (document.cookie = `auth=${value}`)
+import Cookies from 'js-cookie'
+// 쿠기 유효기간? 설정해야될듯
+const saveAuthCookie = value => Cookies.set('auth', value)
+const getAuthCookie = () => Cookies.get('auth')
+const deleteAuthCookie = () => Cookies.remove('auth')
 
-const getAuthCookie = () =>
-	document.cookie.replace(/(?:(?:^|.*;\s*)auth\s*=\s*([^;]*).*$)|^.*$/, '$1')
-
-const deleteCookie = value =>
-	(document.cookie = `${value}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`)
-
-export { saveAuthCookie, getAuthCookie, deleteCookie }
+export { saveAuthCookie, getAuthCookie, deleteAuthCookie }

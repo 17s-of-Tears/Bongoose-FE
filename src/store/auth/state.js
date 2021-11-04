@@ -1,4 +1,7 @@
+import { getAuthCookie } from '@/utils/cookies'
+import { getUserLocalStorage } from '@/utils/localStorage'
+
 export default () => ({
-	user: {},
-	token: ''
+	user: getUserLocalStorage() !== null ? getUserLocalStorage() : [],
+	token: '' || getAuthCookie()
 })
