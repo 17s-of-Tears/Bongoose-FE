@@ -1,14 +1,10 @@
 <template>
 	<div class="card">
-		<img
-			src="http://placeimg.com/400/400/any"
-			alt="프로필 이미지"
-			class="profile-img"
-		/>
+		<img :src="profileImage" alt="프로필 이미지" class="profile-img" />
 		<div class="profile-content">
 			<div class="profile-text">
-				<div>제봉 님</div>
-				<div>@jebong55</div>
+				<div>{{ user.name }} 님</div>
+				<div>@{{ userEmail }}</div>
 			</div>
 			<div @click="logout" class="btn btn-primary">로그아웃</div>
 		</div>
@@ -16,7 +12,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+	computed: {
+		...mapState('auth', ['user']),
+		profileImage() {
+			return this.user.imageUrl || require('@/assets/images/default.png')
+		},
+		userEmail() {
+			return /.+(?=@)/.exec(this.user.email)[0]
+		}
+	},
+
 	methods: {
 		async logout() {
 			try {
