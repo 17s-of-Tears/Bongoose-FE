@@ -6,14 +6,15 @@
 			data-bs-toggle="modal"
 			data-bs-target="#exampleModal"
 		>
-			<p>제봉님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
+			<p>{{ user.name }} 님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
-		<Modal />
-		<PostCard v-for="index in 10" :key="index" />
+		<Modal @updatePost="updatePost" />
+		<PostCard />
 	</section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import PostCard from '@/components/posts/PostCard'
 import Modal from '@/components/home/Modal'
 
@@ -21,6 +22,28 @@ export default {
 	components: {
 		PostCard,
 		Modal
+	},
+
+	computed: {
+		...mapState('auth', ['user'])
+	},
+
+	methods: {
+		async boardInfo() {
+			try {
+				await this.$store.dispatch('board/GET_BOARD')
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		updatePost() {
+			this.boardInfo()
+			console.log(123)
+		}
+	},
+
+	created() {
+		this.boardInfo()
 	}
 }
 </script>

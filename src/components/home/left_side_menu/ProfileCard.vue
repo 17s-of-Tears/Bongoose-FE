@@ -1,9 +1,9 @@
 <template>
-	<div class="card">
+	<div class="card" v-if="isLogged">
 		<img :src="profileImage" alt="프로필 이미지" class="profile-img" />
 		<div class="profile-content">
 			<div class="profile-text">
-				<div>{{ user.name }} 님</div>
+				<div>{{ userInfo.name }} 님</div>
 				<div>@{{ userEmail }}</div>
 			</div>
 			<div @click="logout" class="btn btn-primary">로그아웃</div>
@@ -12,16 +12,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
 	computed: {
-		...mapState('auth', ['user']),
+		...mapGetters('auth', ['isLogged']),
+		userInfo() {
+			// proxy 객체 변환
+			const { user } = this.$store.state.auth
+			const str = JSON.stringify(user)
+			return JSON.parse(str)
+		},
 		profileImage() {
-			return this.user.imageUrl || require('@/assets/images/default.png')
+			return this.userInfo.imageUrl || require('@/assets/images/default.png')
 		},
 		userEmail() {
-			return /.+(?=@)/.exec(this.user.email)[0]
+			// 초기 랜더 에러 방지
+			if (this.userInfo.email === undefined) return 0
+			return /.+(?=@)/.exec(this.userInfo.email)[0]
 		}
 	},
 

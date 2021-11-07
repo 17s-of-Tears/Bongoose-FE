@@ -1,7 +1,9 @@
 import { sign } from './index'
 
-const signupUser = payload => sign.post(`sign/up`, payload)
+const signupUser = payload => sign.post(`up`, payload)
 
-const loginUser = payload => sign.post(`sign`, payload)
+const loginUser = payload => sign.post(`/`, payload)
 
-export { signupUser, loginUser }
+const refreshUser = payload => sign.get(`/`, payload)
+
+export { signupUser, loginUser, refreshUser }
