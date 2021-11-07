@@ -55,8 +55,10 @@ export default {
 		isTopBtn() {
 			return this.$route.name === 'home'
 		},
-		...mapState(['alert']),
-		...mapState('auth', ['user'])
+		NotFound() {
+			return this.$route.name === ':pathMatch(.*)*'
+		},
+		...mapState(['alert'])
 	}
 }
 </script>

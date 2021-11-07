@@ -57,6 +57,11 @@ const routes = [
 		path: '/user/:id',
 		component: () => import('@/views/UserSearchPage'),
 		beforeEnter
+	},
+	{
+		path: '/:pathMatch(.*)*',
+		name: 'NotFound',
+		component: () => import('@/views/NotFound')
 	}
 ]
 
