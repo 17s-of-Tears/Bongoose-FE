@@ -1,5 +1,5 @@
 <template>
-	<main>
+	<main v-for="board in boards" :key="board.id">
 		<div class="user-card card">
 			<div class="user">
 				<img
@@ -9,20 +9,20 @@
 				/>
 				<div class="user-content">
 					<div class="user-info">
-						<div class="user-nickname">제봉팍</div>
+						<div class="user-nickname">{{ board.userName }}</div>
 						<div class="user-id">@jebong2323</div>
 					</div>
 					<div class="user-date">9월 5일 오후 3:55</div>
 				</div>
 			</div>
 			<div class="content">
-				<span> 오늘은 벤치프레스를 했어요! 너무 좋아요 😆 </span>
+				<span>{{ board.content }}</span>
 				<div class="content-hash">
-					<span class="content-hashtag"># 제봉잉</span>
-					<span class="content-hashtag"># 벤치프레스</span>
+					<span class="content-hashtag"># 임시데이터</span>
+					<span class="content-hashtag"># 임시데이터</span>
 				</div>
 				<img
-					src="http://placeimg.com/400/200/any"
+					:src="`http://placeimg.com/400/200/any/${board.id}`"
 					alt="게시물 사진"
 					class="content-img"
 				/>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import CommentForm from '@/components/posts/CommentForm'
 import CommentList from '@/components/posts/CommentList'
 
@@ -63,6 +64,10 @@ export default {
 		return {
 			onComment: false
 		}
+	},
+
+	computed: {
+		...mapState('board', ['boards'])
 	},
 
 	methods: {

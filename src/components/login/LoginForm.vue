@@ -63,7 +63,7 @@ export default {
 				this.$store.commit('SET_MESSAGE', '로그인이 되었습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 				this.$router.push('/home')
-			} catch (error) {
+			} catch {
 				this.$store.commit('SET_MESSAGE', '로그인에 실패했습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 			}

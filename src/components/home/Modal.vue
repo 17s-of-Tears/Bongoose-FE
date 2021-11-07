@@ -1,15 +1,9 @@
 <template>
-	<div
-		class="modal fade"
-		id="exampleModal"
-		tabindex="-1"
-		aria-labelledby="exampleModalLabel"
-		aria-hidden="true"
-	>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">게시물 작성하기</h5>
+					<h5 class="modal-title">게시물 작성하기</h5>
 					<button
 						type="button"
 						class="btn-close"
@@ -17,21 +11,31 @@
 						aria-label="Close"
 					></button>
 				</div>
-
 				<div class="modal-body">
 					<div>
-						<label for="exampleFormControlTextarea1" class="form-label"></label>
+						<label class="form-label"></label>
 						<textarea
+							v-model="content"
 							class="form-control"
-							id="exampleFormControlTextarea1"
-							placeholder="제봉님!오늘 무슨일이 있었나요?"
+							:placeholder="`${user.name} 님!오늘 무슨일이 있었나요?`"
 							rows="5"
 						></textarea>
 					</div>
-					<i class="bi bi-image"></i>
+					<input
+						ref="imageInput"
+						type="file"
+						multiple
+						hidden
+						@change="onChangeImages"
+					/>
+					<i class="bi bi-image" type="button" @click="onClickImageUpload" />
+					<small class="text-black-50">
+						&nbsp;* 이미지는 최대 4개 까지 게시가 가능합니다!
+					</small>
 				</div>
 				<div class="modal-footer">
 					<button
+						@click="boardWriting"
 						type="button"
 						class="btn btn-primary subbtn"
 						data-bs-dismiss="modal"
@@ -45,7 +49,41 @@
 </template>
 
 <script>
-export default {}
+import { createBoard } from '@/api/board'
+import { mapState } from 'vuex'
+
+export default {
+	data() {
+		return {
+			content: ''
+		}
+	},
+
+	computed: {
+		...mapState('auth', ['user'])
+	},
+
+	methods: {
+		async boardWriting() {
+			try {
+				console.log('test', this.content)
+				const data = {
+					content: this.content
+				}
+				await createBoard(data)
+				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$emit('updatePost')
+			} catch {
+				this.$store.commit('SET_MESSAGE', '글 작성이 실패하였습니다.')
+				this.$store.dispatch('AUTO_SET_ALERT')
+			}
+		},
+		onClickImageUpload() {
+			this.$refs.imageInput.click()
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>
