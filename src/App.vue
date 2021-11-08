@@ -1,6 +1,11 @@
 <template>
 	<Header class="responsive-header" />
-	<template v-if="!isLoginPage">
+	<template v-if="isLoginPage && !NotFoundPage">
+		<LoginNav />
+		<RouterView />
+	</template>
+
+	<template v-else-if="isHomePage && !NotFoundPage">
 		<div class="row">
 			<div class="col-12 col-lg-3 responsive-side">
 				<LeftSideMenu />
@@ -17,11 +22,12 @@
 			</div>
 		</div>
 	</template>
-	<!-- 로그인 페이지 -->
+	<!-- 사이드바 -->
 	<template v-else>
-		<LoginNav />
 		<RouterView />
 	</template>
+	<!-- 로그인 페이지 -->
+
 	<!-- 공통 컴포넌트 -->
 	<TopBtn v-if="isTopBtn" />
 	<transition name="fade">
@@ -55,10 +61,16 @@ export default {
 		isTopBtn() {
 			return this.$route.name === 'home'
 		},
-		NotFound() {
-			return this.$route.name === ':pathMatch(.*)*'
+		NotFoundPage() {
+			return this.$route.name === 'NotFound'
+		},
+		isHomePage() {
+			return !this.isLoginPage
 		},
 		...mapState(['alert'])
+	},
+	created() {
+		console.log(this.NotFoundPage)
 	}
 }
 </script>
