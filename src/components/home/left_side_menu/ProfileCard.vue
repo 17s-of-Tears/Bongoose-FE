@@ -35,6 +35,7 @@ export default {
 
 	methods: {
 		async logout() {
+			this.$store.commit('START_LOADING')
 			try {
 				await this.$store.commit('auth/LOGOUT')
 				this.$store.commit('SET_MESSAGE', '로그아웃에 성공하였습니다!')
@@ -43,6 +44,8 @@ export default {
 			} catch (error) {
 				this.$store.commit('SET_MESSAGE', '로그아웃에 실패했습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
+			} finally {
+				this.$store.commit('END_LOADING')
 			}
 		}
 	}

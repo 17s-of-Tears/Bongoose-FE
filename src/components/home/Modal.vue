@@ -65,6 +65,7 @@ export default {
 
 	methods: {
 		async boardWriting() {
+			this.$store.commit('START_LOADING')
 			try {
 				console.log('test', this.content)
 				const data = {
@@ -77,6 +78,8 @@ export default {
 			} catch {
 				this.$store.commit('SET_MESSAGE', '글 작성이 실패하였습니다.')
 				this.$store.dispatch('AUTO_SET_ALERT')
+			} finally {
+				this.$store.commit('END_LOADING')
 			}
 		},
 		onClickImageUpload() {

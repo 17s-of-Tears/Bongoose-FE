@@ -1,4 +1,5 @@
 <template>
+	<Spinner v-if="loading" />
 	<Header class="responsive-header" />
 	<template v-if="!isLoginPage">
 		<div class="row">
@@ -37,6 +38,7 @@ import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
 import TopBtn from '@/components/home/TopBtn'
 import LoginNav from '@/components/login/LoginNav'
 import Alerts from '@/components/common/Alerts'
+import Spinner from '@/components/common/Spinner'
 
 export default {
 	components: {
@@ -45,7 +47,8 @@ export default {
 		RightSideMenu,
 		TopBtn,
 		LoginNav,
-		Alerts
+		Alerts,
+		Spinner
 	},
 
 	computed: {
@@ -58,7 +61,7 @@ export default {
 		NotFound() {
 			return this.$route.name === ':pathMatch(.*)*'
 		},
-		...mapState(['alert'])
+		...mapState(['alert', 'loading'])
 	}
 }
 </script>

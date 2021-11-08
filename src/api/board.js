@@ -1,7 +1,10 @@
-import { board } from './index'
+import { root, board } from './index'
 
-// 무한 스크롤 수정
-const getBoards = () => board.get(`/`)
+const getBoards = payload => {
+	const { start, end } = payload
+	const params = { start, end }
+	return root.get(`/board`, { params })
+}
 
 const createBoard = payload => board.post(`/`, payload)
 

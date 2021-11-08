@@ -17,7 +17,8 @@ const createAuth = (url, options) => {
 }
 
 const sign = create(`${SERVER_URI}/api/v1/sign`)
+const root = createAuth(`${SERVER_URI}/api/v1/`)
 const user = createAuth(`${SERVER_URI}/api/v1/user`)
 const board = createAuth(`${SERVER_URI}/api/v1/board`)
 
-export { sign, user, board }
+export { sign, root, user, board }

@@ -67,13 +67,38 @@ export default {
 	},
 
 	computed: {
-		...mapState('board', ['boards'])
+		...mapState('board', ['boards', 'hasMorePost'])
 	},
 
 	methods: {
 		toggleOnComment() {
 			this.onComment = !this.onComment
+		},
+		async onScroll() {
+			const showTrue =
+				window.scrollY + document.documentElement.clientHeight >
+				document.documentElement.scrollHeight - 300
+			if (showTrue) {
+				if (this.hasMorePost) {
+					this.$store.commit('START_LOADING')
+					try {
+						await this.$store.dispatch('board/GET_LOAD_BOARDS')
+					} catch (error) {
+						console.error(error)
+					} finally {
+						this.$store.commit('END_LOADING')
+					}
+				}
+			}
 		}
+	},
+
+	mounted() {
+		window.addEventListener('scroll', this.onScroll)
+	},
+
+	beforeUnmount() {
+		window.removeEventListener('scroll', this.onScroll)
 	}
 }
 </script>

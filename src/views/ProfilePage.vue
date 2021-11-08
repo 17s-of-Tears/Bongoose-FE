@@ -18,6 +18,10 @@ export default {
 		ProfileCard,
 		ProfileImgCard,
 		PostCard
+	},
+
+	created() {
+		this.$store.commit('END_LOADING')
 	}
 }
 </script>
