@@ -6,9 +6,16 @@
 
 <script>
 export default {
+	props: {
+		page: {
+			type: String,
+			required: true
+		}
+	},
+
 	methods: {
 		toTop() {
-			this.$router.push('/home')
+			this.$router.push(`/${this.page}`)
 		}
 	}
 }

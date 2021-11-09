@@ -6,6 +6,14 @@
 	</div>
 </template>
 
+<script>
+export default {
+	created() {
+		this.$store.commit('END_LOADING')
+	}
+}
+</script>
+
 <style lang="scss" scoped>
 .not-found {
 	line-height: 1.2;

@@ -74,6 +74,7 @@ export default {
 
 	methods: {
 		async onSubmitForm() {
+			this.$store.commit('START_LOADING')
 			try {
 				const userInfo = {
 					email: this.formDatas[0].model,
@@ -87,6 +88,8 @@ export default {
 			} catch (error) {
 				this.$store.commit('SET_MESSAGE', '회원가입에 실패했습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
+			} finally {
+				this.$store.commit('END_LOADING')
 			}
 		}
 	}

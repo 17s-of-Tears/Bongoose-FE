@@ -9,7 +9,8 @@ export default createStore({
 	},
 	state: () => ({
 		alert: false,
-		message: ''
+		message: '',
+		loading: false
 	}),
 	mutations: {
 		OPEN_ALERT(state) {
@@ -20,6 +21,12 @@ export default createStore({
 		},
 		SET_MESSAGE(state, message) {
 			state.message = message
+		},
+		START_LOADING(state) {
+			state.loading = true
+		},
+		END_LOADING(state) {
+			state.loading = false
 		}
 	},
 	actions: {

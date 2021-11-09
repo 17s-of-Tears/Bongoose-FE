@@ -30,19 +30,23 @@ export default {
 
 	methods: {
 		async boardInfo() {
+			this.$store.commit('START_LOADING')
+			this.$store.commit('board/CLEAR_BOARDS')
 			try {
-				await this.$store.dispatch('board/GET_BOARD')
+				await this.$store.dispatch('board/GET_LOAD_BOARDS')
 			} catch (error) {
 				console.error(error)
+			} finally {
+				this.$store.commit('END_LOADING')
 			}
 		},
 		updatePost() {
 			this.boardInfo()
-			console.log(123)
 		}
 	},
 
 	created() {
+		this.$store.commit('END_LOADING')
 		this.boardInfo()
 	}
 }

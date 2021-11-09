@@ -1,8 +1,13 @@
-import { board } from './index'
+import { root, board } from './index'
 
-// 무한 스크롤 수정
-const getBoards = () => board.get(`/`)
+const getBoards = payload => {
+	const { start, end, keyword } = payload
+	const params = { start, end, keyword }
+	return root.get(`/board`, { params })
+}
 
 const createBoard = payload => board.post(`/`, payload)
 
-export { getBoards, createBoard }
+const removeBoard = payload => board.delete(`/${payload}`)
+
+export { getBoards, createBoard, removeBoard }
