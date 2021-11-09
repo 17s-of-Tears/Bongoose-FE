@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container profile-container">
 		<div class="profile-box">
 			<ProfileCard />
 			<ProfileImgCard />
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.profile-container {
 	margin-top: 40px;
 	.profile-box {
 		display: flex;

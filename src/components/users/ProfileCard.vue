@@ -1,18 +1,64 @@
 <template>
-	<div class="card">
+	<div class="card profile-card">
 		<img class="profile-img" src="http://placeimg.com/400/400/any" alt="user" />
 		<span>제봉 님</span>
 		<span>jebong55@gmail.com</span>
 		<span>1줄 자기소개 영역 입니다!</span>
+<<<<<<< HEAD
+		<button
+			@click="showModal = true"
+			type="button"
+			class="btn btn-primary"
+			data-bs-toggle="modal"
+			data-bs-target="#exampleModal"
+			data-bs-whatever="@mdo"
+		>
+			프로필 수정
+		</button>
+		<ProfileModal @updateProfile="updateProfile" />
+=======
+>>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 	</div>
 </template>
 
 <script>
+<<<<<<< HEAD
+import ProfileModal from '@/components/home/ProfileModal.vue'
+import { mapState } from 'vuex'
+
+export default {
+	components: {
+		ProfileModal
+	},
+	computed: {
+		...mapState('auth', ['user'])
+	},
+
+	methods: {
+		async boardInfo() {
+			try {
+				await this.$store.dispatch('board/GET_BOARD')
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		updateProfile() {
+			this.boardInfo()
+			console.log(123)
+		}
+	},
+
+	created() {
+		this.boardInfo()
+	}
+}
+=======
 export default {}
+>>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 </script>
 
 <style lang="scss" scoped>
-.card {
+.profile-card {
 	@include rem(20);
 	color: $gray-700;
 	padding: 15px 30px;
@@ -20,16 +66,13 @@ export default {}
 	display: flex;
 	align-items: center;
 	gap: 15px;
+
 	.profile-img {
 		width: 100px;
 		height: 100px;
 		display: block;
 		border-radius: 50%;
 		background: $gray-500;
-		flex-grow: 0 !important;
-	}
-	:last-child {
-		min-width: 60%;
 		flex-grow: 0 !important;
 	}
 }

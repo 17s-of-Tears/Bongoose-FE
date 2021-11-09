@@ -1,7 +1,12 @@
 <template>
 	<Spinner v-if="loading" />
 	<Header class="responsive-header" />
-	<template v-if="!isLoginPage">
+	<template v-if="isLoginPage && !NotFoundPage">
+		<LoginNav />
+		<RouterView />
+	</template>
+
+	<template v-else-if="isHomePage && !NotFoundPage">
 		<div class="row">
 			<div class="col-12 col-lg-3 responsive-side">
 				<LeftSideMenu />
@@ -18,11 +23,12 @@
 			</div>
 		</div>
 	</template>
-	<!-- 로그인 페이지 -->
+	<!-- 사이드바 -->
 	<template v-else>
-		<LoginNav />
 		<RouterView />
 	</template>
+	<!-- 로그인 페이지 -->
+
 	<!-- 공통 컴포넌트 -->
 	<TopBtn v-if="isTopBtn" :page="routerName" />
 	<transition name="fade">
@@ -59,9 +65,18 @@ export default {
 		isTopBtn() {
 			return this.$route.name === 'home' || this.$route.name === 'profile'
 		},
-		NotFound() {
-			return this.$route.name === ':pathMatch(.*)*'
+		NotFoundPage() {
+			return this.$route.name === 'NotFound'
 		},
+		isHomePage() {
+			return !this.isLoginPage
+		},
+<<<<<<< HEAD
+		...mapState(['alert'])
+	},
+	created() {
+		console.log(this.NotFoundPage)
+=======
 		routerName() {
 			switch (this.$route.name) {
 				case 'home':
@@ -72,6 +87,7 @@ export default {
 					return null
 			}
 		}
+>>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 	}
 }
 </script>
