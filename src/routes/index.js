@@ -17,6 +17,7 @@ const routes = [
 		name: 'login',
 		component: () => import('@/views/LoginPage'),
 		beforeEnter: (to, from, next) => {
+			store.commit('START_LOADING')
 			store.getters['auth/isLogged'] ? next('/home') : next()
 		}
 	},
@@ -25,11 +26,13 @@ const routes = [
 		name: 'signup',
 		component: () => import('@/views/SignUpPage'),
 		beforeEnter: (to, from, next) => {
+			store.commit('START_LOADING')
 			store.getters['auth/isLogged'] ? next('/home') : next()
 		}
 	},
 	{
 		path: '/profile',
+		name: 'profile',
 		component: () => import('@/views/ProfilePage'),
 		beforeEnter
 	},
@@ -61,7 +64,11 @@ const routes = [
 	{
 		path: '/:pathMatch(.*)*',
 		name: 'NotFound',
-		component: () => import('@/views/NotFound')
+		component: () => import('@/views/NotFound'),
+		beforeEnter: (to, from, next) => {
+			store.commit('START_LOADING')
+			next()
+		}
 	}
 ]
 
@@ -74,6 +81,7 @@ const router = createRouter({
 })
 
 function beforeEnter(to, from, next) {
+	store.commit('START_LOADING')
 	store.getters['auth/isLogged'] ? next() : next('/login')
 }
 

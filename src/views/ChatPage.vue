@@ -11,8 +11,8 @@
 
 <script>
 export default {
-	setup() {
-		return {}
+	created() {
+		this.$store.commit('END_LOADING')
 	}
 }
 </script>

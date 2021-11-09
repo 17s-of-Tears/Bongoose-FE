@@ -16,6 +16,10 @@ import FriendCard from '@/components/friend/FriendCard'
 export default {
 	components: {
 		FriendCard
+	},
+
+	created() {
+		this.$store.commit('END_LOADING')
 	}
 }
 </script>

@@ -54,6 +54,7 @@ export default {
 			this.$router.push('/signup')
 		},
 		async onSubmitForm() {
+			this.$store.commit('START_LOADING')
 			try {
 				const userData = {
 					email: this.formDatas[0].model,
@@ -66,6 +67,8 @@ export default {
 			} catch {
 				this.$store.commit('SET_MESSAGE', '로그인에 실패했습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
+			} finally {
+				this.$store.commit('END_LOADING')
 			}
 		}
 	}

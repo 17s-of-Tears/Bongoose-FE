@@ -4,6 +4,7 @@
 		<span>제봉 님</span>
 		<span>jebong55@gmail.com</span>
 		<span>1줄 자기소개 영역 입니다!</span>
+<<<<<<< HEAD
 		<button
 			@click="showModal = true"
 			type="button"
@@ -15,10 +16,13 @@
 			프로필 수정
 		</button>
 		<ProfileModal @updateProfile="updateProfile" />
+=======
+>>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 	</div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import ProfileModal from '@/components/home/ProfileModal.vue'
 import { mapState } from 'vuex'
 
@@ -48,6 +52,9 @@ export default {
 		this.boardInfo()
 	}
 }
+=======
+export default {}
+>>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 </script>
 
 <style lang="scss" scoped>

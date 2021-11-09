@@ -35,6 +35,7 @@ export default {
 	},
 
 	created() {
+		this.$store.commit('END_LOADING')
 		this.isShow()
 	}
 }

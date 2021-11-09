@@ -1,4 +1,5 @@
 <template>
+	<Spinner v-if="loading" />
 	<Header class="responsive-header" />
 	<template v-if="isLoginPage && !NotFoundPage">
 		<LoginNav />
@@ -29,7 +30,7 @@
 	<!-- 로그인 페이지 -->
 
 	<!-- 공통 컴포넌트 -->
-	<TopBtn v-if="isTopBtn" />
+	<TopBtn v-if="isTopBtn" :page="routerName" />
 	<transition name="fade">
 		<Alerts v-if="alert" />
 	</transition>
@@ -40,9 +41,10 @@ import { mapState } from 'vuex'
 import Header from '@/components/responsive/Header'
 import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu'
 import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
-import TopBtn from '@/components/home/TopBtn'
+import TopBtn from '@/components/common/TopBtn'
 import LoginNav from '@/components/login/LoginNav'
 import Alerts from '@/components/common/Alerts'
+import Spinner from '@/components/common/Spinner'
 
 export default {
 	components: {
@@ -51,15 +53,17 @@ export default {
 		RightSideMenu,
 		TopBtn,
 		LoginNav,
-		Alerts
+		Alerts,
+		Spinner
 	},
 
 	computed: {
+		...mapState(['alert', 'loading']),
 		isLoginPage() {
 			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},
 		isTopBtn() {
-			return this.$route.name === 'home'
+			return this.$route.name === 'home' || this.$route.name === 'profile'
 		},
 		NotFoundPage() {
 			return this.$route.name === 'NotFound'
@@ -67,10 +71,23 @@ export default {
 		isHomePage() {
 			return !this.isLoginPage
 		},
+<<<<<<< HEAD
 		...mapState(['alert'])
 	},
 	created() {
 		console.log(this.NotFoundPage)
+=======
+		routerName() {
+			switch (this.$route.name) {
+				case 'home':
+					return this.$route.name
+				case 'profile':
+					return this.$route.name
+				default:
+					return null
+			}
+		}
+>>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 	}
 }
 </script>

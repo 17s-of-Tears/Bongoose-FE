@@ -35,8 +35,13 @@ export default {
 
 	methods: {
 		toSearchPage() {
-			if (this.selected !== '') {
+			if (this.vaild) {
 				this.$router.push(`/${this.selected}/${this.search}`)
+				this.selected = ''
+				this.search = ''
+			} else {
+				this.$store.commit('SET_MESSAGE', '검색 항목 또는 검색어가 필요합니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
 			}
 		}
 	}

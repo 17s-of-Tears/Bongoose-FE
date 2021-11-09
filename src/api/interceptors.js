@@ -19,10 +19,10 @@ const setInterceptors = instance => {
 	instance.interceptors.response.use(
 		response => response,
 		async error => {
-			const { status } = error.response
 			const { message } = error.response.data
 			const { config } = error.response
-			if (status == 401 && message == 'jwt expired') {
+			// 토큰이 만료가 되었을 때
+			if (message == 'jwt expired') {
 				// 토큰을 갱신한다.
 				try {
 					const { data } = await refreshUser()
