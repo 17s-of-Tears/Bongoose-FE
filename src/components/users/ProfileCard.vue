@@ -4,18 +4,11 @@
 		<span>제봉 님</span>
 		<span>jebong55@gmail.com</span>
 		<span>1줄 자기소개 영역 입니다!</span>
-		<ProfileModal />
 	</div>
 </template>
 
 <script>
-import ProfileModal from '@/components/home/ProfileModal.vue'
-
-export default {
-	components: {
-		ProfileModal
-	}
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>

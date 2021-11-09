@@ -67,7 +67,6 @@ export default {
 		async boardWriting() {
 			this.$store.commit('START_LOADING')
 			try {
-				console.log('test', this.content)
 				const data = {
 					content: this.content
 				}

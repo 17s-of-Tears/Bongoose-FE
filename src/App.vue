@@ -24,7 +24,7 @@
 		<RouterView />
 	</template>
 	<!-- 공통 컴포넌트 -->
-	<TopBtn v-if="isTopBtn" />
+	<TopBtn v-if="isTopBtn" :page="routerName" />
 	<transition name="fade">
 		<Alerts v-if="alert" />
 	</transition>
@@ -35,7 +35,7 @@ import { mapState } from 'vuex'
 import Header from '@/components/responsive/Header'
 import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu'
 import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
-import TopBtn from '@/components/home/TopBtn'
+import TopBtn from '@/components/common/TopBtn'
 import LoginNav from '@/components/login/LoginNav'
 import Alerts from '@/components/common/Alerts'
 import Spinner from '@/components/common/Spinner'
@@ -52,16 +52,26 @@ export default {
 	},
 
 	computed: {
+		...mapState(['alert', 'loading']),
 		isLoginPage() {
 			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},
 		isTopBtn() {
-			return this.$route.name === 'home'
+			return this.$route.name === 'home' || this.$route.name === 'profile'
 		},
 		NotFound() {
 			return this.$route.name === ':pathMatch(.*)*'
 		},
-		...mapState(['alert', 'loading'])
+		routerName() {
+			switch (this.$route.name) {
+				case 'home':
+					return this.$route.name
+				case 'profile':
+					return this.$route.name
+				default:
+					return null
+			}
+		}
 	}
 }
 </script>

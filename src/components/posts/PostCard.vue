@@ -14,6 +14,7 @@
 					</div>
 					<div class="user-date">9월 5일 오후 3:55</div>
 				</div>
+				<PopOver v-if="mode === 'profile'" :id="board.id" />
 			</div>
 			<div class="content">
 				<span>{{ board.content }}</span>
@@ -47,17 +48,29 @@
 			</div>
 		</div>
 	</main>
+	<Default v-if="lastPost" />
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import CommentForm from '@/components/posts/CommentForm'
 import CommentList from '@/components/posts/CommentList'
+import PopOver from '@/components/posts/PopOver'
+import Default from '@/components/common/Default'
 
 export default {
 	components: {
 		CommentForm,
-		CommentList
+		CommentList,
+		PopOver,
+		Default
+	},
+
+	props: {
+		mode: {
+			type: String,
+			default: 'home'
+		}
 	},
 
 	data() {
@@ -67,7 +80,8 @@ export default {
 	},
 
 	computed: {
-		...mapState('board', ['boards', 'hasMorePost'])
+		...mapState('auth', ['user']),
+		...mapState('board', ['boards', 'hasMorePost', 'lastPost'])
 	},
 
 	methods: {
@@ -75,14 +89,20 @@ export default {
 			this.onComment = !this.onComment
 		},
 		async onScroll() {
+			// 현재 스크롤 높이 계산해서 무한 스크롤 진행
 			const showTrue =
 				window.scrollY + document.documentElement.clientHeight >
-				document.documentElement.scrollHeight - 300
+				document.documentElement.scrollHeight - 400
 			if (showTrue) {
 				if (this.hasMorePost) {
-					this.$store.commit('START_LOADING')
 					try {
-						await this.$store.dispatch('board/GET_LOAD_BOARDS')
+						this.$store.commit('START_LOADING')
+						if (this.mode === 'profile') {
+							const data = { keyword: this.user.name }
+							await this.$store.dispatch('board/GET_LOAD_BOARDS', data)
+						} else if (this.mode === 'home') {
+							await this.$store.dispatch('board/GET_LOAD_BOARDS')
+						}
 					} catch (error) {
 						console.error(error)
 					} finally {

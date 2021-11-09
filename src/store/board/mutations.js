@@ -8,5 +8,13 @@ export default {
 			state.lastPost = true
 		}
 		state.watchBoard = !state.watchBoard
+	},
+	CLEAR_BOARDS(state) {
+		state.boards = []
+		state.watchBoard = false
+		state.start = 0
+		state.end = 5
+		state.hasMorePost = true
+		state.lastPost = false
 	}
 }

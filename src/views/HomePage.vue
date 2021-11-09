@@ -10,8 +10,6 @@
 		</div>
 		<Modal @updatePost="updatePost" />
 		<PostCard />
-		<!-- 임시 다시만들어야  해여 -->
-		<div v-if="lastPost">끝!</div>
 	</section>
 </template>
 
@@ -27,13 +25,13 @@ export default {
 	},
 
 	computed: {
-		...mapState('auth', ['user']),
-		...mapState('board', ['lastPost'])
+		...mapState('auth', ['user'])
 	},
 
 	methods: {
 		async boardInfo() {
 			this.$store.commit('START_LOADING')
+			this.$store.commit('board/CLEAR_BOARDS')
 			try {
 				await this.$store.dispatch('board/GET_LOAD_BOARDS')
 			} catch (error) {

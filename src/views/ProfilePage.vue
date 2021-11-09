@@ -4,11 +4,12 @@
 			<ProfileCard />
 			<ProfileImgCard />
 		</div>
-		<PostCard v-for="index in 5" :key="index" />
+		<PostCard :mode="'profile'" />
 	</div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import ProfileCard from '@/components/users/ProfileCard'
 import ProfileImgCard from '@/components/users/ProfileImgCard'
 import PostCard from '@/components/posts/PostCard'
@@ -20,8 +21,29 @@ export default {
 		PostCard
 	},
 
+	computed: {
+		...mapState('auth', ['user']),
+		...mapState('board', ['lastPost'])
+	},
+
+	methods: {
+		async myBoardInfo() {
+			this.$store.commit('START_LOADING')
+			this.$store.commit('board/CLEAR_BOARDS')
+			try {
+				const data = { keyword: this.user.name }
+				await this.$store.dispatch('board/GET_LOAD_BOARDS', data)
+			} catch (error) {
+				console.error(error)
+			} finally {
+				this.$store.commit('END_LOADING')
+			}
+		}
+	},
+
 	created() {
 		this.$store.commit('END_LOADING')
+		this.myBoardInfo()
 	}
 }
 </script>
