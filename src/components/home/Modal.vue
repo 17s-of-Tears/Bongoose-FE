@@ -1,6 +1,6 @@
 <template>
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">게시물 작성하기</h5>
@@ -96,10 +96,29 @@ export default {
 	position: relative;
 }
 
+.modal-content {
+	height: 450px;
+}
+.bi-image {
+	font-size: 25px;
+}
+
+textarea.form-control {
+	height: 200px;
+	margin-bottom: 20px;
+}
+
+.text-black-50 {
+	font-size: 20px;
+}
+
+textarea::placeholder {
+	font-size: 20px;
+}
 .bi-image {
 	color: $primary;
 	position: absolute;
-	top: 140px;
+	top: 200px;
 	bottom: 0;
 	right: 30px;
 }

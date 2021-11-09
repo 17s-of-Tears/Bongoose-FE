@@ -1,14 +1,4 @@
 <template>
-	<button
-		type="button"
-		class="btn btn-primary"
-		data-bs-toggle="modal"
-		data-bs-target="#exampleModal"
-		data-bs-whatever="@mdo"
-	>
-		프로필 수정
-	</button>
-
 	<div
 		class="modal fade"
 		id="exampleModal"
@@ -27,29 +17,23 @@
 						aria-label="Close"
 					></button>
 				</div>
+
 				<div class="modal-body">
 					<form>
 						<div class="mb-3">
-							<label for="recipient-name" class="col-form-label"
-								>뭔진모르겠다</label
-							>
-							<input type="text" class="form-control" id="recipient-name" />
+							<label for="recipient-name" class="col-form-label">닉네임</label>
+							<input type="text" class="form-control" />
 						</div>
 						<div class="mb-3">
-							<label for="message-text" class="col-form-label">메세지</label>
-							<textarea class="form-control" id="message-text"></textarea>
+							<label for="message-text" class="col-form-label"
+								>1줄 자기소개</label
+							>
+							<textarea class="form-control"></textarea>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button
-						type="button"
-						class="btn btn-secondary"
-						data-bs-dismiss="modal"
-					>
-						Close
-					</button>
-					<button type="button" class="btn btn-primary">Change</button>
+					<button type="button" class="btn btn-primary">수정하기</button>
 				</div>
 			</div>
 		</div>
