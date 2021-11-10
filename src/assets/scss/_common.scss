@@ -8,7 +8,9 @@ body {
     display: none !important; 
   }
 }
-
+.modal-backdrop {
+	z-index: 7;
+}
 textarea {
   resize: none; 
 }

@@ -71,12 +71,6 @@ export default {
 		isHomePage() {
 			return !this.isLoginPage
 		},
-<<<<<<< HEAD
-		...mapState(['alert'])
-	},
-	created() {
-		console.log(this.NotFoundPage)
-=======
 		routerName() {
 			switch (this.$route.name) {
 				case 'home':
@@ -87,7 +81,6 @@ export default {
 					return null
 			}
 		}
->>>>>>> 9cc7b8b7dd0adfe2bb268c3e23077710704d2caa
 	}
 }
 </script>
