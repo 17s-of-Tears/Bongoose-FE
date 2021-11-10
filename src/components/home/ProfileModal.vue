@@ -30,6 +30,12 @@
 							>
 							<textarea class="form-control"></textarea>
 						</div>
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label"
+								>1줄 자기소개</label
+							>
+							<textarea class="form-control"></textarea>
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">

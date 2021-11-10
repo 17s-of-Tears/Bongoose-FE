@@ -2,14 +2,20 @@
 	<div class="popover-box">
 		<i class="bi bi-three-dots popover-icon" @click="onList"></i>
 		<transition name="fade">
-			<ul class="list-group popover-list" v-if="isListShow">
+			<ul class="list-group popover-list popover-show" v-if="isListShow">
 				<!-- 수정 버튼 -->
 				<li class="list-group-item popover-list-item">
-					<span><i class="bi bi-pencil-square"></i> 수정하기</span>
+					<span data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+						><i class="bi bi-pencil-square"></i> 수정하기</span
+					>
+					<UpdateModal @click="showUpdateModal" />
 				</li>
 				<!-- 삭제 버튼 -->
 				<li class="list-group-item popover-list-item">
-					<span> <i class="bi bi-trash2-fill"></i> 삭제하기 </span>
+					<span data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+						<i class="bi bi-trash2-fill"></i> 삭제하기
+					</span>
+					<RemoveModal @click="onRemoveModal" />
 				</li>
 			</ul>
 		</transition>
@@ -18,7 +24,8 @@
 
 <script>
 // import { removeBoard } from '@/api/board'
-
+import UpdateModal from '@/components/posts/UpdateModal'
+import RemoveModal from '@/components/posts/RemoveModal'
 export default {
 	props: {
 		id: {
@@ -32,6 +39,10 @@ export default {
 			isListShow: false
 		}
 	},
+	components: {
+		UpdateModal,
+		RemoveModal
+	},
 
 	methods: {
 		onList() {
@@ -39,6 +50,9 @@ export default {
 		},
 		onRemoveModal() {
 			this.isRemoveModalShow = true
+		},
+		offList() {
+			this.isListShow = false
 		}
 		// async onRemoveBoard() {
 		// 	try {
@@ -55,6 +69,8 @@ export default {
 <style lang="scss" scoped>
 .popover-box {
 	margin-left: auto;
+	.popover-show {
+	}
 	.popover-icon {
 		color: $primary;
 		font-size: 28px;
@@ -65,7 +81,7 @@ export default {
 		position: absolute;
 		right: 30px;
 		width: 120px;
-		z-index: 10;
+
 		.popover-list-item {
 			cursor: pointer;
 			transition: 0.5s;
