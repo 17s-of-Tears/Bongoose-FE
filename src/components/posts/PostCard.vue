@@ -14,7 +14,11 @@
 					</div>
 					<div class="user-date">9월 5일 오후 3:55</div>
 				</div>
-				<PopOver v-if="mode === 'profile'" :id="board.id" />
+				<PopOver
+					v-if="mode === 'profile'"
+					@updatePost="updatePost"
+					:id="board.id"
+				/>
 			</div>
 			<div class="content">
 				<span>{{ board.content }}</span>
@@ -88,6 +92,21 @@ export default {
 		toggleOnComment() {
 			this.onComment = !this.onComment
 		},
+		async getBoards() {
+			this.$store.commit('START_LOADING')
+			try {
+				if (this.mode === 'profile') {
+					const data = { keyword: this.user.name }
+					await this.$store.dispatch('board/GET_LOAD_BOARDS', data)
+				} else if (this.mode === 'home') {
+					await this.$store.dispatch('board/GET_LOAD_BOARDS')
+				}
+			} catch (error) {
+				console.error(error)
+			} finally {
+				this.$store.commit('END_LOADING')
+			}
+		},
 		async onScroll() {
 			// 현재 스크롤 높이 계산해서 무한 스크롤 진행
 			const showTrue =
@@ -95,21 +114,13 @@ export default {
 				document.documentElement.scrollHeight - 400
 			if (showTrue) {
 				if (this.hasMorePost) {
-					try {
-						this.$store.commit('START_LOADING')
-						if (this.mode === 'profile') {
-							const data = { keyword: this.user.name }
-							await this.$store.dispatch('board/GET_LOAD_BOARDS', data)
-						} else if (this.mode === 'home') {
-							await this.$store.dispatch('board/GET_LOAD_BOARDS')
-						}
-					} catch (error) {
-						console.error(error)
-					} finally {
-						this.$store.commit('END_LOADING')
-					}
+					this.getBoards()
 				}
 			}
+		},
+		updatePost() {
+			this.$store.commit('board/CLEAR_BOARDS')
+			this.getBoards()
 		}
 	},
 

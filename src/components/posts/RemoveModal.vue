@@ -1,15 +1,9 @@
 <template>
-	<div
-		class="modal fade"
-		id="exampleModalToggle"
-		aria-hidden="true"
-		aria-labelledby="exampleModalToggleLabel"
-		tabindex="-1"
-	>
+	<div class="modal fade" id="removeModal" aria-hidden="true" tabindex="-1">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">게시글 삭제</h5>
+					<h5 class="modal-title">게시글 삭제 확인</h5>
 					<button
 						type="button"
 						class="btn-close"
@@ -19,20 +13,16 @@
 				</div>
 				<div class="modal-body">게시글을 삭제하시겠습니까?</div>
 				<div class="modal-footer">
-					<button
-						type="button"
-						class="btn btn-secondary"
-						data-bs-target="#exampleModalToggle2"
-						data-bs-dismiss="modal"
-					>
-						취소
+					<button class="btn btn-secondary" data-bs-dismiss="modal">
+						취소하기
 					</button>
 					<button
-						class="btn btn-primary"
-						data-bs-target="#exampleModalToggle2"
-						data-bs-toggle="modal"
+						@click="onRemoveBoard"
+						type="button"
+						class="btn btn-primary subbtn"
+						data-bs-dismiss="modal"
 					>
-						삭제
+						삭제하기
 					</button>
 				</div>
 			</div>
@@ -41,7 +31,35 @@
 </template>
 
 <script>
-export default {}
+import { removeBoard } from '@/api/board'
+
+export default {
+	props: {
+		id: {
+			type: Number,
+			requried: true
+		}
+	},
+
+	methods: {
+		async onRemoveBoard() {
+			this.$store.commit('START_LOADING')
+			try {
+				const { data } = await removeBoard(this.id)
+				console.log(data)
+				this.$store.commit('SET_MESSAGE', '게시글을 삭제했습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$emit('updatePost')
+			} catch (error) {
+				console.error(error.response.data)
+				this.$store.commit('SET_MESSAGE', error.response.data)
+				this.$store.dispatch('AUTO_SET_ALERT')
+			} finally {
+				this.$store.commit('END_LOADING')
+			}
+		}
+	}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -50,10 +68,12 @@ export default {}
 	justify-content: center;
 	align-items: center;
 }
+
 .modal-body {
 	font-size: 17px;
 	text-align: center;
 }
+
 .btn {
 	padding: 10px 30px;
 }

@@ -28,25 +28,26 @@ export default {
 	},
 	computed: {
 		...mapState('auth', ['user'])
-	},
-
-	methods: {
-		async boardInfo() {
-			try {
-				await this.$store.dispatch('board/GET_BOARD')
-			} catch (error) {
-				console.error(error)
-			}
-		},
-		updateProfile() {
-			this.boardInfo()
-			console.log(123)
-		}
-	},
-
-	created() {
-		this.boardInfo()
 	}
+
+	// 왜있는거지..?
+	// methods: {
+	// 	async boardInfo() {
+	// 		try {
+	// 			await this.$store.dispatch('board/GET_BOARD')
+	// 		} catch (error) {
+	// 			console.error(error)
+	// 		}
+	// 	},
+	// 	updateProfile() {
+	// 		this.boardInfo()
+	// 		console.log(123)
+	// 	}
+	// },
+
+	// created() {
+	// 	this.boardInfo()
+	// }
 }
 </script>
 

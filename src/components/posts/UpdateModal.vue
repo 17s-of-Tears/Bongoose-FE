@@ -1,16 +1,9 @@
 <template>
-	<div
-		class="modal fade"
-		id="staticBackdrop"
-		tabindex="-1"
-		aria-labelledby="staticBackdropLabel"
-		data-bs-keyboard="false"
-		aria-hidden="true"
-	>
+	<div class="modal fade" id="updateModal" aria-hidden="true" tabindex="-1">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">게시물 작성하기</h5>
+					<h5 class="modal-title">게시물 작성하기</h5>
 					<button
 						type="button"
 						class="btn-close"
@@ -56,8 +49,8 @@
 </template>
 
 <script>
-import { createBoard } from '@/api/board'
 import { mapState } from 'vuex'
+import { createBoard } from '@/api/board'
 
 export default {
 	data() {
