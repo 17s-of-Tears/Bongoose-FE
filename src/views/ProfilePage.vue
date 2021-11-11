@@ -31,8 +31,9 @@ export default {
 			this.$store.commit('START_LOADING')
 			this.$store.commit('board/CLEAR_BOARDS')
 			try {
-				const data = { keyword: this.user.name }
-				await this.$store.dispatch('board/GET_LOAD_BOARDS', data)
+				await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+					userId: this.user.id
+				})
 			} catch (error) {
 				console.error(error)
 			} finally {

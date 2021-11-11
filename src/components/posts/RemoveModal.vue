@@ -45,8 +45,7 @@ export default {
 		async onRemoveBoard() {
 			this.$store.commit('START_LOADING')
 			try {
-				const { data } = await removeBoard(this.id)
-				console.log(data)
+				await removeBoard(this.id)
 				this.$store.commit('SET_MESSAGE', '게시글을 삭제했습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 				this.$emit('updatePost')

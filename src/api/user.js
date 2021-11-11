@@ -1,5 +1,6 @@
 import { user } from './index'
 
-const UserInfo = () => user.get(`me`)
+const userInfo = () => user.get(`me`)
 
-export { UserInfo }
+const updateUser = payload => user.put(`me`, payload)
+export { userInfo, updateUser }

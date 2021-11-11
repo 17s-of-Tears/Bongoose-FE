@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">게시물 작성하기</h5>
+					<h5 class="modal-title">게시물 수정하기</h5>
 					<button
 						type="button"
 						class="btn-close"
@@ -13,29 +13,18 @@
 				</div>
 				<div class="modal-body">
 					<div>
-						<label class="form-label"></label>
-						<textarea
-							v-model="content"
-							class="form-control"
-							:placeholder="`${user.name} 님!오늘 무슨일이 있었나요?`"
-							rows="5"
-						></textarea>
+						<textarea v-model="content" class="form-control" rows="5">
+						</textarea>
 					</div>
-					<input
-						ref="imageInput"
-						type="file"
-						multiple
-						hidden
-						@change="onChangeImages"
-					/>
-					<i class="bi bi-image" type="button" @click="onClickImageUpload" />
+					<input ref="imageInput" type="file" multiple hidden />
+					<i class="bi bi-image" type="button" />
 					<small class="text-black-50">
 						&nbsp;* 이미지는 최대 4개 까지 게시가 가능합니다!
 					</small>
 				</div>
 				<div class="modal-footer">
 					<button
-						@click="boardWriting"
+						@click="onUpdateBoard"
 						type="button"
 						class="btn btn-primary subbtn"
 						data-bs-dismiss="modal"
@@ -49,41 +38,57 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { createBoard } from '@/api/board'
+import { getBoard, updateBoard } from '@/api/board'
 
 export default {
-	data() {
-		return {
-			content: ''
+	props: {
+		id: {
+			type: Number,
+			requried: true
 		}
 	},
 
-	computed: {
-		...mapState('auth', ['user'])
+	data() {
+		return {
+			content: '',
+			addHashtags: '',
+			deleteHashtags: ''
+		}
 	},
 
 	methods: {
-		async boardWriting() {
+		async patchBoardInfo() {
 			this.$store.commit('START_LOADING')
 			try {
-				const data = {
-					content: this.content
-				}
-				await createBoard(data)
-				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
-				this.$emit('updatePost')
-			} catch {
-				this.$store.commit('SET_MESSAGE', '글 작성이 실패하였습니다.')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				const { data } = await getBoard(this.id)
+				this.content = data.content
+			} catch (error) {
+				console.error(error)
 			} finally {
 				this.$store.commit('END_LOADING')
 			}
 		},
-		onClickImageUpload() {
-			this.$refs.imageInput.click()
+		async onUpdateBoard() {
+			this.$store.commit('START_LOADING')
+			try {
+				await updateBoard(this.id, {
+					content: this.content,
+					addHashtags: this.addHashtags,
+					deleteHashtags: this.deleteHashtags
+				})
+				this.$store.commit('SET_MESSAGE', '게시글이 수정되었습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$emit('updatePost')
+			} catch (error) {
+				console.error(error)
+			} finally {
+				this.$store.commit('END_LOADING')
+			}
 		}
+	},
+
+	created() {
+		this.patchBoardInfo()
 	}
 }
 </script>
@@ -101,6 +106,7 @@ export default {
 .modal-content {
 	height: 450px;
 }
+
 .bi-image {
 	font-size: 25px;
 }
@@ -117,6 +123,7 @@ textarea.form-control {
 textarea::placeholder {
 	font-size: 20px;
 }
+
 .bi-image {
 	color: $primary;
 	position: absolute;

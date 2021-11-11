@@ -1,0 +1,112 @@
+.user-card {
+	margin-top: 40px;
+	width: 100%;
+	padding: 30px;
+	display: flex;
+	gap: 30px;
+	@include media-breakpoint-down(sm) {
+		margin-top: 20px;
+		padding: 20px;
+		gap: 15px;
+	}
+	&.card {
+		border-radius: 20px;
+	}
+	.user {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		.user-img {
+			width: 60px;
+			height: 60px;
+			background-color: $gray-800;
+			border-radius: 15px;
+			@include media-breakpoint-down(sm) {
+				width: 40px;
+				height: 40px;
+				border-radius: 10px;
+			}
+		}
+		.user-content {
+			display: flex;
+			flex-direction: column;
+			color: $gray-700;
+		}
+		.user-info {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			.user-nickname {
+				@include rem(20);
+			}
+			.user-id {
+				@include rem(15);
+			}
+		}
+		.user-date {
+			@include rem(15);
+		}
+	}
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		@include media-breakpoint-down(sm) {
+			gap: 10px;
+		}
+		.content-hash {
+			display: flex;
+			gap: 10px;
+			color: $primary;
+			.content-hashtag {
+				cursor: pointer;
+			}
+		}
+		.content-img {
+			width: 100%;
+			height: 400px;
+			border-radius: 20px;
+			background-color: $gray-500;
+			&::before {
+				content: '';
+				display: block;
+				padding-top: 50%;
+			}
+		}
+		.content-footer {
+			display: flex;
+			justify-content: space-between;
+			.content-like {
+				display: flex;
+				gap: 5px;
+				cursor: pointer;
+				p {
+					color: $gray-600;
+				}
+			}
+			.content-comment {
+				display: flex;
+				gap: 10px;
+				color: $primary;
+				cursor: pointer;
+				p {
+					color: $gray-600;
+				}
+			}
+		}
+	}
+}
+
+.fade-enter-active {
+	transition: all 0.4s ease-out;
+}
+
+.fade-leave-active {
+	transition: all 0.3s cubic-bezier(1, 0.5, 0.5, 1);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	transform: translateY(10px);
+	opacity: 0;
+}
