@@ -66,6 +66,9 @@ export default {
 	methods: {
 		async boardWriting() {
 			this.$store.commit('START_LOADING')
+			// 이거 해야함
+			// 테스트 #ㅇㄴㅇ #ㅂㅈㄷㅂ #ㅌㅊ
+			// content: '테스트', hashtags: ['ㅇㄴㅇ', 'ㅂㅈㄷㅂ', 'ㅌㅊ']
 			try {
 				const data = {
 					content: this.content

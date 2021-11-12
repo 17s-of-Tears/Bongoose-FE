@@ -17,11 +17,7 @@
 				/>
 			</div>
 			<div class="content">
-				<span>{{ board.content }}</span>
-				<div class="content-hash">
-					<span class="content-hashtag"># 임시데이터</span>
-					<span class="content-hashtag"># 임시데이터</span>
-				</div>
+				<PostContent :board="board" />
 				<img
 					:src="`http://placeimg.com/400/200/any/${board.id}`"
 					alt="게시물 사진"
@@ -56,6 +52,7 @@ import { mapState, mapGetters } from 'vuex'
 import moment from 'moment'
 import CommentForm from '@/components/posts/CommentForm'
 import CommentList from '@/components/posts/CommentList'
+import PostContent from '@/components/posts/PostContent'
 import PopOver from '@/components/posts/PopOver'
 import Default from '@/components/common/Default'
 
@@ -63,6 +60,7 @@ export default {
 	components: {
 		CommentForm,
 		CommentList,
+		PostContent,
 		PopOver,
 		Default
 	},
