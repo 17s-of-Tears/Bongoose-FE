@@ -1,21 +1,21 @@
 <template>
 	<div class="popover-box">
-		<i class="bi bi-three-dots popover-icon" @click="onList"></i>
+		<i class="bi bi-three-dots popover-icon" @click="toggleShowList"></i>
 		<transition name="fade">
 			<ul class="list-group popover-list popover-show" v-if="isListShow">
 				<!-- 수정 버튼 -->
 				<li class="list-group-item popover-list-item">
-					<span data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-						><i class="bi bi-pencil-square"></i> 수정하기</span
-					>
-					<UpdateModal @click="showUpdateModal" />
+					<span data-bs-toggle="modal" data-bs-target="#updateModal">
+						<i class="bi bi-pencil-square"></i> 수정하기
+					</span>
+					<UpdateModal @updatePost="updatePost" :id="id" />
 				</li>
 				<!-- 삭제 버튼 -->
 				<li class="list-group-item popover-list-item">
-					<span data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+					<span data-bs-toggle="modal" data-bs-target="#removeModal">
 						<i class="bi bi-trash2-fill"></i> 삭제하기
 					</span>
-					<RemoveModal @click="onRemoveModal" />
+					<RemoveModal @updatePost="updatePost" :id="id" />
 				</li>
 			</ul>
 		</transition>
@@ -23,9 +23,9 @@
 </template>
 
 <script>
-// import { removeBoard } from '@/api/board'
 import UpdateModal from '@/components/posts/UpdateModal'
 import RemoveModal from '@/components/posts/RemoveModal'
+
 export default {
 	props: {
 		id: {
@@ -39,29 +39,21 @@ export default {
 			isListShow: false
 		}
 	},
+
 	components: {
 		UpdateModal,
 		RemoveModal
 	},
 
 	methods: {
-		onList() {
+		toggleShowList() {
 			this.isListShow = !this.isListShow
 		},
-		onRemoveModal() {
-			this.isRemoveModalShow = true
-		},
-		offList() {
+		updatePost() {
+			console.log('popover')
 			this.isListShow = false
+			this.$emit('updatePost')
 		}
-		// async onRemoveBoard() {
-		// 	try {
-		// 		const { data } = await removeBoard(this.id)
-		// 		console.log(data)
-		// 	} catch (error) {
-		// 		console.error(error)
-		// 	}
-		// }
 	}
 }
 </script>
@@ -69,8 +61,6 @@ export default {
 <style lang="scss" scoped>
 .popover-box {
 	margin-left: auto;
-	.popover-show {
-	}
 	.popover-icon {
 		color: $primary;
 		font-size: 28px;
@@ -86,7 +76,7 @@ export default {
 			cursor: pointer;
 			transition: 0.5s;
 		}
-		:hover {
+		> :hover {
 			color: $primary;
 		}
 	}

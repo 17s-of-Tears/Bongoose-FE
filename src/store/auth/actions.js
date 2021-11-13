@@ -1,5 +1,5 @@
 import { loginUser } from '@/api/sign'
-import { UserInfo } from '@/api/user'
+import { userInfo } from '@/api/user'
 import { saveAuthCookie } from '@/utils/cookies'
 import { saveUserLocalStorage } from '@/utils/localStorage'
 
@@ -13,7 +13,7 @@ export default {
 	},
 
 	async USER_INFO({ commit }) {
-		const { data } = await UserInfo()
+		const { data } = await userInfo()
 		commit('SET_USER', data)
 		saveUserLocalStorage(data)
 		return data

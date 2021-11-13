@@ -1,51 +1,36 @@
 <template>
 	<div class="card profile-card">
-		<img class="profile-img" src="http://placeimg.com/400/400/any" alt="user" />
-		<span>제봉 님</span>
-		<span>jebong55@gmail.com</span>
-		<span>1줄 자기소개 영역 입니다!</span>
+		<img class="profile-img" :src="profileImage" alt="user" />
+		<span>{{ user.name }} 님</span>
+		<span>{{ user.title }}</span>
+		<span>{{ user.description || '소개글이 비어 있습니다!' }}</span>
 		<button
-			@click="showModal = true"
 			type="button"
 			class="btn btn-primary"
 			data-bs-toggle="modal"
-			data-bs-target="#exampleModal"
+			data-bs-target="#profileCardModal"
 			data-bs-whatever="@mdo"
 		>
 			프로필 수정
 		</button>
-		<ProfileModal @updateProfile="updateProfile" />
+		<ProfileModal :user="user" />
 	</div>
 </template>
 
 <script>
-import ProfileModal from '@/components/home/ProfileModal.vue'
 import { mapState } from 'vuex'
+import ProfileModal from '@/components/users/ProfileModal'
 
 export default {
 	components: {
 		ProfileModal
 	},
+
 	computed: {
-		...mapState('auth', ['user'])
-	},
-
-	methods: {
-		async boardInfo() {
-			try {
-				await this.$store.dispatch('board/GET_BOARD')
-			} catch (error) {
-				console.error(error)
-			}
-		},
-		updateProfile() {
-			this.boardInfo()
-			console.log(123)
+		...mapState('auth', ['user']),
+		profileImage() {
+			return this.user.imageUrl || require('@/assets/images/default.png')
 		}
-	},
-
-	created() {
-		this.boardInfo()
 	}
 }
 </script>
