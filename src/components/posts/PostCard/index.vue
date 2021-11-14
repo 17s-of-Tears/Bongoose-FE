@@ -5,8 +5,10 @@
 				<img :src="profileImage()" alt="프로필 사진" class="user-img" />
 				<div class="user-content">
 					<div class="user-info">
-						<div class="user-nickname">{{ board.userName }}</div>
-						<div class="user-id">@{{ userEamilFatch }}</div>
+						<div class="user-nickname" @click="toUserFindPage(board.userName)">
+							{{ board.userName }}
+						</div>
+						<div class="user-id">@{{ userEmail(board.userEmail) }}</div>
 					</div>
 					<div class="user-date">{{ boardDate(board.createdAt) }}</div>
 				</div>
@@ -24,12 +26,7 @@
 					class="content-img"
 				/>
 				<div class="content-footer">
-					<div class="content-like">
-						<i class="bi bi-emoji-smile-fill"></i>
-						<p>320 &nbsp;</p>
-						<i class="bi bi-emoji-frown-fill"></i>
-						<p>1</p>
-					</div>
+					<Liker :board="board" />
 					<div @click="toggleOnComment" class="content-comment">
 						<i class="bi bi-chat-text-fill"></i>
 						<p>5</p>
@@ -48,13 +45,14 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import moment from 'moment'
 import CommentForm from '@/components/posts/CommentForm'
 import CommentList from '@/components/posts/CommentList'
 import PostContent from '@/components/posts/PostContent'
 import PopOver from '@/components/posts/PopOver'
 import Default from '@/components/common/Default'
+import Liker from '@/components/posts/Liker'
 
 export default {
 	components: {
@@ -62,7 +60,8 @@ export default {
 		CommentList,
 		PostContent,
 		PopOver,
-		Default
+		Default,
+		Liker
 	},
 
 	props: {
@@ -80,18 +79,15 @@ export default {
 
 	computed: {
 		...mapState('auth', ['user']),
-		...mapState('board', ['boards', 'hasMorePost', 'lastPost']),
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		...mapGetters('auth', ['userEamilFatch'])
+		...mapState('board', ['boards', 'hasMorePost', 'lastPost'])
 	},
 
 	methods: {
 		toggleOnComment() {
 			this.onComment = !this.onComment
+		},
+		toUserFindPage(id) {
+			this.router.push(`/user/${id}`)
 		},
 		async getBoards() {
 			this.$store.commit('START_LOADING')
@@ -128,9 +124,9 @@ export default {
 			this.getBoards()
 		},
 		// 데이터 필터링
-		// userEmail(email) {
-		// 	return /.+(?=@)/.exec(email)[0]
-		// },
+		userEmail(email) {
+			return email.match(/.+(?=@)/g)[0]
+		},
 		boardDate(date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},

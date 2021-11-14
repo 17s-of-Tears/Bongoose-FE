@@ -15,7 +15,7 @@
 					<div>
 						<label class="form-label"></label>
 						<textarea
-							v-model="content"
+							v-model="boardContent"
 							class="form-control"
 							:placeholder="`${user.name} 님!오늘 무슨일이 있었나요?`"
 							rows="5"
@@ -55,7 +55,7 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			content: ''
+			boardContent: ''
 		}
 	},
 
@@ -66,14 +66,13 @@ export default {
 	methods: {
 		async boardWriting() {
 			this.$store.commit('START_LOADING')
-			// 이거 해야함
-			// 테스트 #ㅇㄴㅇ #ㅂㅈㄷㅂ #ㅌㅊ
-			// content: '테스트', hashtags: ['ㅇㄴㅇ', 'ㅂㅈㄷㅂ', 'ㅌㅊ']
+			const content = this.boardContent.replace(/#[^\s#]+/g, '')
+			const hashtags = this.boardContent
+				.match(/#[^\s#]+/g)
+				.map(v => v.substring(1))
+			console.log(hashtags)
 			try {
-				const data = {
-					content: this.content
-				}
-				await createBoard(data)
+				await createBoard({ content, hashtags })
 				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 				this.$emit('updatePost')

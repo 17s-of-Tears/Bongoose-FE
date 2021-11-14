@@ -5,5 +5,8 @@ export default () => ({
 	start: 0,
 	end: 5,
 	hasMorePost: true,
-	lastPost: false
+	lastPost: false,
+	// 좋아요
+	like: false,
+	dislike: false
 })
