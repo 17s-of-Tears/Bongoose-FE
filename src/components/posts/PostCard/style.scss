@@ -68,14 +68,14 @@
 		.content-footer {
 			display: flex;
 			justify-content: space-between;
-			.content-comment {
-				display: flex;
-				gap: 10px;
-				color: $primary;
-				cursor: pointer;
-				p {
-					color: $gray-600;
-				}
+		}
+		.content-comment {
+			display: flex;
+			gap: 10px;
+			color: $primary;
+			cursor: pointer;
+			p {
+				color: $gray-600;
 			}
 		}
 	}

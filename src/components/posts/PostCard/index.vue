@@ -5,7 +5,9 @@
 				<img :src="profileImage()" alt="프로필 사진" class="user-img" />
 				<div class="user-content">
 					<div class="user-info">
-						<div class="user-nickname">{{ board.userName }}</div>
+						<div class="user-nickname" @click="toUserFindPage(board.userName)">
+							{{ board.userName }}
+						</div>
 						<div class="user-id">@{{ userEmail(board.userEmail) }}</div>
 					</div>
 					<div class="user-date">{{ boardDate(board.createdAt) }}</div>
@@ -89,6 +91,9 @@ export default {
 	methods: {
 		toggleOnComment() {
 			this.onComment = !this.onComment
+		},
+		toUserFindPage(id) {
+			this.router.push(`/user/${id}`)
 		},
 		async getBoards() {
 			this.$store.commit('START_LOADING')
