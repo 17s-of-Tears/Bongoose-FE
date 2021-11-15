@@ -30,6 +30,7 @@
 					<div @click="toggleOnComment" class="content-comment">
 						<i class="bi bi-chat-text-fill"></i>
 						<p>5</p>
+						{{ lastPost }}
 					</div>
 				</div>
 				<transition name="fade">
@@ -136,7 +137,7 @@ export default {
 	},
 
 	mounted() {
-		window.addEventListener('scroll', this.onScroll)
+		window.addEventListener('scroll', this.onScroll), console.log(this.lastPost)
 	},
 
 	beforeUnmount() {

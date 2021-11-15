@@ -13,8 +13,5 @@ export default {
 		state.token = ''
 		deleteAuthCookie()
 		deleteUserLocalStorage()
-	},
-	SET_LIKE(state, like) {
-		state.like = like
 	}
 }

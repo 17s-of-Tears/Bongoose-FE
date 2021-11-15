@@ -67,10 +67,10 @@ export default {
 		async boardWriting() {
 			this.$store.commit('START_LOADING')
 			const content = this.boardContent.replace(/#[^\s#]+/g, '')
-			const hashtags = this.boardContent
-				.match(/#[^\s#]+/g)
-				.map(v => v.substring(1))
-			console.log(hashtags)
+			let hashtags = null
+			if (this.boardContent.includes('#')) {
+				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
+			}
 			try {
 				await createBoard({ content, hashtags })
 				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
@@ -81,6 +81,7 @@ export default {
 				this.$store.dispatch('AUTO_SET_ALERT')
 			} finally {
 				this.$store.commit('END_LOADING')
+				this.boardContent = ''
 			}
 		},
 		onClickImageUpload() {
@@ -96,6 +97,7 @@ export default {
 	border-radius: 10px;
 	height: 50px;
 }
+
 .modal-body {
 	position: relative;
 }
@@ -103,6 +105,7 @@ export default {
 .modal-content {
 	height: 450px;
 }
+
 .bi-image {
 	font-size: 25px;
 }
@@ -119,6 +122,7 @@ textarea.form-control {
 textarea::placeholder {
 	font-size: 20px;
 }
+
 .bi-image {
 	color: $primary;
 	position: absolute;

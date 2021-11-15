@@ -16,5 +16,11 @@ export default {
 		state.end = 5
 		state.hasMorePost = true
 		state.lastPost = false
+	},
+	SET_LIKE(state, like) {
+		state.like = like
+	},
+	SET_DISLIKE(state, dislike) {
+		state.dislike = dislike
 	}
 }

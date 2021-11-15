@@ -52,7 +52,7 @@ export default {
 		updatePost() {
 			console.log('popover')
 			this.isListShow = false
-			this.$emit('updatePost')
+			this.$emit('updatePost', true)
 		}
 	}
 }
