@@ -6,7 +6,7 @@
 				<div class="user-content">
 					<div class="user-info">
 						<div class="user-nickname">{{ board.userName }}</div>
-						<div class="user-id">@{{ userEamilFatch }}</div>
+						<div class="user-id">@{{ userEmail(board.userEmail) }}</div>
 					</div>
 					<div class="user-date">{{ boardDate(board.createdAt) }}</div>
 				</div>
@@ -24,12 +24,7 @@
 					class="content-img"
 				/>
 				<div class="content-footer">
-					<div class="content-like">
-						<i class="bi bi-emoji-smile-fill"></i>
-						<p>320 &nbsp;</p>
-						<i class="bi bi-emoji-frown-fill"></i>
-						<p>1</p>
-					</div>
+					<Liker :id="board.id" />
 					<div @click="toggleOnComment" class="content-comment">
 						<i class="bi bi-chat-text-fill"></i>
 						<p>5</p>
@@ -44,17 +39,20 @@
 			</div>
 		</div>
 	</main>
-	<Default v-if="lastPost" />
+	<Default v-if="lastPost || noPost" />
+	<BorderSpinner v-else />
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import moment from 'moment'
 import CommentForm from '@/components/posts/CommentForm'
 import CommentList from '@/components/posts/CommentList'
 import PostContent from '@/components/posts/PostContent'
 import PopOver from '@/components/posts/PopOver'
+import Liker from '@/components/posts/Liker'
 import Default from '@/components/common/Default'
+import BorderSpinner from '@/components/common/BorderSpinner'
 
 export default {
 	components: {
@@ -62,7 +60,9 @@ export default {
 		CommentList,
 		PostContent,
 		PopOver,
-		Default
+		Liker,
+		Default,
+		BorderSpinner
 	},
 
 	props: {
@@ -81,12 +81,9 @@ export default {
 	computed: {
 		...mapState('auth', ['user']),
 		...mapState('board', ['boards', 'hasMorePost', 'lastPost']),
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		// board 이메일로 다시 변경하기
-		...mapGetters('auth', ['userEamilFatch'])
+		noPost() {
+			return this.boards.length === 0
+		}
 	},
 
 	methods: {
@@ -128,9 +125,11 @@ export default {
 			this.getBoards()
 		},
 		// 데이터 필터링
-		// userEmail(email) {
-		// 	return /.+(?=@)/.exec(email)[0]
-		// },
+		userEmail(email) {
+			if (email) {
+				return /.+(?=@)/.exec(email)[0]
+			}
+		},
 		boardDate(date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},

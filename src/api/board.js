@@ -6,7 +6,10 @@ const getBoards = payload => {
 	return root.get(`/board`, { params })
 }
 
-const createBoard = payload => board.post(`/`, payload)
+const createBoard = payload => {
+	console.log(payload)
+	return board.post(`/`, payload)
+}
 
 const getBoard = payload => board.get(`/${payload}`)
 
@@ -15,14 +18,14 @@ const updateBoard = (payload, data) => board.put(`/${payload}`, data)
 const removeBoard = payload => board.delete(`/${payload}`)
 
 // like
-const getLikeCount = payload => board.get(`/${payload}/like`)
+const getLikeInfo = payload => board.get(`/${payload}/like`)
 
-const updateLikeCount = payload => {
+const updateLikeInfo = payload => {
 	const { boardId, like } = payload
-	return board.put(`/${boardId}/like`, like)
+	return board.put(`/${boardId}/like`, { like })
 }
 
-const deleteLikeCount = payload => board.delete(`/${payload}`)
+const deleteLikeInfo = payload => board.delete(`/${payload}/like`)
 
 export {
 	getBoards,
@@ -30,7 +33,7 @@ export {
 	getBoard,
 	updateBoard,
 	removeBoard,
-	getLikeCount,
-	updateLikeCount,
-	deleteLikeCount
+	getLikeInfo,
+	updateLikeInfo,
+	deleteLikeInfo
 }

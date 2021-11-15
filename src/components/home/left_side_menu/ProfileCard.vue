@@ -4,7 +4,7 @@
 		<div class="profile-content">
 			<div class="profile-text">
 				<div>{{ userInfo.name }} 님</div>
-				<div>@{{ userEamilFatch }}</div>
+				<div>@{{ userEmail }}</div>
 			</div>
 			<div @click="logout" class="btn btn-primary">로그아웃</div>
 		</div>
@@ -16,7 +16,7 @@ import { mapGetters } from 'vuex'
 
 export default {
 	computed: {
-		...mapGetters('auth', ['isLogged', 'userEamilFatch']),
+		...mapGetters('auth', ['isLogged']),
 		userInfo() {
 			// proxy 객체 변환
 			const { user } = this.$store.state.auth
@@ -25,6 +25,11 @@ export default {
 		},
 		profileImage() {
 			return this.userInfo.imageUrl || require('@/assets/images/default.png')
+		},
+		userEmail() {
+			// 초기 랜더 에러 방지
+			if (this.userInfo.email === undefined) return 0
+			return /.+(?=@)/.exec(this.userInfo.email)[0]
 		}
 	},
 

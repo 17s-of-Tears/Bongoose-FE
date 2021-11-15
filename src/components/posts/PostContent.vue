@@ -5,8 +5,9 @@
 			class="content-hashtag"
 			v-for="(hashtag, index) in board.hashtags"
 			:key="index"
+			@click="toHashtagFindPage(hashtag)"
 		>
-			{{ hashtag }}
+			# {{ hashtag }}
 		</span>
 	</div>
 </template>
@@ -17,6 +18,11 @@ export default {
 		board: {
 			type: Object,
 			required: true
+		}
+	},
+	methods: {
+		toHashtagFindPage(hashtag) {
+			this.$router.push(`/hashtag/${hashtag}`)
 		}
 	}
 }

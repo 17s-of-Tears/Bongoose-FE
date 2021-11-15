@@ -15,7 +15,7 @@
 					<div>
 						<label class="form-label"></label>
 						<textarea
-							v-model="content"
+							v-model="boardContent"
 							class="form-control"
 							:placeholder="`${user.name} 님!오늘 무슨일이 있었나요?`"
 							rows="5"
@@ -51,29 +51,25 @@
 <script>
 import { createBoard } from '@/api/board'
 import { mapState } from 'vuex'
-
 export default {
 	data() {
 		return {
-			content: ''
+			boardContent: ''
 		}
 	},
-
 	computed: {
 		...mapState('auth', ['user'])
 	},
-
 	methods: {
 		async boardWriting() {
 			this.$store.commit('START_LOADING')
-			// 이거 해야함
-			// 테스트 #ㅇㄴㅇ #ㅂㅈㄷㅂ #ㅌㅊ
-			// content: '테스트', hashtags: ['ㅇㄴㅇ', 'ㅂㅈㄷㅂ', 'ㅌㅊ']
+			const content = this.boardContent.replace(/#[^\s#]+/g, '')
+			let hashtags = null
+			if (this.boardContent.includes('#')) {
+				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
+			}
 			try {
-				const data = {
-					content: this.content
-				}
-				await createBoard(data)
+				await createBoard({ content, hashtags })
 				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 				this.$emit('updatePost')
@@ -82,6 +78,7 @@ export default {
 				this.$store.dispatch('AUTO_SET_ALERT')
 			} finally {
 				this.$store.commit('END_LOADING')
+				this.boardContent = ''
 			}
 		},
 		onClickImageUpload() {
@@ -100,23 +97,19 @@ export default {
 .modal-body {
 	position: relative;
 }
-
 .modal-content {
 	height: 450px;
 }
 .bi-image {
 	font-size: 25px;
 }
-
 textarea.form-control {
 	height: 200px;
 	margin-bottom: 20px;
 }
-
 .text-black-50 {
 	font-size: 20px;
 }
-
 textarea::placeholder {
 	font-size: 20px;
 }

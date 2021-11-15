@@ -1,5 +1,5 @@
 <template>
-	<Spinner v-if="loading" />
+	<GrowSpinner v-if="loading" />
 	<Header class="responsive-header" />
 	<template v-if="isLoginPage && !NotFoundPage">
 		<LoginNav />
@@ -44,7 +44,7 @@ import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
 import TopBtn from '@/components/common/TopBtn'
 import LoginNav from '@/components/login/LoginNav'
 import Alerts from '@/components/common/Alerts'
-import Spinner from '@/components/common/Spinner'
+import GrowSpinner from '@/components/common/GrowSpinner'
 
 export default {
 	components: {
@@ -54,7 +54,7 @@ export default {
 		TopBtn,
 		LoginNav,
 		Alerts,
-		Spinner
+		GrowSpinner
 	},
 
 	computed: {
