@@ -21,6 +21,7 @@
 							rows="5"
 						></textarea>
 					</div>
+					<!-- 이미지 업로드 버튼 -->
 					<input
 						ref="imageInput"
 						type="file"
@@ -32,6 +33,7 @@
 					<small class="text-black-50">
 						&nbsp;* 이미지는 최대 4개 까지 게시가 가능합니다!
 					</small>
+					<UploadImages v-if="urls" :urls="urls" />
 				</div>
 				<div class="modal-footer">
 					<button
@@ -51,10 +53,17 @@
 <script>
 import { createBoard } from '@/api/board'
 import { mapState } from 'vuex'
+import UploadImages from '@/components/home/UploadImages'
+
 export default {
+	components: {
+		UploadImages
+	},
+
 	data() {
 		return {
-			boardContent: ''
+			boardContent: '',
+			urls: []
 		}
 	},
 	computed: {
@@ -83,6 +92,12 @@ export default {
 		},
 		onClickImageUpload() {
 			this.$refs.imageInput.click()
+		},
+		// 이미지 업로드
+		onChangeImages(e) {
+			console.log(e.target.files[0])
+			const file = e.target.files[0]
+			this.urls.push(URL.createObjectURL(file))
 		}
 	}
 }
@@ -94,25 +109,24 @@ export default {
 	border-radius: 10px;
 	height: 50px;
 }
+
 .modal-body {
 	position: relative;
 }
-.modal-content {
-	height: 450px;
-}
+
 .bi-image {
 	font-size: 25px;
 }
+
 textarea.form-control {
 	height: 200px;
 	margin-bottom: 20px;
 }
-.text-black-50 {
-	font-size: 20px;
-}
+
 textarea::placeholder {
 	font-size: 20px;
 }
+
 .bi-image {
 	color: $primary;
 	position: absolute;

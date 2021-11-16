@@ -9,7 +9,8 @@
 			<p>{{ user.name }} 님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
 		<Modal @updatePost="updatePost" />
-		<PostCard />
+		<Skeleton v-if="loading" />
+		<PostCard v-else />
 	</section>
 </template>
 
@@ -17,14 +18,17 @@
 import { mapState } from 'vuex'
 import PostCard from '@/components/posts/PostCard'
 import Modal from '@/components/home/Modal'
+import Skeleton from '@/components/posts/PostCard/Skeleton'
 
 export default {
 	components: {
 		PostCard,
-		Modal
+		Modal,
+		Skeleton
 	},
 
 	computed: {
+		...mapState(['loading']),
 		...mapState('auth', ['user'])
 	},
 

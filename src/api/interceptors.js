@@ -23,16 +23,17 @@ const setInterceptors = instance => {
 			const { config } = error.response
 			// 토큰이 만료가 되었을 때
 			if (message == 'jwt expired') {
+				console.log('gㅎㅇㅎㅇ')
 				// 토큰을 갱신한다.
 				try {
-					const { data } = await refreshUser()
 					deleteAuthCookie()
+					const { data } = await refreshUser()
 					saveAuthCookie(data)
 					store.commit('auth/SET_TOKEN', data)
 					config.headers.Authorization = `Bearer ${data}`
 					return instance(config)
 				} catch (error) {
-					console.error(error)
+					console.error(error.response)
 					return Promise.reject(error)
 				}
 			}

@@ -13,7 +13,7 @@
 					<div class="user-date">{{ boardDate(board.createdAt) }}</div>
 				</div>
 				<PopOver
-					v-if="mode === 'profile'"
+					v-if="mode === 'profile' || myPost(board.userEmail)"
 					@updatePost="updatePost"
 					:id="board.id"
 				/>
@@ -129,7 +129,7 @@ export default {
 			this.$store.commit('board/CLEAR_BOARDS')
 			this.getBoards()
 		},
-		// 데이터 필터링
+		// 매개변수 데이터 가공
 		userEmail(email) {
 			if (email) {
 				return /.+(?=@)/.exec(email)[0]
@@ -140,6 +140,9 @@ export default {
 		},
 		profileImage(image) {
 			return image || require('@/assets/images/default.png')
+		},
+		myPost(boardEmail) {
+			return this.user.email === boardEmail
 		}
 	},
 

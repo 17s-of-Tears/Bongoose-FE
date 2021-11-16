@@ -4,7 +4,8 @@
 			<ProfileCard />
 			<ProfileImgCard />
 		</div>
-		<PostCard :mode="'profile'" />
+		<Skeleton v-if="loading" />
+		<PostCard v-else :mode="'profile'" />
 	</div>
 </template>
 
@@ -13,15 +14,18 @@ import { mapState } from 'vuex'
 import ProfileCard from '@/components/users/ProfileCard'
 import ProfileImgCard from '@/components/users/ProfileImgCard'
 import PostCard from '@/components/posts/PostCard'
+import Skeleton from '@/components/posts/PostCard/Skeleton'
 
 export default {
 	components: {
 		ProfileCard,
 		ProfileImgCard,
-		PostCard
+		PostCard,
+		Skeleton
 	},
 
 	computed: {
+		...mapState(['loading']),
 		...mapState('auth', ['user']),
 		...mapState('board', ['lastPost'])
 	},
