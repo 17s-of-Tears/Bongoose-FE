@@ -9,6 +9,7 @@
 						class="btn-close"
 						data-bs-dismiss="modal"
 						aria-label="Close"
+						@click="clearFormData"
 					></button>
 				</div>
 				<div class="modal-body">
@@ -20,24 +21,29 @@
 							:placeholder="`${user.name} 님!오늘 무슨일이 있었나요?`"
 							rows="5"
 						></textarea>
+						<transition name="fade">
+							<span v-if="contentValid" class="valid">
+								내용이 비어있습니다! 입력해 주세요!
+							</span>
+						</transition>
 					</div>
 					<!-- 이미지 업로드 버튼 -->
-					<input
-						ref="imageInput"
-						type="file"
-						multiple
-						hidden
-						@change="onChangeImages"
-					/>
+					<input ref="imageInput" type="file" hidden @change="onChangeImages" />
 					<i class="bi bi-image" type="button" @click="onClickImageUpload" />
 					<small class="text-black-50">
 						&nbsp;* 이미지는 최대 4개 까지 게시가 가능합니다!
 					</small>
-					<UploadImages v-if="urls" :urls="urls" />
+					<UploadImages v-if="urls" :urls="urls" @remove="remove" />
+					<transition name="fade">
+						<span v-if="imageValid" class="valid">
+							이미지는 4장까지 업로드 가능합니다!
+						</span>
+					</transition>
 				</div>
 				<div class="modal-footer">
 					<button
 						@click="boardWriting"
+						:disabled="contentValid"
 						type="button"
 						class="btn btn-primary subbtn"
 						data-bs-dismiss="modal"
@@ -63,12 +69,19 @@ export default {
 	data() {
 		return {
 			boardContent: '',
-			urls: []
+			images: [],
+			urls: [],
+			imageValid: false
 		}
 	},
+
 	computed: {
-		...mapState('auth', ['user'])
+		...mapState('auth', ['user']),
+		contentValid() {
+			return !this.boardContent ? true : false
+		}
 	},
+
 	methods: {
 		async boardWriting() {
 			this.$store.commit('START_LOADING')
@@ -82,6 +95,7 @@ export default {
 				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 				this.$emit('updatePost')
+				this.clearFormData()
 			} catch {
 				this.$store.commit('SET_MESSAGE', '글 작성이 실패하였습니다.')
 				this.$store.dispatch('AUTO_SET_ALERT')
@@ -95,9 +109,25 @@ export default {
 		},
 		// 이미지 업로드
 		onChangeImages(e) {
-			console.log(e.target.files[0])
-			const file = e.target.files[0]
-			this.urls.push(URL.createObjectURL(file))
+			if (this.images.length < 4) {
+				const file = e.target.files[0]
+				this.images.push(file)
+				this.urls.push(URL.createObjectURL(file))
+			} else {
+				this.imageValid = true
+			}
+		},
+		// 해당 이미지 삭제
+		remove(index) {
+			this.images.splice(index, 1)
+			this.urls.splice(index, 1)
+			this.imageValid = false
+		},
+		// 내용 값 초기화
+		clearFormData() {
+			this.boardContent = ''
+			this.images = []
+			this.urls = []
 		}
 	}
 }
@@ -120,7 +150,6 @@ export default {
 
 textarea.form-control {
 	height: 200px;
-	margin-bottom: 20px;
 }
 
 textarea::placeholder {
@@ -133,5 +162,18 @@ textarea::placeholder {
 	top: 200px;
 	bottom: 0;
 	right: 30px;
+}
+
+.valid {
+	color: $danger;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.4s, transform 0.6s;
+}
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
 }
 </style>

@@ -9,7 +9,7 @@
 			<p>{{ user.name }} 님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
 		<Modal @updatePost="updatePost" />
-		<Skeleton v-if="loading" />
+		<Skeleton v-if="boardLoading" />
 		<PostCard v-else />
 	</section>
 </template>
@@ -27,6 +27,12 @@ export default {
 		Skeleton
 	},
 
+	data() {
+		return {
+			boardLoading: false
+		}
+	},
+
 	computed: {
 		...mapState(['loading']),
 		...mapState('auth', ['user'])
@@ -34,6 +40,7 @@ export default {
 
 	methods: {
 		async boardInfo() {
+			this.boardLoading = true
 			this.$store.commit('START_LOADING')
 			this.$store.commit('board/CLEAR_BOARDS')
 			try {
@@ -41,6 +48,7 @@ export default {
 			} catch (error) {
 				console.error(error)
 			} finally {
+				this.boardLoading = false
 				this.$store.commit('END_LOADING')
 			}
 		},

@@ -5,7 +5,11 @@
 			:key="index"
 			:style="{ 'background-image': `url(${url})` }"
 			class="image"
-		></div>
+		>
+			<span class="badge bg-danger" @click="removeImage(index)">
+				<i class="bi bi-x-lg"></i>
+			</span>
+		</div>
 	</div>
 </template>
 
@@ -15,6 +19,12 @@ export default {
 		urls: {
 			type: Object,
 			required: true
+		}
+	},
+
+	methods: {
+		removeImage(index) {
+			this.$emit('remove', index)
 		}
 	}
 }
@@ -34,6 +44,18 @@ export default {
 		background-size: cover;
 		background-position: center;
 		border-radius: 10px;
+		position: relative;
+		> span {
+			position: absolute;
+			right: 0;
+			width: 28px;
+			height: 28px;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+		}
 	}
 }
 </style>

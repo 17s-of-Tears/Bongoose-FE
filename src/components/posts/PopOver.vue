@@ -2,7 +2,7 @@
 	<div class="popover-box">
 		<i class="bi bi-three-dots popover-icon" @click="toggleShowList"></i>
 		<transition name="fade">
-			<ul class="list-group popover-list popover-show" v-if="isListShow">
+			<ul class="list-group popover-list popover-show" v-if="isShow">
 				<!-- 수정 버튼 -->
 				<li class="list-group-item popover-list-item">
 					<span data-bs-toggle="modal" data-bs-target="#updateModal">
@@ -36,7 +36,7 @@ export default {
 
 	data() {
 		return {
-			isListShow: false
+			isShow: false
 		}
 	},
 
@@ -47,10 +47,9 @@ export default {
 
 	methods: {
 		toggleShowList() {
-			this.isListShow = !this.isListShow
+			this.isShow = !this.isShow
 		},
 		updatePost() {
-			console.log('popover')
 			this.isListShow = false
 			this.$emit('updatePost')
 		}
@@ -71,7 +70,6 @@ export default {
 		position: absolute;
 		right: 30px;
 		width: 120px;
-
 		.popover-list-item {
 			cursor: pointer;
 			transition: 0.5s;

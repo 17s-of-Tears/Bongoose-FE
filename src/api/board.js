@@ -27,6 +27,9 @@ const updateLikeInfo = payload => {
 
 const deleteLikeInfo = payload => board.delete(`/${payload}/like`)
 
+// hashtag ranking
+const getHashtagRanking = () => board.get('/rating')
+
 export {
 	getBoards,
 	createBoard,
@@ -35,5 +38,6 @@ export {
 	removeBoard,
 	getLikeInfo,
 	updateLikeInfo,
-	deleteLikeInfo
+	deleteLikeInfo,
+	getHashtagRanking
 }

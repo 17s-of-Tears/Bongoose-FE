@@ -4,7 +4,7 @@
 			<ProfileCard />
 			<ProfileImgCard />
 		</div>
-		<Skeleton v-if="loading" />
+		<Skeleton v-if="boardLoading" />
 		<PostCard v-else :mode="'profile'" />
 	</div>
 </template>
@@ -24,6 +24,12 @@ export default {
 		Skeleton
 	},
 
+	data() {
+		return {
+			boardLoading: false
+		}
+	},
+
 	computed: {
 		...mapState(['loading']),
 		...mapState('auth', ['user']),
@@ -32,6 +38,7 @@ export default {
 
 	methods: {
 		async myBoardInfo() {
+			this.boardLoading = true
 			this.$store.commit('START_LOADING')
 			this.$store.commit('board/CLEAR_BOARDS')
 			try {
@@ -41,6 +48,7 @@ export default {
 			} catch (error) {
 				console.error(error)
 			} finally {
+				this.boardLoading = false
 				this.$store.commit('END_LOADING')
 			}
 		}

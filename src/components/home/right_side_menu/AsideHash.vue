@@ -1,23 +1,45 @@
 <template>
 	<div class="aside-hash">
-		<span>실시간 #</span>
+		<span># 인기순위</span>
 		<div class="card hash-card">
-			<div v-for="index in 3" :key="index" class="hash-box">
-				<div class="hash-rank">{{ index }}위</div>
+			<div v-for="(hash, index) in hashs" :key="index" class="hash-box">
+				<div class="hash-rank">{{ index + 1 }}위</div>
 				<div class="hash-item">
-					<span># 해시태그{{ index }}</span>
-					<span>{{ 100 - index }}회</span>
+					<span @click="toHashSearch(hash.hashtag)"># {{ hash.hashtag }}</span>
+					<span>{{ hash.total }}회</span>
 				</div>
-				<hr v-if="!(index === 3)" />
+				<hr v-if="!(index === 2)" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import { getHashtagRanking } from '@/api/board'
+
 export default {
-	setup() {
-		return {}
+	data() {
+		return {
+			hashs: []
+		}
+	},
+
+	methods: {
+		async HashtagRankInfo() {
+			try {
+				const { data } = await getHashtagRanking()
+				this.hashs = data
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		toHashSearch(hash) {
+			this.$router.push(`/hashtag/${hash}`)
+		}
+	},
+
+	created() {
+		this.HashtagRankInfo()
 	}
 }
 </script>
@@ -46,7 +68,12 @@ export default {
 				justify-content: space-between;
 				@include rem(18);
 				:nth-child(1) {
-					color: $primary;
+					color: $gray-700;
+					cursor: pointer;
+					&:hover {
+						color: $primary;
+						transition: 0.3s;
+					}
 				}
 				:nth-child(2) {
 					color: $gray-600;
