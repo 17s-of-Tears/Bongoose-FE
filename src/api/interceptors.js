@@ -22,7 +22,7 @@ const setInterceptors = instance => {
 			const { message } = error.response.data
 			const { config } = error.response
 			// 토큰이 만료가 되었을 때
-			if (message == 'jwt expired') {
+			if (message === 'jwt expired' || message === 'jwt malformed') {
 				// 토큰을 갱신한다.
 				try {
 					deleteAuthCookie()

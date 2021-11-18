@@ -83,15 +83,28 @@ export default {
 	},
 
 	methods: {
-		async boardWriting() {
-			this.$store.commit('START_LOADING')
-			const content = this.boardContent.replace(/#[^\s#]+/g, '')
+		boardWriting() {
 			let hashtags = null
+			const content = this.boardContent.replace(/#[^\s#]+/g, '')
+			const formData = new FormData()
 			if (this.boardContent.includes('#')) {
 				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
 			}
+			// 이미지 데이터가 있을때 요청 분기처리
+			if (this.images.length > 0) {
+				Array.from(this.images).forEach(v => formData.append('images', v))
+				formData.append('content', content)
+				formData.append('hashtag', hashtags)
+				this.createBoardFunc(formData)
+			} else {
+				this.createBoardFunc({ content, hashtags })
+			}
+		},
+		// 중복 코드 정리
+		async createBoardFunc(payload) {
+			this.$store.commit('START_LOADING')
 			try {
-				await createBoard({ content, hashtags })
+				await createBoard(payload)
 				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
 				this.$store.dispatch('AUTO_SET_ALERT')
 				this.$emit('updatePost')
@@ -110,18 +123,21 @@ export default {
 		// 이미지 업로드
 		onChangeImages(e) {
 			if (this.images.length < 4) {
+				// 이미지 썸네일
 				const file = e.target.files[0]
 				this.images.push(file)
 				this.urls.push(URL.createObjectURL(file))
 			} else {
 				this.imageValid = true
+				setTimeout(() => {
+					this.imageValid = false
+				}, 1500)
 			}
 		},
 		// 해당 이미지 삭제
 		remove(index) {
 			this.images.splice(index, 1)
 			this.urls.splice(index, 1)
-			this.imageValid = false
 		},
 		// 내용 값 초기화
 		clearFormData() {

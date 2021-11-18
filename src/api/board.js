@@ -1,5 +1,9 @@
 import { root, board } from './index'
 
+const config = {
+	headers: { 'content-type': 'multipart/form-data' }
+}
+
 const getBoards = payload => {
 	const { start, end, userId } = payload
 	const params = { start, end, userId }
@@ -7,8 +11,12 @@ const getBoards = payload => {
 }
 
 const createBoard = payload => {
-	console.log(payload)
-	return board.post(`/`, payload)
+	const { formData } = payload
+	// 이미지 업로드 분기처리
+	const res = formData
+		? board.post(`/`, payload, config)
+		: board.post(`/`, payload)
+	return res
 }
 
 const getBoard = payload => board.get(`/${payload}`)

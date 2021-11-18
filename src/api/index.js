@@ -5,13 +5,13 @@ const SERVER_URI = process.env.VUE_APP_URI
 
 // 로그인전 요청
 const create = url => {
-	const instance = axios.create(Object.assign({ baseURL: url }))
+	const instance = axios.create({ baseURL: url, withCredentials: true })
 	return instance
 }
 
 // 로그인후 요청
 const createAuth = url => {
-	const instance = axios.create(Object.assign({ baseURL: url }))
+	const instance = axios.create({ baseURL: url })
 	setInterceptors(instance)
 	return instance
 }
