@@ -35,9 +35,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-textarea {
-}
-
 .comment-btn-flex {
 	display: flex;
 	justify-content: flex-end;

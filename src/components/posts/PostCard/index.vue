@@ -20,11 +20,7 @@
 			</div>
 			<div class="content">
 				<PostContent :board="board" />
-				<img
-					:src="`http://placeimg.com/400/200/any/${board.id}`"
-					alt="게시물 사진"
-					class="content-img"
-				/>
+				<Images v-if="board.images" :images="board.images" />
 				<div class="content-footer">
 					<Liker :id="board.id" />
 					<div @click="toggleOnComment" class="content-comment">
@@ -48,11 +44,12 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
-import CommentForm from '@/components/posts/CommentForm'
-import CommentList from '@/components/posts/CommentList'
-import PostContent from '@/components/posts/PostContent'
-import PopOver from '@/components/posts/PopOver'
-import Liker from '@/components/posts/Liker'
+import CommentForm from '@/components/posts/PostCard/CommentForm'
+import CommentList from '@/components/posts/PostCard/CommentList'
+import PostContent from '@/components/posts/PostCard/PostContent'
+import Images from '@/components/posts/PostCard/Images'
+import PopOver from '@/components/posts/PostCard/PopOver'
+import Liker from '@/components/posts/PostCard/Liker'
 import Default from '@/components/common/Default'
 import BorderSpinner from '@/components/common/BorderSpinner'
 
@@ -61,6 +58,7 @@ export default {
 		CommentForm,
 		CommentList,
 		PostContent,
+		Images,
 		PopOver,
 		Liker,
 		Default,
