@@ -8,28 +8,39 @@
 		>
 			<p>{{ user.name }} 님! 오늘은 무슨일이 있었나요? 모두에게 알려주세요!</p>
 		</div>
-		<Modal @updatePost="updatePost" />
-		<PostCard />
+		<WriterModal @updatePost="updatePost" />
+		<Skeleton v-if="boardLoading" />
+		<PostCard v-else />
 	</section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import PostCard from '@/components/posts/PostCard'
-import Modal from '@/components/home/Modal'
+import WriterModal from '@/components/home/WriterModal'
+import Skeleton from '@/components/posts/PostCard/Skeleton'
 
 export default {
 	components: {
 		PostCard,
-		Modal
+		WriterModal,
+		Skeleton
+	},
+
+	data() {
+		return {
+			boardLoading: false
+		}
 	},
 
 	computed: {
+		...mapState(['loading']),
 		...mapState('auth', ['user'])
 	},
 
 	methods: {
 		async boardInfo() {
+			this.boardLoading = true
 			this.$store.commit('START_LOADING')
 			this.$store.commit('board/CLEAR_BOARDS')
 			try {
@@ -37,6 +48,7 @@ export default {
 			} catch (error) {
 				console.error(error)
 			} finally {
+				this.boardLoading = false
 				this.$store.commit('END_LOADING')
 			}
 		},

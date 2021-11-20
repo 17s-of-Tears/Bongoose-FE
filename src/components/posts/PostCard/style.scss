@@ -54,28 +54,17 @@
 		@include media-breakpoint-down(sm) {
 			gap: 10px;
 		}
-		.content-img {
-			width: 100%;
-			height: 400px;
-			border-radius: 20px;
-			background-color: $gray-500;
-			&::before {
-				content: '';
-				display: block;
-				padding-top: 50%;
-			}
-		}
 		.content-footer {
 			display: flex;
 			justify-content: space-between;
-			.content-comment {
-				display: flex;
-				gap: 10px;
-				color: $primary;
-				cursor: pointer;
-				p {
-					color: $gray-600;
-				}
+		}
+		.content-comment {
+			display: flex;
+			gap: 10px;
+			color: $primary;
+			cursor: pointer;
+			p {
+				color: $gray-600;
 			}
 		}
 	}

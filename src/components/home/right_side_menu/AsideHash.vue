@@ -1,23 +1,51 @@
 <template>
 	<div class="aside-hash">
-		<span>실시간 #</span>
+		<div class="hash-title">
+			<span># 인기순위</span>
+			<i class="bi bi-arrow-repeat" @click="refresh"></i>
+		</div>
 		<div class="card hash-card">
-			<div v-for="index in 3" :key="index" class="hash-box">
-				<div class="hash-rank">{{ index }}위</div>
+			<div v-for="(hash, index) in hashs" :key="index" class="hash-box">
+				<div class="hash-rank">{{ index + 1 }}위</div>
 				<div class="hash-item">
-					<span># 해시태그{{ index }}</span>
-					<span>{{ 100 - index }}회</span>
+					<span @click="toHashSearch(hash.hashtag)"># {{ hash.hashtag }}</span>
+					<span>{{ hash.total }}회</span>
 				</div>
-				<hr v-if="!(index === 3)" />
+				<hr v-if="!(index === 2)" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import { getHashtagRanking } from '@/api/board'
+
 export default {
-	setup() {
-		return {}
+	data() {
+		return {
+			hashs: []
+		}
+	},
+
+	methods: {
+		async HashtagRankInfo() {
+			try {
+				const { data } = await getHashtagRanking()
+				this.hashs = data
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		toHashSearch(hash) {
+			this.$router.push(`/hashtag/${hash}`)
+		},
+		refresh() {
+			this.HashtagRankInfo()
+		}
+	},
+
+	created() {
+		this.HashtagRankInfo()
 	}
 }
 </script>
@@ -27,9 +55,23 @@ export default {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	> span {
-		color: $white;
-		@include rem(25);
+	.hash-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		> span {
+			color: $white;
+			@include rem(25);
+		}
+		i {
+			color: $white;
+			@include rem(25);
+			cursor: pointer;
+			transition: 0.7s;
+			&:hover {
+				transform: rotate(45deg);
+			}
+		}
 	}
 	.hash-card {
 		width: 100%;
@@ -46,7 +88,12 @@ export default {
 				justify-content: space-between;
 				@include rem(18);
 				:nth-child(1) {
-					color: $primary;
+					color: $gray-700;
+					cursor: pointer;
+					&:hover {
+						color: $primary;
+						transition: 0.3s;
+					}
 				}
 				:nth-child(2) {
 					color: $gray-600;

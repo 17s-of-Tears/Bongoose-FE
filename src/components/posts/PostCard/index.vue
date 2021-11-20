@@ -5,24 +5,22 @@
 				<img :src="profileImage()" alt="프로필 사진" class="user-img" />
 				<div class="user-content">
 					<div class="user-info">
-						<div class="user-nickname">{{ board.userName }}</div>
+						<div class="user-nickname" @click="toUserFindPage(board.userName)">
+							{{ board.userName }}
+						</div>
 						<div class="user-id">@{{ userEmail(board.userEmail) }}</div>
 					</div>
 					<div class="user-date">{{ boardDate(board.createdAt) }}</div>
 				</div>
 				<PopOver
-					v-if="mode === 'profile'"
+					v-if="mode === 'profile' || myPost(board.userEmail)"
 					@updatePost="updatePost"
 					:id="board.id"
 				/>
 			</div>
 			<div class="content">
 				<PostContent :board="board" />
-				<img
-					:src="`http://placeimg.com/400/200/any/${board.id}`"
-					alt="게시물 사진"
-					class="content-img"
-				/>
+				<Images v-if="board.images" :images="board.images" />
 				<div class="content-footer">
 					<Liker :id="board.id" />
 					<div @click="toggleOnComment" class="content-comment">
@@ -46,11 +44,12 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
-import CommentForm from '@/components/posts/CommentForm'
-import CommentList from '@/components/posts/CommentList'
-import PostContent from '@/components/posts/PostContent'
-import PopOver from '@/components/posts/PopOver'
-import Liker from '@/components/posts/Liker'
+import CommentForm from '@/components/posts/PostCard/CommentForm'
+import CommentList from '@/components/posts/PostCard/CommentList'
+import PostContent from '@/components/posts/PostCard/PostContent'
+import Images from '@/components/posts/PostCard/Images'
+import PopOver from '@/components/posts/PostCard/PopOver'
+import Liker from '@/components/posts/PostCard/Liker'
 import Default from '@/components/common/Default'
 import BorderSpinner from '@/components/common/BorderSpinner'
 
@@ -59,6 +58,7 @@ export default {
 		CommentForm,
 		CommentList,
 		PostContent,
+		Images,
 		PopOver,
 		Liker,
 		Default,
@@ -89,6 +89,9 @@ export default {
 	methods: {
 		toggleOnComment() {
 			this.onComment = !this.onComment
+		},
+		toUserFindPage(id) {
+			this.router.push(`/user/${id}`)
 		},
 		async getBoards() {
 			this.$store.commit('START_LOADING')
@@ -124,7 +127,7 @@ export default {
 			this.$store.commit('board/CLEAR_BOARDS')
 			this.getBoards()
 		},
-		// 데이터 필터링
+		// 매개변수 데이터 가공
 		userEmail(email) {
 			if (email) {
 				return /.+(?=@)/.exec(email)[0]
@@ -135,6 +138,9 @@ export default {
 		},
 		profileImage(image) {
 			return image || require('@/assets/images/default.png')
+		},
+		myPost(boardEmail) {
+			return this.user.email === boardEmail
 		}
 	},
 
