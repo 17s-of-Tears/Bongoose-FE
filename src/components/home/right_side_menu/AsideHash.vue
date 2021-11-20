@@ -1,6 +1,9 @@
 <template>
 	<div class="aside-hash">
-		<span># 인기순위</span>
+		<div class="hash-title">
+			<span># 인기순위</span>
+			<i class="bi bi-arrow-repeat" @click="refresh"></i>
+		</div>
 		<div class="card hash-card">
 			<div v-for="(hash, index) in hashs" :key="index" class="hash-box">
 				<div class="hash-rank">{{ index + 1 }}위</div>
@@ -35,6 +38,9 @@ export default {
 		},
 		toHashSearch(hash) {
 			this.$router.push(`/hashtag/${hash}`)
+		},
+		refresh() {
+			this.HashtagRankInfo()
 		}
 	},
 
@@ -49,9 +55,23 @@ export default {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	> span {
-		color: $white;
-		@include rem(25);
+	.hash-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		> span {
+			color: $white;
+			@include rem(25);
+		}
+		i {
+			color: $white;
+			@include rem(25);
+			cursor: pointer;
+			transition: 0.7s;
+			&:hover {
+				transform: rotate(45deg);
+			}
+		}
 	}
 	.hash-card {
 		width: 100%;

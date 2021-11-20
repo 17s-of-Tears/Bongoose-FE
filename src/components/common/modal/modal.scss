@@ -1,0 +1,42 @@
+.subbtn {
+	width: 100%;
+	border-radius: 10px;
+	height: 50px;
+}
+
+.modal-body {
+	position: relative;
+}
+
+.bi-image {
+	font-size: 25px;
+}
+
+textarea.form-control {
+	height: 200px;
+}
+
+textarea::placeholder {
+	font-size: 20px;
+}
+
+.bi-image {
+	color: $primary;
+	position: absolute;
+	top: 200px;
+	bottom: 0;
+	right: 30px;
+}
+
+.valid {
+	color: $danger;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.4s, transform 0.6s;
+}
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
+}
