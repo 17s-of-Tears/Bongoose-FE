@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ImagesCarousel from '@/components/posts/PostCard/ImagesCarousel'
+import ImagesCarousel from '@/components/posts/ImagesCarousel'
 
 export default {
 	components: {

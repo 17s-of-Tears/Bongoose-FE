@@ -18,7 +18,7 @@
 import { mapState } from 'vuex'
 import PostCard from '@/components/posts/PostCard'
 import WriterModal from '@/components/home/WriterModal'
-import Skeleton from '@/components/posts/PostCard/Skeleton'
+import Skeleton from '@/components/posts/Skeleton'
 
 export default {
 	components: {

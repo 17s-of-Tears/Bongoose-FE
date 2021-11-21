@@ -44,12 +44,12 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
-import CommentForm from '@/components/posts/PostCard/CommentForm'
-import CommentList from '@/components/posts/PostCard/CommentList'
-import PostContent from '@/components/posts/PostCard/PostContent'
-import Images from '@/components/posts/PostCard/Images'
-import PopOver from '@/components/posts/PostCard/PopOver'
-import Liker from '@/components/posts/PostCard/Liker'
+import CommentForm from '@/components/posts/CommentForm'
+import CommentList from '@/components/posts/CommentList'
+import PostContent from '@/components/posts/PostContent'
+import Images from '@/components/posts/Images'
+import PopOver from '@/components/posts/PopOver'
+import Liker from '@/components/posts/Liker'
 import Default from '@/components/common/Default'
 import BorderSpinner from '@/components/common/BorderSpinner'
 

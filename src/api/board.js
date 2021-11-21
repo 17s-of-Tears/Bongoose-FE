@@ -19,21 +19,24 @@ const createBoard = payload => {
 	return res
 }
 
-const getBoard = payload => board.get(`/${payload}`)
+const getBoard = boardId => board.get(`/${boardId}`)
 
-const updateBoard = (payload, data) => board.put(`/${payload}`, data)
+const updateBoard = (boardId, data) => board.put(`/${boardId}`, data)
 
-const removeBoard = payload => board.delete(`/${payload}`)
+const updateBoardImage = (boardId, data) =>
+	board.put(`/${boardId}/image`, data, config)
+
+const removeBoard = boardId => board.delete(`/${boardId}`)
 
 // like
-const getLikeInfo = payload => board.get(`/${payload}/like`)
+const getLikeInfo = boardId => board.get(`/${boardId}/like`)
 
 const updateLikeInfo = payload => {
 	const { boardId, like } = payload
 	return board.put(`/${boardId}/like`, { like })
 }
 
-const deleteLikeInfo = payload => board.delete(`/${payload}/like`)
+const deleteLikeInfo = boardId => board.delete(`/${boardId}/like`)
 
 // hashtag ranking
 const getHashtagRanking = () => board.get('/rating')
@@ -43,6 +46,7 @@ export {
 	createBoard,
 	getBoard,
 	updateBoard,
+	updateBoardImage,
 	removeBoard,
 	getLikeInfo,
 	updateLikeInfo,
