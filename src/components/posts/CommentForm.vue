@@ -18,7 +18,16 @@
 </template>
 
 <script>
+import { createComments } from '@/api/board'
+
 export default {
+	props: {
+		id: {
+			type: Number,
+			required: true
+		}
+	},
+
 	data() {
 		return {
 			comment: ''
@@ -26,9 +35,16 @@ export default {
 	},
 
 	methods: {
-		onSubmitComment() {
-			console.log(this.comment)
-			this.comment = ''
+		async onSubmitComment() {
+			try {
+				await createComments({ boardId: this.id, content: this.comment })
+				this.comment = ''
+				this.$emit('updateComment')
+				this.$store.commit('SET_MESSAGE', '댓글이 등록되었습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+			} catch (error) {
+				console.error(error)
+			}
 		}
 	}
 }

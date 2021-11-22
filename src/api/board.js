@@ -21,10 +21,14 @@ const createBoard = payload => {
 
 const getBoard = boardId => board.get(`/${boardId}`)
 
-const updateBoard = (boardId, data) => board.put(`/${boardId}`, data)
-
-const updateBoardImage = (boardId, data) =>
-	board.put(`/${boardId}/image`, data, config)
+const updateBoard = (boardId, payload) => {
+	const { formData } = payload
+	// 이미지 업로드 분기처리
+	const res = formData
+		? board.put(`/${boardId}`, payload, config)
+		: board.put(`/${boardId}`, payload)
+	return res
+}
 
 const removeBoard = boardId => board.delete(`/${boardId}`)
 
@@ -41,15 +45,24 @@ const deleteLikeInfo = boardId => board.delete(`/${boardId}/like`)
 // hashtag ranking
 const getHashtagRanking = () => board.get('/rating')
 
+// comment
+const getComments = boardId => board.get(`/${boardId}/comment`)
+
+const createComments = payload => {
+	console.log(payload)
+	const { boardId, content } = payload
+	return board.post(`/${boardId}/comment`, { content })
+}
 export {
 	getBoards,
 	createBoard,
 	getBoard,
 	updateBoard,
-	updateBoardImage,
 	removeBoard,
 	getLikeInfo,
 	updateLikeInfo,
 	deleteLikeInfo,
-	getHashtagRanking
+	getHashtagRanking,
+	getComments,
+	createComments
 }

@@ -54,4 +54,4 @@
 
 <script src="./modal.js"></script>
 
-<style lang="scss" src="./modal.scss" scoped></style>
+<style lang="scss" src="./style.scss" scoped></style>

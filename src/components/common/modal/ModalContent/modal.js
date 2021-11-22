@@ -1,11 +1,6 @@
 import { mapState } from 'vuex'
 import UploadImages from '@/components/common/modal/UploadImages'
-import {
-	getBoard,
-	createBoard,
-	updateBoard,
-	updateBoardImage
-} from '@/api/board'
+import { getBoard, createBoard, updateBoard } from '@/api/board'
 
 export default {
 	components: {
@@ -43,38 +38,27 @@ export default {
 	},
 
 	methods: {
-		async boardWriting() {
+		boardWriting() {
 			let hashtags = null
 			const content = this.boardContent.replace(/#[^\s#]+/g, '')
 			const formData = new FormData()
 			if (this.boardContent.includes('#')) {
 				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
 			}
-			if (this.mode === 'writer') {
-				// 이미지 데이터가 있을때 요청 분기처리
-				if (this.images.length > 0) {
-					Array.from(this.images).forEach(v => formData.append('images', v))
-					Array.from(hashtags).forEach(v => formData.append('hashtags', v))
-					formData.append('content', content)
+			if (this.images.length > 0) {
+				Array.from(this.images).forEach(v => formData.append('images', v))
+				Array.from(hashtags).forEach(v => formData.append('hashtags', v))
+				formData.append('content', content)
+				if (this.mode === 'writer') {
 					this.createBoardFunc(formData)
-				} else {
-					this.createBoardFunc({ content, hashtags })
+				} else if (this.mode === 'update') {
+					this.updateBoardFunc(this.id, formData)
 				}
-			} else if (this.mode === 'update') {
-				console.log(this.images.length > 0)
-				try {
-					if (this.images.length > 0) {
-						Array.from(this.images).forEach(v => formData.append('images', v))
-						await updateBoardImage(this.id, formData)
-					}
-					await updateBoard(this.id, { content, hashtags })
-					this.$store.commit('SET_MESSAGE', '글 수정이 완료되었습니다!')
-					this.$store.dispatch('AUTO_SET_ALERT')
-					this.$emit('updatePost')
-					this.clearFormData()
-				} catch (error) {
-					this.$store.commit('SET_MESSAGE', '글 수정이 실패하였습니다.')
-					this.$store.dispatch('AUTO_SET_ALERT')
+			} else {
+				if (this.mode === 'writer') {
+					this.createBoardFunc({ content, hashtags })
+				} else if (this.mode === 'update') {
+					this.updateBoardFunc(this.id, { content, hashtags })
 				}
 			}
 		},
@@ -91,6 +75,18 @@ export default {
 				this.$store.dispatch('AUTO_SET_ALERT')
 			} finally {
 				this.boardContent = ''
+			}
+		},
+		async updateBoardFunc(id, data) {
+			try {
+				await updateBoard(id, data)
+				this.$store.commit('SET_MESSAGE', '글 수정이 완료되었습니다!')
+				this.$store.dispatch('AUTO_SET_ALERT')
+				this.$emit('updatePost')
+				this.clearFormData()
+			} catch {
+				this.$store.commit('SET_MESSAGE', '글 수정이 실패하였습니다.')
+				this.$store.dispatch('AUTO_SET_ALERT')
 			}
 		},
 		onClickImageUpload() {

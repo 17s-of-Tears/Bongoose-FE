@@ -10,7 +10,11 @@
 		</div>
 		<WriterModal @updatePost="updatePost" />
 		<Skeleton v-if="boardLoading" />
-		<PostCard v-else />
+		<template v-else>
+			<PostCard v-for="board in boards" :key="board.id" :board="board" />
+			<Default v-if="lastPost || noPost" />
+			<BorderSpinner v-else />
+		</template>
 	</section>
 </template>
 
@@ -19,12 +23,16 @@ import { mapState } from 'vuex'
 import PostCard from '@/components/posts/PostCard'
 import WriterModal from '@/components/home/WriterModal'
 import Skeleton from '@/components/posts/Skeleton'
+import Default from '@/components/common/Default'
+import BorderSpinner from '@/components/common/BorderSpinner'
 
 export default {
 	components: {
 		PostCard,
 		WriterModal,
-		Skeleton
+		Skeleton,
+		Default,
+		BorderSpinner
 	},
 
 	data() {
@@ -35,7 +43,11 @@ export default {
 
 	computed: {
 		...mapState(['loading']),
-		...mapState('auth', ['user'])
+		...mapState('auth', ['user']),
+		...mapState('board', ['boards', 'lastPost']),
+		noPost() {
+			return this.boards.length === 0
+		}
 	},
 
 	methods: {
