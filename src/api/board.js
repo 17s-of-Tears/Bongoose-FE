@@ -53,6 +53,7 @@ const createComments = payload => {
 	const { boardId, content } = payload
 	return board.post(`/${boardId}/comment`, { content })
 }
+
 export {
 	getBoards,
 	createBoard,

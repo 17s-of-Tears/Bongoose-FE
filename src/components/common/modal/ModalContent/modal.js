@@ -38,6 +38,11 @@ export default {
 	},
 
 	methods: {
+		/**
+		 * 1. 해시태그 없을 때 오류남
+		 * 2. 해시태그 한개만 입력했을 때 문자열로 전송됨
+		 * 3. 이미지수정 문제있음 (기존이미지가 [object Object] 로 됨)
+		 */
 		boardWriting() {
 			let hashtags = null
 			const content = this.boardContent.replace(/#[^\s#]+/g, '')
