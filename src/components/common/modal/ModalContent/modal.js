@@ -1,6 +1,7 @@
 import { mapState } from 'vuex'
 import UploadImages from '@/components/common/modal/UploadImages'
 import { getBoard, createBoard, updateBoard } from '@/api/board'
+import customAlert from '@/utils/customAlert'
 
 export default {
 	components: {
@@ -17,6 +18,8 @@ export default {
 			default: 0
 		}
 	},
+
+	emits: ['updatePost'],
 
 	data() {
 		return {
@@ -71,13 +74,11 @@ export default {
 		async createBoardFunc(payload) {
 			try {
 				await createBoard(payload)
-				this.$store.commit('SET_MESSAGE', '글 작성이 완료되었습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('글 작성이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
 			} catch {
-				this.$store.commit('SET_MESSAGE', '글 작성이 실패하였습니다.')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('글 작성이 실패하였습니다.')
 			} finally {
 				this.boardContent = ''
 			}
@@ -85,13 +86,11 @@ export default {
 		async updateBoardFunc(id, data) {
 			try {
 				await updateBoard(id, data)
-				this.$store.commit('SET_MESSAGE', '글 수정이 완료되었습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('글 수정이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
 			} catch {
-				this.$store.commit('SET_MESSAGE', '글 수정이 실패하였습니다.')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('글 수정이 실패하였습니다.')
 			}
 		},
 		onClickImageUpload() {

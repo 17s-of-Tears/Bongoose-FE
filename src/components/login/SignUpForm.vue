@@ -31,6 +31,7 @@
 
 <script>
 import { signupUser } from '@/api/sign'
+import customAlert from '@/utils/customAlert'
 
 export default {
 	data() {
@@ -82,12 +83,10 @@ export default {
 					password: this.formDatas[2].model
 				}
 				await signupUser(userInfo)
-				this.$store.commit('SET_MESSAGE', '회원가입에 성공하였습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('회원가입에 성공하였습니다!')
 				this.$router.push('/login')
 			} catch (error) {
-				this.$store.commit('SET_MESSAGE', '회원가입에 실패했습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('회원가입에 실패했습니다!')
 			} finally {
 				this.$store.commit('END_LOADING')
 			}

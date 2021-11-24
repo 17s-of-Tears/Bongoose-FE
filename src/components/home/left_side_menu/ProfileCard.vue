@@ -13,6 +13,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import customAlert from '@/utils/customAlert'
 
 export default {
 	computed: {
@@ -38,12 +39,10 @@ export default {
 			this.$store.commit('START_LOADING')
 			try {
 				await this.$store.commit('auth/LOGOUT')
-				this.$store.commit('SET_MESSAGE', '로그아웃에 성공하였습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('로그아웃에 성공하였습니다!')
 				this.$router.push('/login')
 			} catch (error) {
-				this.$store.commit('SET_MESSAGE', '로그아웃에 실패했습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('로그아웃에 실패했습니다!')
 			} finally {
 				this.$store.commit('END_LOADING')
 			}

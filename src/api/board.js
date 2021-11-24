@@ -48,10 +48,14 @@ const getHashtagRanking = () => board.get('/rating')
 // comment
 const getComments = boardId => board.get(`/${boardId}/comment`)
 
-const createComments = payload => {
-	console.log(payload)
+const createComment = payload => {
 	const { boardId, content } = payload
 	return board.post(`/${boardId}/comment`, { content })
+}
+
+const removeComment = payload => {
+	const { boardID, commentID } = payload
+	return board.delete(`/${boardID}/comment/${commentID}`)
 }
 
 export {
@@ -65,5 +69,6 @@ export {
 	deleteLikeInfo,
 	getHashtagRanking,
 	getComments,
-	createComments
+	createComment,
+	removeComment
 }

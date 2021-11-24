@@ -13,7 +13,14 @@
 			<span>{{ commentDate(comment.createdAt) }}</span>
 			<div class="comment-edit" v-if="isMeComment(comment.email)">
 				<span @click="commentUpdate(comment.commentID)">수정하기</span>
-				<span @click="commentDelete">삭제하기</span>
+				<span data-bs-toggle="modal" data-bs-target="#commentRemoveModal">
+					삭제하기
+				</span>
+				<CommentRemoveModal
+					@updateComment="updateComment"
+					:id="id"
+					:commentId="comment.commentID"
+				/>
 			</div>
 		</div>
 	</div>
@@ -22,14 +29,25 @@
 <script>
 import moment from 'moment'
 import { mapState } from 'vuex'
+import CommentRemoveModal from '@/components/posts/CommentRemoveModal'
 
 export default {
+	components: {
+		CommentRemoveModal
+	},
+
 	props: {
 		comment: {
 			type: Object,
 			required: true
+		},
+		id: {
+			type: Number,
+			required: true
 		}
 	},
+
+	emits: ['updateComment'],
 
 	data() {
 		return {
@@ -43,15 +61,17 @@ export default {
 	},
 
 	methods: {
+		// 댓글 수정
 		commentUpdate(comment) {
 			this.content = comment.content
 			this.updateShow = true
 		},
-		commentDelete() {
-			console.log('deleteTest')
-		},
 		isMeComment(commentEmail) {
 			return this.user.email === commentEmail
+		},
+		// 댓글 정보 다시불러오기
+		updateComment() {
+			this.$emit('updateComment')
 		},
 		// 데이터 가공
 		userEmail(email) {

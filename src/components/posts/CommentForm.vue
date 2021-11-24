@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import { createComments } from '@/api/board'
+import { createComment } from '@/api/board'
+import customAlert from '@/utils/customAlert'
 
 export default {
 	props: {
@@ -27,6 +28,8 @@ export default {
 			required: true
 		}
 	},
+
+	emits: ['updateComment'],
 
 	data() {
 		return {
@@ -37,11 +40,10 @@ export default {
 	methods: {
 		async onSubmitComment() {
 			try {
-				await createComments({ boardId: this.id, content: this.comment })
+				await createComment({ boardId: this.id, content: this.comment })
 				this.comment = ''
 				this.$emit('updateComment')
-				this.$store.commit('SET_MESSAGE', '댓글이 등록되었습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('댓글이 등록되었습니다!')
 			} catch (error) {
 				console.error(error)
 			}

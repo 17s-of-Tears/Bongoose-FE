@@ -10,7 +10,11 @@
 				:key="comment.commentID"
 				class="list-group-item"
 			>
-				<CommentContent :comment="comment" />
+				<CommentContent
+					:id="id"
+					:comment="comment"
+					@updateComment="updateComment"
+				/>
 			</li>
 		</ul>
 	</template>
@@ -40,7 +44,7 @@ export default {
 		}
 	},
 
-	emits: ['commentCount'],
+	emits: ['updateComment'],
 
 	methods: {
 		async getCommentsInfo() {

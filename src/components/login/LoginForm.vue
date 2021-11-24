@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import customAlert from '@/utils/customAlert'
+
 export default {
 	data() {
 		return {
@@ -61,12 +63,10 @@ export default {
 					password: this.formDatas[1].model
 				}
 				await this.$store.dispatch('auth/LOGIN', userData)
-				this.$store.commit('SET_MESSAGE', '로그인이 되었습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('로그인이 되었습니다!')
 				this.$router.push('/home')
 			} catch {
-				this.$store.commit('SET_MESSAGE', '로그인에 실패했습니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('로그인에 실패했습니다!')
 			} finally {
 				this.$store.commit('END_LOADING')
 			}

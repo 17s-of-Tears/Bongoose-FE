@@ -21,6 +21,8 @@ export default {
 		}
 	},
 
+	emits: ['updatePost'],
+
 	methods: {
 		updatePost() {
 			this.$emit('updatePost')

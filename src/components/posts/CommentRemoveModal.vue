@@ -1,7 +1,18 @@
 <template>
-	<div class="modal fade" id="removeModal" aria-hidden="true" tabindex="-1">
+	<div
+		class="modal fade"
+		id="commentRemoveModal"
+		aria-hidden="true"
+		tabindex="-1"
+	>
 		<div class="modal-dialog modal-sm">
-			<RemoveModalContent :id="id" mode="post" @updatePost="updatePost" />
+			<RemoveModalContent
+				:id="id"
+				:commentId="commentId"
+				mode="comment"
+				@updatePost="updatePost"
+				@updateComment="updateComment"
+			/>
 		</div>
 	</div>
 </template>
@@ -18,14 +29,21 @@ export default {
 		id: {
 			type: Number,
 			requried: true
+		},
+		commentId: {
+			type: Number,
+			requried: true
 		}
 	},
 
-	emits: ['updatePost'],
+	emits: ['updatePost', 'updateComment'],
 
 	methods: {
 		updatePost() {
 			this.$emit('updatePost')
+		},
+		updateComment() {
+			this.$emit('updateComment')
 		}
 	}
 }
