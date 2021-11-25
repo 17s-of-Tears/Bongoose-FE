@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import customAlert from '@/utils/customAlert'
 import {
 	deleteLikeInfo,
 	getBoard,
@@ -80,8 +81,7 @@ export default {
 			if (mode === 'like') {
 				// 이미 싫어요를 했는지 검사
 				if (this.mydislike) {
-					this.$store.commit('SET_MESSAGE', '이미 싫어요를 누르셨습니다!')
-					this.$store.dispatch('AUTO_SET_ALERT')
+					customAlert('이미 싫어요를 누르셨습니다!')
 				} else {
 					// 좋아요
 					try {
@@ -94,8 +94,7 @@ export default {
 			} else if (mode === 'dislike') {
 				// 이미 좋아요를 했는지 검사
 				if (this.mylike) {
-					this.$store.commit('SET_MESSAGE', '이미 좋아요를 누르셨습니다!')
-					this.$store.dispatch('AUTO_SET_ALERT')
+					customAlert('이미 좋아요를 누르셨습니다!')
 				} else {
 					// 싫어요
 					try {

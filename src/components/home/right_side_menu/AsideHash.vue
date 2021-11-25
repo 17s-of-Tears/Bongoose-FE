@@ -23,7 +23,8 @@ import { getHashtagRanking } from '@/api/board'
 export default {
 	data() {
 		return {
-			hashs: []
+			hashs: [],
+			throttle: false
 		}
 	},
 
@@ -40,7 +41,13 @@ export default {
 			this.$router.push(`/hashtag/${hash}`)
 		},
 		refresh() {
-			this.HashtagRankInfo()
+			if (!this.throttle) {
+				this.throttle = true
+				this.HashtagRankInfo()
+				setTimeout(() => {
+					this.throttle = false
+				}, 2000)
+			}
 		}
 	},
 

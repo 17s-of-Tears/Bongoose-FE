@@ -22,6 +22,8 @@ export default {
 		}
 	},
 
+	emits: ['remove'],
+
 	methods: {
 		removeImage(index) {
 			this.$emit('remove', index)
