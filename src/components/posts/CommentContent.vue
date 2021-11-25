@@ -7,12 +7,17 @@
 				<span>@{{ userEmail(comment.email) }}</span>
 			</div>
 			<span v-if="!updateShow">{{ comment.content }}</span>
-			<input v-else type="text" v-model="content" />
+			<!-- 수정 input -->
+			<div class="commtent-update" v-else>
+				<input type="text" v-model="content" class="form-control" />
+				<button class="btn btn-primary" @click="commentUpdate">수정</button>
+			</div>
 		</div>
 		<div class="comment-date">
 			<span>{{ commentDate(comment.createdAt) }}</span>
 			<div class="comment-edit" v-if="isMeComment(comment.email)">
-				<span @click="commentUpdate(comment.commentID)">수정하기</span>
+				<span v-if="!updateShow" @click="commentUpdateShow">수정하기</span>
+				<span v-else @click="commentUpdateCancel">수정취소</span>
 				<span data-bs-toggle="modal" data-bs-target="#commentRemoveModal">
 					삭제하기
 				</span>
@@ -30,6 +35,8 @@
 import moment from 'moment'
 import { mapState } from 'vuex'
 import CommentRemoveModal from '@/components/posts/CommentRemoveModal'
+import { updateCommentAPI } from '@/api/board'
+import customAlert from '@/utils/customAlert'
 
 export default {
 	components: {
@@ -62,10 +69,27 @@ export default {
 
 	methods: {
 		// 댓글 수정
-		commentUpdate(comment) {
-			this.content = comment.content
+		commentUpdateShow() {
+			this.content = this.comment.content
 			this.updateShow = true
 		},
+		async commentUpdate() {
+			try {
+				await updateCommentAPI(
+					{ boardID: this.id, commentID: this.comment.commentID },
+					{ content: this.content }
+				)
+				this.$emit('updateComment')
+				customAlert('댓글 수정이 완료되었습니다!')
+				this.updateShow = false
+			} catch (error) {
+				customAlert('댓글 수정을 실패했습니다!')
+			}
+		},
+		commentUpdateCancel() {
+			this.updateShow = false
+		},
+		// 자신의 댓글 확인
 		isMeComment(commentEmail) {
 			return this.user.email === commentEmail
 		},
@@ -113,6 +137,16 @@ export default {
 		:last-child {
 			@include rem(15);
 			color: $gray-600;
+		}
+		.commtent-update {
+			width: 400px;
+			height: 40px;
+			display: flex;
+			gap: 10px;
+			button {
+				width: 60px;
+				color: $white;
+			}
 		}
 	}
 	.comment-date {

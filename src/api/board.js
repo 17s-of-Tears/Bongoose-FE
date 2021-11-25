@@ -4,11 +4,15 @@ const config = {
 	headers: { 'content-type': 'multipart/form-data' }
 }
 
+// boards
 const getBoards = payload => {
 	const { start, end, userId } = payload
 	const params = { start, end, userId }
 	return root.get(`/board`, { params })
 }
+
+// board
+const getBoard = boardId => board.get(`/${boardId}`)
 
 const createBoard = payload => {
 	const { formData } = payload
@@ -18,8 +22,6 @@ const createBoard = payload => {
 		: board.post(`/`, payload)
 	return res
 }
-
-const getBoard = boardId => board.get(`/${boardId}`)
 
 const updateBoard = (boardId, payload) => {
 	const { formData } = payload
@@ -53,6 +55,11 @@ const createComment = payload => {
 	return board.post(`/${boardId}/comment`, { content })
 }
 
+const updateCommentAPI = (payload, content) => {
+	const { boardID, commentID } = payload
+	return board.put(`/${boardID}/comment/${commentID}`, content)
+}
+
 const removeComment = payload => {
 	const { boardID, commentID } = payload
 	return board.delete(`/${boardID}/comment/${commentID}`)
@@ -70,5 +77,6 @@ export {
 	getHashtagRanking,
 	getComments,
 	createComment,
-	removeComment
+	removeComment,
+	updateCommentAPI
 }
