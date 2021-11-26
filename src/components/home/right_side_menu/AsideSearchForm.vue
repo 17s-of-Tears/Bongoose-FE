@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import customAlert from '@/utils/customAlert'
+
 export default {
 	data() {
 		return {
@@ -40,8 +42,7 @@ export default {
 				this.selected = ''
 				this.search = ''
 			} else {
-				this.$store.commit('SET_MESSAGE', '검색 항목 또는 검색어가 필요합니다!')
-				this.$store.dispatch('AUTO_SET_ALERT')
+				customAlert('검색 항목 또는 검색어가 필요합니다!')
 			}
 		}
 	}

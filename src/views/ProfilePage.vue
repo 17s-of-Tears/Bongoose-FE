@@ -14,7 +14,7 @@ import { mapState } from 'vuex'
 import ProfileCard from '@/components/users/ProfileCard'
 import ProfileImgCard from '@/components/users/ProfileImgCard'
 import PostCard from '@/components/posts/PostCard'
-import Skeleton from '@/components/posts/PostCard/Skeleton'
+import Skeleton from '@/components/posts/Skeleton'
 
 export default {
 	components: {

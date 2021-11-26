@@ -32,7 +32,7 @@ const setInterceptors = instance => {
 					config.headers.Authorization = `Bearer ${data}`
 					return instance(config)
 				} catch (error) {
-					console.error(error.response)
+					console.error(error.response.data.message)
 					return Promise.reject(error)
 				}
 			}
