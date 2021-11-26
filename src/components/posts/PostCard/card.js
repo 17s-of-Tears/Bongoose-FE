@@ -5,7 +5,7 @@ import PostContent from '@/components/posts/PostContent'
 import Images from '@/components/posts/Images'
 import PopOver from '@/components/posts/PopOver'
 import Liker from '@/components/posts/Liker'
-import { getComments } from '@/api/board'
+import { getCommentsAPI } from '@/api/board'
 
 export default {
 	components: {
@@ -23,7 +23,7 @@ export default {
 		},
 		board: {
 			type: Object,
-			require: true
+			required: true
 		}
 	},
 
@@ -42,7 +42,7 @@ export default {
 	methods: {
 		async commentCount() {
 			try {
-				const { data } = await getComments(this.board.id)
+				const { data } = await getCommentsAPI(this.board.id)
 				this.count = data.comments.length
 			} catch (error) {
 				console.error(error)
@@ -57,7 +57,7 @@ export default {
 		toUserFindPage(id) {
 			this.router.push(`/user/${id}`)
 		},
-		async getBoards() {
+		async getBoardsAPI() {
 			this.$store.commit('START_LOADING')
 			try {
 				// 로그인 한 유저의 게시물 불러오기
@@ -82,14 +82,14 @@ export default {
 				document.documentElement.scrollHeight - 400
 			if (showTrue) {
 				if (this.hasMorePost) {
-					this.getBoards()
+					this.getBoardsAPI()
 				}
 			}
 		},
 		updatePost() {
 			// 수정 및 삭제 후 게시판 정보 초기화 후에 정보 갱신하기
 			this.$store.commit('board/CLEAR_BOARDS')
-			this.getBoards()
+			this.getBoardsAPI()
 		},
 		// 매개변수 데이터 가공
 		userEmail(email) {

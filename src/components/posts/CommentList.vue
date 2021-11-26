@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getComments } from '@/api/board'
+import { getCommentsAPI } from '@/api/board'
 import CommentForm from '@/components/posts/CommentForm'
 import CommentContent from '@/components/posts/CommentContent'
 
@@ -47,9 +47,9 @@ export default {
 	emits: ['updateComment'],
 
 	methods: {
-		async getCommentsInfo() {
+		async getCommentsAPIInfo() {
 			try {
-				const { data } = await getComments(this.id)
+				const { data } = await getCommentsAPI(this.id)
 				this.comments = data.comments
 				this.$emit('updateComment')
 			} catch (error) {
@@ -57,12 +57,12 @@ export default {
 			}
 		},
 		updateComment() {
-			this.getCommentsInfo()
+			this.getCommentsAPIInfo()
 		}
 	},
 
 	created() {
-		this.getCommentsInfo()
+		this.getCommentsAPIInfo()
 	}
 }
 </script>

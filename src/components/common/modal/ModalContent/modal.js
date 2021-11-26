@@ -1,6 +1,6 @@
 import { mapState } from 'vuex'
 import UploadImages from '@/components/common/modal/UploadImages'
-import { getBoard, createBoard, updateBoard } from '@/api/board'
+import { getBoardAPI, createBoardAPI, updateBoardAPI } from '@/api/board'
 import customAlert from '@/utils/customAlert'
 
 export default {
@@ -42,7 +42,7 @@ export default {
 
 	methods: {
 		/**
-		 * 1. 해시태그 없을 때 오류남
+		 * 1. 해시태그 없을 때 오류남 [o]
 		 * 2. 해시태그 한개만 입력했을 때 문자열로 전송됨
 		 * 3. 이미지수정 문제있음 (기존이미지가 [object Object] 로 됨)
 		 */
@@ -54,26 +54,43 @@ export default {
 				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
 			}
 			if (this.images.length > 0) {
-				Array.from(this.images).forEach(v => formData.append('images', v))
-				Array.from(hashtags).forEach(v => formData.append('hashtags', v))
+				// 수정 모드일때 proxy 객체 엑세스
+				if (this.mode === 'update') {
+					console.log('update', this.images)
+					// const updateImages = JSON.parse(JSON.stringify(this.images))[0]
+					// console.log('update', updateImages)
+					// console.log(typeof updateImages)
+					// updateImages.forEach(v => formData.append('images', v))
+					Array.from(this.images).forEach(v => formData.append('images', v))
+				} else {
+					console.log('writer', this.images)
+					Array.from(this.images).forEach(v => formData.append('images', v))
+				}
+				// 해시태그 있을 때만 formData에 저장
+				hashtags &&
+					Array.from(hashtags).forEach(v => formData.append('hashtags', v))
 				formData.append('content', content)
 				if (this.mode === 'writer') {
-					this.createBoardFunc(formData)
+					// 글 쓰기
+					this.createBoardAPIFunc(formData)
 				} else if (this.mode === 'update') {
-					this.updateBoardFunc(this.id, formData)
+					// 글 수정
+					this.updateBoardAPIFunc(this.id, formData)
 				}
 			} else {
 				if (this.mode === 'writer') {
-					this.createBoardFunc({ content, hashtags })
+					// 글 쓰기
+					this.createBoardAPIFunc({ content, hashtags })
 				} else if (this.mode === 'update') {
-					this.updateBoardFunc(this.id, { content, hashtags })
+					// 글 수정
+					this.updateBoardAPIFunc(this.id, { content, hashtags })
 				}
 			}
 		},
-		// 중복 코드 정리
-		async createBoardFunc(payload) {
+		// 중복 코드 정리 (글 쓰기)
+		async createBoardAPIFunc(payload) {
 			try {
-				await createBoard(payload)
+				await createBoardAPI(payload)
 				customAlert('글 작성이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
@@ -83,9 +100,10 @@ export default {
 				this.boardContent = ''
 			}
 		},
-		async updateBoardFunc(id, data) {
+		// 중복 코드 정리 (글 수정)
+		async updateBoardAPIFunc(id, data) {
 			try {
-				await updateBoard(id, data)
+				await updateBoardAPI(id, data)
 				customAlert('글 수정이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
@@ -101,6 +119,7 @@ export default {
 			if (this.images.length < 4) {
 				// 이미지 썸네일
 				const file = e.target.files[0]
+				console.log(e.target.files[0])
 				this.images.push(file)
 				this.urls.push(URL.createObjectURL(file))
 			} else {
@@ -126,10 +145,11 @@ export default {
 		async getOneBoardInfo() {
 			if (this.mode !== 'update') return null
 			try {
-				const { data } = await getBoard(this.id)
+				const { data } = await getBoardAPI(this.id)
 				const hashtags = data.hashtags.map(v => `#${v.hashtag}`)
 				this.boardContent = data.content + hashtags.join(' ')
-				this.images = data.images
+				console.log(data.images)
+				this.images.push(data.images)
 				this.urls = data.images.map(
 					v => `${process.env.VUE_APP_URI}/${v.imageUrl}`
 				)

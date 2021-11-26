@@ -15,7 +15,7 @@
 				취소하기
 			</button>
 			<button
-				@click="onRemoveBoard"
+				@click="onremoveBoardAPI"
 				type="button"
 				class="btn btn-primary subbtn"
 				data-bs-dismiss="modal"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { removeBoard, removeComment } from '@/api/board'
+import { removeBoardAPI, removeCommentAPI } from '@/api/board'
 import customAlert from '@/utils/customAlert'
 
 export default {
@@ -55,7 +55,7 @@ export default {
 	},
 
 	methods: {
-		async onRemoveBoard() {
+		async onremoveBoardAPI() {
 			if (this.mode === 'post') {
 				// 게시물 삭제
 				this.onRemoveFunc(this.id, 'updatePost')
@@ -71,9 +71,9 @@ export default {
 		async onRemoveFunc(payload, event) {
 			try {
 				if (this.mode === 'post') {
-					await removeBoard(payload)
+					await removeBoardAPI(payload)
 				} else if (this.mode === 'comment') {
-					await removeComment(payload)
+					await removeCommentAPI(payload)
 				}
 				customAlert(`${this.modeInfo}을 삭제했습니다!`)
 				this.$emit(event)

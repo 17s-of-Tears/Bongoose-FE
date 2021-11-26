@@ -6,11 +6,6 @@
 
 [Bongoose-BE 리포지토리](https://github.com/codingjoa/Bongoose-BE)
 
-.env
-```
-VUE_APP_URI=...
-```
-
 ## Index 📖
 1. 팀 포지션
 1. 사용기술
@@ -61,3 +56,15 @@ VUE_APP_URI=...
 ## 화면 미리보기 🖥
 
 준비중 입니다!
+
+## etc... 📝
+
+```
+node -v 
+v16.13.0
+```
+
+```
+.env
+VUE_APP_URI=...
+```

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { getHashtagRanking } from '@/api/board'
+import { getHashtagRankingAPI } from '@/api/board'
 
 export default {
 	data() {
@@ -31,7 +31,7 @@ export default {
 	methods: {
 		async HashtagRankInfo() {
 			try {
-				const { data } = await getHashtagRanking()
+				const { data } = await getHashtagRankingAPI()
 				this.hashs = data
 			} catch (error) {
 				console.error(error)
