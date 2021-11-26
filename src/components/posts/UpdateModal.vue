@@ -31,4 +31,42 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.subbtn {
+	width: 100%;
+	border-radius: 10px;
+	height: 50px;
+}
+.modal-body {
+	position: relative;
+}
+
+.modal-content {
+	height: 450px;
+}
+
+.bi-image {
+	font-size: 25px;
+}
+
+textarea.form-control {
+	height: 200px;
+	margin-bottom: 20px;
+}
+
+.text-black-50 {
+	font-size: 20px;
+}
+
+textarea::placeholder {
+	font-size: 20px;
+}
+
+.bi-image {
+	color: $primary;
+	position: absolute;
+	top: 180px;
+	bottom: 0;
+	right: 30px;
+}
+</style>

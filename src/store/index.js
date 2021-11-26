@@ -1,11 +1,13 @@
 import { createStore } from 'vuex'
 import auth from './auth'
 import board from './board'
+import user from './user'
 
 export default createStore({
 	modules: {
 		auth,
-		board
+		board,
+		user
 	},
 	state: () => ({
 		alert: false,

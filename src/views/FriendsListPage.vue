@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="friends-title">
-			<h2>제봉 님의 친구</h2>
+			<h2>{{ user.name }} 님의 친구</h2>
 			<p>총 16명</p>
 		</div>
 		<div class="friends-list-box">
@@ -12,12 +12,15 @@
 
 <script>
 import FriendCard from '@/components/friend/FriendCard'
+import { mapState } from 'vuex'
 
 export default {
 	components: {
 		FriendCard
 	},
-
+	computed: {
+		...mapState('auth', ['user'])
+	},
 	created() {
 		this.$store.commit('END_LOADING')
 	}
