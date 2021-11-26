@@ -1,13 +1,13 @@
 <template>
-	<div class="profile-card card">
+	<div class="profile-card card" v-for="user in users" :key="user.id">
 		<img
-			src="http://placeimg.com/400/400/any"
+			:src="profileImage(user.imageUrl)"
 			alt="프로필 이미지"
 			class="profile-img"
 		/>
-		<p>제봉 님</p>
-		<p>jebong55@gmail.com</p>
-		<p>1줄 자기소개 영역 입니다!</p>
+		<p>{{ user.name }} 님</p>
+		<p>{{ user.email }}</p>
+		<p>{{ user.description }}</p>
 		<button class="btn btn-primary">{{ btnType }}</button>
 		<button v-if="subBtnType" class="btn btn-secondary">
 			{{ subBtnType }}
@@ -16,7 +16,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+	computed: {
+		...mapState('user', ['users']),
+		imageURI() {
+			return process.env.VUE_APP_URI
+		}
+	},
 	props: {
 		btnType: {
 			type: String,
@@ -26,6 +34,25 @@ export default {
 			type: String,
 			default: ''
 		}
+	},
+	methods: {
+		async findFriend() {
+			try {
+				await this.$store.dispatch('user/GET_USERS')
+			} catch (error) {
+				console.log(error)
+			}
+		},
+		profileImage(image) {
+			return image === null
+				? require('@/assets/images/default.png')
+				: `${this.imageURI}/${image}`
+		}
+	},
+
+	created() {
+		this.$store.commit('END_LOADING')
+		this.findFriend()
 	}
 }
 </script>

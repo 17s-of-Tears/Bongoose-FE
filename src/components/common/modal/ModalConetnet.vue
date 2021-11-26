@@ -1,5 +1,5 @@
 <template>
-	<div class="modal-content">
+	<div class="modal-content container">
 		<div class="modal-header">
 			<h5 class="modal-title">게시물 작성하기</h5>
 			<button

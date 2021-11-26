@@ -127,7 +127,7 @@ textarea::placeholder {
 .bi-image {
 	color: $primary;
 	position: absolute;
-	top: 200px;
+	top: 180px;
 	bottom: 0;
 	right: 30px;
 }

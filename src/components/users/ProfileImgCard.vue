@@ -1,6 +1,6 @@
 <template>
 	<div class="card">
-		<span>제봉님의 최근 사진</span>
+		<span>{{ user.name }}님의 최근 사진</span>
 		<div class="row">
 			<div
 				v-for="index in viewport"
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
 	data() {
 		return {
@@ -30,7 +32,8 @@ export default {
 			} else {
 				return 4
 			}
-		}
+		},
+		...mapState('auth', ['user'])
 	},
 
 	methods: {
