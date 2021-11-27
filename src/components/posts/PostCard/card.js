@@ -1,5 +1,6 @@
 import { mapState } from 'vuex'
 import moment from 'moment'
+import customAlert from '@/utils/customAlert'
 import CommentList from '@/components/posts/CommentList'
 import PostContent from '@/components/posts/PostContent'
 import Images from '@/components/posts/Images'
@@ -24,6 +25,10 @@ export default {
 		board: {
 			type: Object,
 			required: true
+		},
+		keyword: {
+			type: String,
+			default: null
 		}
 	},
 
@@ -60,14 +65,24 @@ export default {
 		async getBoardsAPI() {
 			this.$store.commit('START_LOADING')
 			try {
-				// 로그인 한 유저의 게시물 불러오기
-				if (this.mode === 'profile') {
-					await this.$store.dispatch('board/GET_LOAD_BOARDS', {
-						userId: this.user.id
-					})
-					// 전체 게시물 불러오기
-				} else if (this.mode === 'home') {
-					await this.$store.dispatch('board/GET_LOAD_BOARDS')
+				switch (this.mode) {
+					case 'profile': // 로그인 한 유저의 게시물 불러오기
+						await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+							userId: this.user.id
+						})
+						break
+					case 'search': // 해쉬태그 검색 결과 게시물 불러오기
+						await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+							keyword: this.keyword
+						})
+						break
+					case 'home': // 전체 게시물 불러오기
+						await this.$store.dispatch('board/GET_LOAD_BOARDS')
+						break
+					default:
+						this.$store.commit('END_LOADING')
+						customAlert('게시물 불러오기를 실패했습니다')
+						break
 				}
 			} catch (error) {
 				console.error(error)

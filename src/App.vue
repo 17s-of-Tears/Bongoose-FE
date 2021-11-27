@@ -5,7 +5,6 @@
 		<LoginNav />
 		<RouterView />
 	</template>
-
 	<template v-else-if="isHomePage && !NotFoundPage">
 		<div class="row">
 			<div class="col-12 col-lg-3 responsive-side">
@@ -23,12 +22,10 @@
 			</div>
 		</div>
 	</template>
-	<!-- 사이드바 -->
+	<!-- 로그인 페이지 -->
 	<template v-else>
 		<RouterView />
 	</template>
-	<!-- 로그인 페이지 -->
-
 	<!-- 공통 컴포넌트 -->
 	<TopBtn v-if="isTopBtn" :page="routerName" />
 	<transition name="fade">

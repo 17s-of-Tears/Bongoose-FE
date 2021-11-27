@@ -53,6 +53,7 @@ const routes = [
 	},
 	{
 		path: '/hashtag/:id',
+		name: 'hashtag',
 		component: () => import('@/views/HashTagPage'),
 		beforeEnter
 	},

@@ -6,9 +6,9 @@ export default {
 		const { start, end, hasMorePost } = state
 		if (hasMorePost) {
 			if (payload !== undefined) {
-				// 로그인 한 유저의 게시물 불러오기
-				const { userId } = payload
-				const { data } = await getBoardsAPI({ start, end, userId })
+				// 유저 또는 해시태그 게시물 검색결과
+				const { userId, keyword } = payload
+				const { data } = await getBoardsAPI({ start, end, userId, keyword })
 				commit('SET_LOAD_BOARDS', data)
 				return data
 			} else {

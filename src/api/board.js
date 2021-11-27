@@ -1,13 +1,13 @@
 import { root, board } from './index'
 
-const config = {
+const formDataConfig = {
 	headers: { 'content-type': 'multipart/form-data' }
 }
 
 // boards
 const getBoardsAPI = payload => {
-	const { start, end, userId } = payload
-	const params = { start, end, userId }
+	const { start, end, userId, keyword } = payload
+	const params = { start, end, userId, keyword }
 	return root.get(`/board`, { params })
 }
 
@@ -17,10 +17,9 @@ const getBoardAPI = boardId => board.get(`/${boardId}`)
 const createBoardAPI = payload => {
 	const { formData } = payload
 	// 이미지 업로드 분기처리
-	const res = formData
-		? board.post(`/`, payload, config)
+	return formData
+		? board.post(`/`, payload, formDataConfig)
 		: board.post(`/`, payload)
-	return res
 }
 
 const updateBoardAPI = (boardId, payload) => {
@@ -29,10 +28,9 @@ const updateBoardAPI = (boardId, payload) => {
 	console.log(payload)
 	console.log(formData)
 	// 이미지 업로드 분기처리
-	const res = formData
-		? board.put(`/${boardId}`, payload, config)
+	return formData
+		? board.put(`/${boardId}`, payload, formDataConfig)
 		: board.put(`/${boardId}`, payload)
-	return res
 }
 
 const removeBoardAPI = boardId => board.delete(`/${boardId}`)
