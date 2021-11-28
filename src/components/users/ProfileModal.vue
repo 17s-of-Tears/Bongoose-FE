@@ -143,7 +143,6 @@ export default {
 			// 이미지 썸네일
 			const file = e.target.files[0]
 			this.image = file
-			console.log(this.image)
 			this.url = URL.createObjectURL(file)
 		}
 	}

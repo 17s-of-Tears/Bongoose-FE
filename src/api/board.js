@@ -24,9 +24,6 @@ const createBoardAPI = payload => {
 
 const updateBoardAPI = (boardId, payload) => {
 	const { formData } = payload
-	console.log(boardId)
-	console.log(payload)
-	console.log(formData)
 	// 이미지 업로드 분기처리
 	return formData
 		? board.put(`/${boardId}`, payload, formDataConfig)

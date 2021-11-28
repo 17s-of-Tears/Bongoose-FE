@@ -25,6 +25,8 @@ export default {
 		return {
 			boardContent: '',
 			images: [],
+			getImageInfo: [],
+			imageId: [],
 			urls: [],
 			imageValid: false
 		}
@@ -41,35 +43,26 @@ export default {
 	},
 
 	methods: {
-		/**
-		 * 1. 해시태그 없을 때 오류남 [o]
-		 * 2. 해시태그 한개만 입력했을 때 문자열로 전송됨
-		 * 3. 이미지수정 문제있음 (기존이미지가 [object Object] 로 됨)
-		 */
 		boardWriting() {
-			let hashtags = null
-			const content = this.boardContent.replace(/#[^\s#]+/g, '')
 			const formData = new FormData()
+			// 해시태그 제외한 내용을 content에 저장
+			const content = this.boardContent.replace(/#[^\s#]+/g, '')
+			let hashtags = null
+			// 해시태그 있을 때 해시태그 추출
 			if (this.boardContent.includes('#')) {
 				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
 			}
-			if (this.images.length > 0) {
-				// 수정 모드일때 proxy 객체 엑세스
-				if (this.mode === 'update') {
-					console.log('update', this.images)
-					// const updateImages = JSON.parse(JSON.stringify(this.images))[0]
-					// console.log('update', updateImages)
-					// console.log(typeof updateImages)
-					// updateImages.forEach(v => formData.append('images', v))
-					Array.from(this.images).forEach(v => formData.append('images', v))
-				} else {
-					console.log('writer', this.images)
-					Array.from(this.images).forEach(v => formData.append('images', v))
-				}
+			console.log(hashtags)
+			// 이미지정보가 있을 경우 (multipart/form-data)
+			if (this.images.length > 0 || this.getImageInfo.length > 0) {
+				Array.from(this.images).forEach(v => formData.append('images', v))
 				// 해시태그 있을 때만 formData에 저장
 				hashtags &&
 					Array.from(hashtags).forEach(v => formData.append('hashtags', v))
 				formData.append('content', content)
+				// 이미지 수정
+				this.imageId.forEach(v => formData.append('overwrite', v))
+				console.log(formData.getAll('overwrite'))
 				if (this.mode === 'writer') {
 					// 글 쓰기
 					this.createBoardAPIFunc(formData)
@@ -77,6 +70,7 @@ export default {
 					// 글 수정
 					this.updateBoardAPIFunc(this.id, formData)
 				}
+				// 이미지가 없는 경우 (application/json)
 			} else {
 				if (this.mode === 'writer') {
 					// 글 쓰기
@@ -119,7 +113,6 @@ export default {
 			if (this.images.length < 4) {
 				// 이미지 썸네일
 				const file = e.target.files[0]
-				console.log(e.target.files[0])
 				this.images.push(file)
 				this.urls.push(URL.createObjectURL(file))
 			} else {
@@ -132,6 +125,7 @@ export default {
 		// 해당 이미지 삭제
 		remove(index) {
 			this.images.splice(index, 1)
+			this.imageId.splice(index, 1)
 			this.urls.splice(index, 1)
 		},
 		// 내용 값 초기화
@@ -142,14 +136,16 @@ export default {
 				this.urls = []
 			}
 		},
+		// 현재 게시물 정보 가져오기
 		async getOneBoardInfo() {
 			if (this.mode !== 'update') return null
 			try {
 				const { data } = await getBoardAPI(this.id)
 				const hashtags = data.hashtags.map(v => `#${v.hashtag}`)
 				this.boardContent = data.content + hashtags.join(' ')
-				console.log(data.images)
-				this.images.push(data.images)
+				this.getImageInfo.push(data.images)
+				data.images.forEach(v => this.imageId.push(v.id))
+				console.log(this.imageId)
 				this.urls = data.images.map(
 					v => `${process.env.VUE_APP_URI}/${v.imageUrl}`
 				)

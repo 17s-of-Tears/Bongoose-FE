@@ -13,6 +13,7 @@
 		>
 			프로필 수정
 		</button>
+		{{ profileImage }}
 		<ProfileModal :user="user" />
 	</div>
 </template>
@@ -28,9 +29,19 @@ export default {
 
 	computed: {
 		...mapState('auth', ['user']),
+		imageURI() {
+			return process.env.VUE_APP_URI
+		},
 		profileImage() {
-			return this.user.imageUrl || require('@/assets/images/default.png')
+			return (
+				`${this.imageURI}/${this.user.imageUrl}` ||
+				require('@/assets/images/default.png')
+			)
 		}
+	},
+
+	created() {
+		console.log(this.profileImage)
 	}
 }
 </script>

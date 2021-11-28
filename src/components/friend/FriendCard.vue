@@ -40,7 +40,7 @@ export default {
 			try {
 				await this.$store.dispatch('user/GET_USERS')
 			} catch (error) {
-				console.log(error)
+				console.error(error)
 			}
 		},
 		profileImage(image) {
