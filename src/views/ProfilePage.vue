@@ -83,12 +83,6 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		gap: 30px;
-		:first-child {
-			flex: 1 1 0;
-		}
-		:last-child {
-			flex: 2 1 0;
-		}
 		@include media-breakpoint-down(sm) {
 			display: block;
 			:first-child {

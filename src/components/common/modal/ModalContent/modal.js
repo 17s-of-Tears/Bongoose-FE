@@ -56,28 +56,23 @@ export default {
 			// 이미지정보가 있을 경우 (multipart/form-data)
 			if (this.images.length > 0 || this.getImageInfo.length > 0) {
 				Array.from(this.images).forEach(v => formData.append('images', v))
-				// 해시태그 있을 때만 formData에 저장
-				hashtags &&
+				hashtags && // 해시태그 있을 때만 formData에 저장
 					Array.from(hashtags).forEach(v => formData.append('hashtags', v))
 				formData.append('content', content)
 				// 이미지 수정
 				this.imageId.forEach(v => formData.append('overwrite', v))
 				console.log(formData.getAll('overwrite'))
 				if (this.mode === 'writer') {
-					// 글 쓰기
-					this.createBoardAPIFunc(formData)
+					this.createBoardAPIFunc(formData) // 글 쓰기
 				} else if (this.mode === 'update') {
-					// 글 수정
-					this.updateBoardAPIFunc(this.id, formData)
+					this.updateBoardAPIFunc(this.id, formData) // 글 수정
 				}
 				// 이미지가 없는 경우 (application/json)
 			} else {
 				if (this.mode === 'writer') {
-					// 글 쓰기
-					this.createBoardAPIFunc({ content, hashtags })
+					this.createBoardAPIFunc({ content, hashtags }) // 글 쓰기
 				} else if (this.mode === 'update') {
-					// 글 수정
-					this.updateBoardAPIFunc(this.id, { content, hashtags })
+					this.updateBoardAPIFunc(this.id, { content, hashtags }) // 글 수정
 				}
 			}
 		},
@@ -88,6 +83,7 @@ export default {
 				customAlert('글 작성이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
+				this.$store.dispatch('auth/USER_INFO')
 			} catch {
 				customAlert('글 작성이 실패하였습니다.')
 			} finally {
@@ -101,6 +97,7 @@ export default {
 				customAlert('글 수정이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
+				this.$store.dispatch('auth/USER_INFO')
 			} catch {
 				customAlert('글 수정이 실패하였습니다.')
 			}

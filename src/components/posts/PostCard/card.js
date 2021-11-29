@@ -101,10 +101,11 @@ export default {
 				}
 			}
 		},
-		updatePost() {
+		async updatePost() {
 			// 수정 및 삭제 후 게시판 정보 초기화 후에 정보 갱신하기
 			this.$store.commit('board/CLEAR_BOARDS')
 			this.getBoardsAPI()
+			this.$store.dispatch('auth/USER_INFO')
 		},
 		// 매개변수 데이터 가공
 		userEmail(email) {

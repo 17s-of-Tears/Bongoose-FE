@@ -13,7 +13,6 @@
 		>
 			프로필 수정
 		</button>
-		{{ profileImage }}
 		<ProfileModal :user="user" />
 	</div>
 </template>
@@ -33,15 +32,12 @@ export default {
 			return process.env.VUE_APP_URI
 		},
 		profileImage() {
-			return (
-				`${this.imageURI}/${this.user.imageUrl}` ||
-				require('@/assets/images/default.png')
-			)
+			if (this.user.imageUrl) {
+				return `${this.imageURI}/${this.user.imageUrl}`
+			} else {
+				return require('@/assets/images/default.png')
+			}
 		}
-	},
-
-	created() {
-		console.log(this.profileImage)
 	}
 }
 </script>
@@ -49,16 +45,16 @@ export default {
 <style lang="scss" scoped>
 .profile-card {
 	@include rem(20);
+	width: 300px;
 	color: $gray-700;
 	padding: 15px 30px;
 	border-radius: 20px !important;
 	display: flex;
 	align-items: center;
 	gap: 15px;
-
 	.profile-img {
-		width: 100px;
-		height: 100px;
+		width: 100px !important;
+		height: 100px !important;
 		display: block;
 		border-radius: 50%;
 		background: $gray-500;
