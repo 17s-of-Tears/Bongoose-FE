@@ -60,6 +60,7 @@ export default {
 		},
 		created() {
 			this.getUsers()
+			console.log() //푸쉬되나 재확인
 		}
 	}
 }
