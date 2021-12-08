@@ -28,8 +28,15 @@ export default {
 
 	computed: {
 		...mapState('auth', ['user']),
+		imageURI() {
+			return process.env.VUE_APP_URI
+		},
 		profileImage() {
-			return this.user.imageUrl || require('@/assets/images/default.png')
+			if (this.user.imageUrl) {
+				return `${this.imageURI}/${this.user.imageUrl}`
+			} else {
+				return require('@/assets/images/default.png')
+			}
 		}
 	}
 }
@@ -38,16 +45,16 @@ export default {
 <style lang="scss" scoped>
 .profile-card {
 	@include rem(20);
+	width: 300px;
 	color: $gray-700;
 	padding: 15px 30px;
 	border-radius: 20px !important;
 	display: flex;
 	align-items: center;
 	gap: 15px;
-
 	.profile-img {
-		width: 100px;
-		height: 100px;
+		width: 100px !important;
+		height: 100px !important;
 		display: block;
 		border-radius: 50%;
 		background: $gray-500;

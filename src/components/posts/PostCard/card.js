@@ -1,11 +1,12 @@
 import { mapState } from 'vuex'
 import moment from 'moment'
+import customAlert from '@/utils/customAlert'
 import CommentList from '@/components/posts/CommentList'
 import PostContent from '@/components/posts/PostContent'
 import Images from '@/components/posts/Images'
 import PopOver from '@/components/posts/PopOver'
 import Liker from '@/components/posts/Liker'
-import { getComments } from '@/api/board'
+import { getCommentsAPI } from '@/api/board'
 
 export default {
 	components: {
@@ -23,7 +24,11 @@ export default {
 		},
 		board: {
 			type: Object,
-			require: true
+			required: true
+		},
+		keyword: {
+			type: String,
+			default: null
 		}
 	},
 
@@ -42,7 +47,7 @@ export default {
 	methods: {
 		async commentCount() {
 			try {
-				const { data } = await getComments(this.board.id)
+				const { data } = await getCommentsAPI(this.board.id)
 				this.count = data.comments.length
 			} catch (error) {
 				console.error(error)
@@ -57,17 +62,27 @@ export default {
 		toUserFindPage(id) {
 			this.router.push(`/user/${id}`)
 		},
-		async getBoards() {
+		async getBoardsAPI() {
 			this.$store.commit('START_LOADING')
 			try {
-				// 로그인 한 유저의 게시물 불러오기
-				if (this.mode === 'profile') {
-					await this.$store.dispatch('board/GET_LOAD_BOARDS', {
-						userId: this.user.id
-					})
-					// 전체 게시물 불러오기
-				} else if (this.mode === 'home') {
-					await this.$store.dispatch('board/GET_LOAD_BOARDS')
+				switch (this.mode) {
+					case 'profile': // 로그인 한 유저의 게시물 불러오기
+						await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+							userId: this.user.id
+						})
+						break
+					case 'search': // 해쉬태그 검색 결과 게시물 불러오기
+						await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+							keyword: this.keyword
+						})
+						break
+					case 'home': // 전체 게시물 불러오기
+						await this.$store.dispatch('board/GET_LOAD_BOARDS')
+						break
+					default:
+						this.$store.commit('END_LOADING')
+						customAlert('게시물 불러오기를 실패했습니다')
+						break
 				}
 			} catch (error) {
 				console.error(error)
@@ -82,14 +97,15 @@ export default {
 				document.documentElement.scrollHeight - 400
 			if (showTrue) {
 				if (this.hasMorePost) {
-					this.getBoards()
+					this.getBoardsAPI()
 				}
 			}
 		},
-		updatePost() {
+		async updatePost() {
 			// 수정 및 삭제 후 게시판 정보 초기화 후에 정보 갱신하기
 			this.$store.commit('board/CLEAR_BOARDS')
-			this.getBoards()
+			this.getBoardsAPI()
+			this.$store.dispatch('auth/USER_INFO')
 		},
 		// 매개변수 데이터 가공
 		userEmail(email) {

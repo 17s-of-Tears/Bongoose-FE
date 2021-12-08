@@ -24,8 +24,15 @@ export default {
 			const str = JSON.stringify(user)
 			return JSON.parse(str)
 		},
+		imageURI() {
+			return process.env.VUE_APP_URI
+		},
 		profileImage() {
-			return this.userInfo.imageUrl || require('@/assets/images/default.png')
+			if (this.userInfo.imageUrl) {
+				return `${this.imageURI}/${this.userInfo.imageUrl}`
+			} else {
+				return require('@/assets/images/default.png')
+			}
 		},
 		userEmail() {
 			// 초기 랜더 에러 방지

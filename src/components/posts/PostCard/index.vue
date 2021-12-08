@@ -5,15 +5,22 @@
 				<img :src="profileImage()" alt="프로필 사진" class="user-img" />
 				<div class="user-content">
 					<div class="user-info">
-						<div class="user-nickname" @click="toUserFindPage(board.userName)">
-							{{ board.userName }}
+						<div
+							class="user-nickname"
+							@click="toUserFindPage(board.userName || board.name)"
+						>
+							{{ board.userName || board.name }}
 						</div>
-						<div class="user-id">@{{ userEmail(board.userEmail) }}</div>
+						<div class="user-id">
+							@{{ userEmail(board.userEmail || board.userEmail) }}
+						</div>
 					</div>
 					<div class="user-date">{{ boardDate(board.createdAt) }}</div>
 				</div>
 				<PopOver
-					v-if="mode === 'profile' || myPost(board.userEmail)"
+					v-if="
+						mode === 'profile' || myPost(board.userEmail || board.userEmail)
+					"
 					@updatePost="updatePost"
 					:id="board.id"
 				/>

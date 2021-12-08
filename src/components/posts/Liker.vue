@@ -30,10 +30,10 @@
 <script>
 import customAlert from '@/utils/customAlert'
 import {
-	deleteLikeInfo,
-	getBoard,
-	getLikeInfo,
-	updateLikeInfo
+	deleteLikeInfoAPI,
+	getBoardAPI,
+	getLikeInfoAPI,
+	updateLikeInfoAPI
 } from '@/api/board'
 
 export default {
@@ -57,7 +57,7 @@ export default {
 		// 게시글 정보 (좋아요, 싫어요) 불러오기
 		async setBoardInfo() {
 			try {
-				const { data } = await getBoard(this.id)
+				const { data } = await getBoardAPI(this.id)
 				this.likes = data.likes
 				this.dislikes = data.dislikes
 				this.boardLike()
@@ -68,7 +68,7 @@ export default {
 		// 좋아요 여부 상태 정보 불러오기
 		async boardLike() {
 			try {
-				const { data } = await getLikeInfo(this.id)
+				const { data } = await getLikeInfoAPI(this.id)
 				if (data.like !== null) {
 					data.like ? (this.mylike = true) : (this.mydislike = true)
 				}
@@ -85,7 +85,7 @@ export default {
 				} else {
 					// 좋아요
 					try {
-						await updateLikeInfo({ boardId: this.id, like: true })
+						await updateLikeInfoAPI({ boardId: this.id, like: true })
 						this.mylike = true
 					} catch (error) {
 						console.error(error)
@@ -98,7 +98,7 @@ export default {
 				} else {
 					// 싫어요
 					try {
-						await updateLikeInfo({ boardId: this.id, like: false })
+						await updateLikeInfoAPI({ boardId: this.id, like: false })
 						this.mydislike = true
 					} catch (error) {
 						console.error(error)
@@ -111,7 +111,7 @@ export default {
 			if (mode === 'like') {
 				// 좋아요 취소
 				try {
-					await deleteLikeInfo(this.id)
+					await deleteLikeInfoAPI(this.id)
 					this.mylike = null
 				} catch (error) {
 					console.error(error)
@@ -119,7 +119,7 @@ export default {
 			} else if (mode === 'dislike') {
 				// 싫어요 취소
 				try {
-					await deleteLikeInfo(this.id)
+					await deleteLikeInfoAPI(this.id)
 					this.mydislike = null
 				} catch (error) {
 					console.error(error)

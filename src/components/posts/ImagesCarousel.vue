@@ -1,11 +1,15 @@
 <template>
-	<div id="contentCarousel" class="carousel slide" data-bs-ride="carousel">
+	<div
+		:id="`contentCarousel${imageId}`"
+		class="carousel slide"
+		data-bs-ride="carousel"
+	>
 		<div class="carousel-indicators">
 			<button
 				v-for="(image, index) in images"
 				:key="index"
 				type="button"
-				data-bs-target="#contentCarousel"
+				:data-bs-target="`#contentCarousel${imageId}`"
 				:data-bs-slide-to="index"
 				:aria-label="`Slide ${index + 1}`"
 				:class="activeClass(index)"
@@ -31,7 +35,7 @@
 			:key="carousel.type"
 			:class="`carousel-control-${carousel.type}`"
 			type="button"
-			data-bs-target="#contentCarousel"
+			:data-bs-target="`#contentCarousel${imageId}`"
 			:data-bs-slide="carousel.type"
 		>
 			<span
@@ -64,6 +68,10 @@ export default {
 	computed: {
 		imageURI() {
 			return process.env.VUE_APP_URI
+		},
+		imageId() {
+			// 고유 값을 만들기 위해 랜덤 문자열 뽑기
+			return (((1 + Math.random()) * 0x10000) | 0).toString(8).substring(1)
 		}
 	},
 

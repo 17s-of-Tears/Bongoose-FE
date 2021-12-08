@@ -3,11 +3,14 @@
 		<span>{{ user.name }}님의 최근 사진</span>
 		<div class="row">
 			<div
-				v-for="index in viewport"
+				v-for="(imageUrl, index) in imageUrls"
 				:key="index"
 				class="col-lg-3 col-sm-4 image-box"
 			>
-				<img src="http://placeimg.com/100/100/any" alt="최근사진" />
+				<img
+					:src="profileImage(imageUrl)"
+					:alt="`${user.name}님의 최근 사진`"
+				/>
 			</div>
 		</div>
 	</div>
@@ -19,41 +22,57 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			width: window.innerWidth
+			imageUrls: []
 		}
 	},
 
 	computed: {
-		viewport() {
-			if (this.width >= 1100) {
-				return 8
-			} else if (this.width >= 584) {
-				return 6
-			} else {
-				return 4
-			}
-		},
-		...mapState('auth', ['user'])
-	},
-
-	methods: {
-		handleResize() {
-			this.width = window.innerWidth
+		...mapState('auth', ['user']),
+		imageURI() {
+			return process.env.VUE_APP_URI
 		}
 	},
 
-	mounted() {
-		window.addEventListener('resize', this.handleResize)
+	watch: {
+		user(val) {
+			console.log('test', val)
+			this.setImagesInfo()
+		}
 	},
 
-	beforeUnmount() {
-		window.removeEventListener('resize', this.handleResize)
+	methods: {
+		// 최근 사진 8장 뽑는 함수, 8장 이하일 때 부족한 만큼 default 이미지 채우기
+		setImagesInfo() {
+			const imageUrlsInfo = new Array(8).fill('default')
+			const test = this.user.images.reverse()
+			console.log(test)
+			for (let i = 0; i < imageUrlsInfo.length; i += 1) {
+				if (this.user.images[i]) {
+					imageUrlsInfo.unshift(this.user.images[i].imageUrl)
+					imageUrlsInfo.pop()
+				}
+			}
+			this.imageUrls = imageUrlsInfo
+		},
+		// 이미지 데이터 가공
+		profileImage(imageUrl) {
+			if (imageUrl === 'default') {
+				return require('@/assets/images/default_image.png')
+			} else {
+				return `${this.imageURI}/${imageUrl}`
+			}
+		}
+	},
+
+	created() {
+		this.setImagesInfo()
 	}
 }
 </script>
 
 <style lang="scss" scoped>
 .card {
+	width: 600px;
 	padding: 25px;
 	border-radius: 20px !important;
 	> span {
@@ -77,6 +96,7 @@ export default {
 				height: $width;
 				border-radius: 20px;
 				object-fit: cover;
+				box-shadow: 5px 5px 12px 0 #bbb;
 				@media (max-width: 1500px) {
 					width: 80px;
 				}
