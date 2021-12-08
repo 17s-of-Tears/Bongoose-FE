@@ -6,16 +6,16 @@
 				<i class="bi bi-chevron-right" @click="toFriendPage" />
 			</span>
 		</div>
-		<div v-for="index in 3" :key="index" class="friend-items">
+		<div v-for="user in users" :key="user.id" class="friend-items">
 			<div class="friend-item">
 				<img
-					src="http://placeimg.com/400/400/any"
+					:src="profileImage(user.imageUrl)"
 					alt="프로필 이미지"
 					class="friend-img"
 				/>
 				<div class="friend-info">
-					<span>제봉팍</span>
-					<span>@jebong2323</span>
+					<span>{{ user.name }}</span>
+					<span>{{ user.email }}</span>
 				</div>
 			</div>
 			<i class="bi bi-plus-lg"></i>
@@ -24,10 +24,43 @@
 </template>
 
 <script>
+import { getRandomFriends } from '@/api/user'
+import { mapState } from 'vuex'
+
 export default {
+	data() {
+		return {
+			users: []
+		}
+	},
+	computed: {
+		...mapState('user', ['users']),
+		imageURI() {
+			return process.env.VUE_APP_URI
+		}
+	},
 	methods: {
 		toFriendPage() {
 			this.$router.push('/friends_find')
+		},
+		async getUsers() {
+			try {
+				const { data } = await getRandomFriends()
+				console.log(data)
+				this.users = data
+				console.log(this.users)
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		profileImage(image) {
+			return image === null
+				? require('@/assets/images/default.png')
+				: `${this.imageURI}/${image}`
+		},
+		created() {
+			this.getUsers()
+			console.log() //푸쉬되나 재확인
 		}
 	}
 }
