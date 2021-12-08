@@ -85,7 +85,7 @@ export default {
 				} else {
 					// 좋아요
 					try {
-						await updateLikeInfoAPI({ boardId: this.id, like: true })
+						await updateLikeInfoAPI({ boardId: this.id }, { like: true })
 						this.mylike = true
 					} catch (error) {
 						console.error(error)

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, NavigationGuardNext } from 'vue-router'
 import store from '@/store'
 
 const routes = [
@@ -9,14 +9,14 @@ const routes = [
 	{
 		path: '/home',
 		name: 'home',
-		component: () => import('@/views/HomePage'),
+		component: () => import('@/views/HomePage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/login',
 		name: 'login',
-		component: () => import('@/views/LoginPage'),
-		beforeEnter: (to, from, next) => {
+		component: () => import('@/views/LoginPage.vue'),
+		beforeEnter: (to: any, from: any, next: NavigationGuardNext) => {
 			store.commit('START_LOADING')
 			store.getters['auth/isLogged'] ? next('/home') : next()
 		}
@@ -24,8 +24,8 @@ const routes = [
 	{
 		path: '/signup',
 		name: 'signup',
-		component: () => import('@/views/SignUpPage'),
-		beforeEnter: (to, from, next) => {
+		component: () => import('@/views/SignUpPage.vue'),
+		beforeEnter: (to: any, from: any, next: NavigationGuardNext) => {
 			store.commit('START_LOADING')
 			store.getters['auth/isLogged'] ? next('/home') : next()
 		}
@@ -33,40 +33,40 @@ const routes = [
 	{
 		path: '/profile',
 		name: 'profile',
-		component: () => import('@/views/ProfilePage'),
+		component: () => import('@/views/ProfilePage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/chat',
-		component: () => import('@/views/ChatPage'),
+		component: () => import('@/views/ChatPage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/friends_list',
-		component: () => import('@/views/FriendsListPage'),
+		component: () => import('@/views/FriendsListPage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/friends_find',
-		component: () => import('@/views/FriendsFindPage'),
+		component: () => import('@/views/FriendsFindPage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/hashtag/:id',
 		name: 'hashtag',
-		component: () => import('@/views/HashTagPage'),
+		component: () => import('@/views/HashTagPage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/user/:id',
-		component: () => import('@/views/UserSearchPage'),
+		component: () => import('@/views/UserSearchPage.vue'),
 		beforeEnter
 	},
 	{
 		path: '/:pathMatch(.*)*',
 		name: 'NotFound',
-		component: () => import('@/views/NotFound'),
-		beforeEnter: (to, from, next) => {
+		component: () => import('@/views/NotFound.vue'),
+		beforeEnter: (to: any, from: any, next: NavigationGuardNext) => {
 			store.commit('START_LOADING')
 			next()
 		}
@@ -81,7 +81,7 @@ const router = createRouter({
 	routes
 })
 
-function beforeEnter(to, from, next) {
+function beforeEnter(to: any, from: any, next: NavigationGuardNext) {
 	store.commit('START_LOADING')
 	store.getters['auth/isLogged'] ? next() : next('/login')
 }

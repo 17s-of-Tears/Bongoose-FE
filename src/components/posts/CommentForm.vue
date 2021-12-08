@@ -40,7 +40,7 @@ export default {
 	methods: {
 		async onSubmitComment() {
 			try {
-				await createCommentAPI({ boardId: this.id, content: this.comment })
+				await createCommentAPI({ boardId: this.id }, { content: this.comment })
 				this.comment = ''
 				this.$emit('updateComment')
 				customAlert('댓글이 등록되었습니다!')

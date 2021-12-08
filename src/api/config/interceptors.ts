@@ -4,7 +4,7 @@ import {
 	saveAuthCookie
 } from '@/utils/cookies'
 import store from '@/store'
-import { refreshUser } from './sign'
+import { refreshUser } from '@/api/sign'
 
 const setInterceptors = instance => {
 	instance.interceptors.request.use(
@@ -27,11 +27,11 @@ const setInterceptors = instance => {
 				try {
 					deleteAuthCookie()
 					const { data } = await refreshUser()
-					saveAuthCookie(data)
-					store.commit('auth/SET_TOKEN', data)
-					config.headers.Authorization = `Bearer ${data}`
+					saveAuthCookie(data.accessToken)
+					store.commit('auth/SET_TOKEN', data.accessToken)
+					config.headers.Authorization = `Bearer ${data.accessToken}`
 					return instance(config)
-				} catch (error) {
+				} catch (error: any) {
 					console.error(error.response.data.message)
 					return Promise.reject(error)
 				}
