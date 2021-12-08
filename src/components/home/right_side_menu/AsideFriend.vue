@@ -30,15 +30,17 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			users: []
+			usersInfo: []
 		}
 	},
+
 	computed: {
 		...mapState('user', ['users']),
 		imageURI() {
 			return process.env.VUE_APP_URI
 		}
 	},
+
 	methods: {
 		toFriendPage() {
 			this.$router.push('/friends_find')
@@ -46,9 +48,7 @@ export default {
 		async getUsers() {
 			try {
 				const { data } = await getRandomFriends()
-				console.log(data)
-				this.users = data
-				console.log(this.users)
+				this.usersInfo = data
 			} catch (error) {
 				console.error(error)
 			}
