@@ -9,12 +9,15 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	created() {
-		this.$store.commit('END_LOADING')
+		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

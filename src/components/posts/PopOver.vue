@@ -12,9 +12,7 @@
 				</li>
 				<!-- 삭제 버튼 -->
 				<li class="list-group-item popover-list-item">
-					<span data-bs-toggle="modal" data-bs-target="#removeModal">
-						<i class="bi bi-trash2-fill"></i> 삭제하기
-					</span>
+					<span data-bs-toggle="modal" data-bs-target="#removeModal"> <i class="bi bi-trash2-fill"></i> 삭제하기 </span>
 					<RemoveModal @updatePost="updatePost" :id="id" />
 				</li>
 			</ul>
@@ -22,11 +20,12 @@
 	</div>
 </template>
 
-<script>
-import UpdateModal from '@/components/posts/UpdateModal'
-import RemoveModal from '@/components/posts/RemoveModal'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import UpdateModal from '@/components/posts/UpdateModal.vue'
+import RemoveModal from '@/components/posts/RemoveModal.vue'
 
-export default {
+export default defineComponent({
 	props: {
 		id: {
 			type: Number,
@@ -52,11 +51,11 @@ export default {
 			this.isShow = !this.isShow
 		},
 		updatePost() {
-			this.isListShow = false
+			this.isShow = false
 			this.$emit('updatePost')
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,42 +1,22 @@
 <template>
 	<div class="content-like">
 		<!-- 좋아여 -->
-		<i
-			v-if="!mylike"
-			@click="onClickLike('like')"
-			class="bi bi-emoji-smile-fill"
-		></i>
-		<i
-			v-else
-			@click="onClickUnLike('like')"
-			class="active bi bi-emoji-smile-fill"
-		></i>
+		<i v-if="!mylike" @click="onClickLike('like')" class="bi bi-emoji-smile-fill"></i>
+		<i v-else @click="onClickUnLike('like')" class="active bi bi-emoji-smile-fill"></i>
 		<p>{{ likes }} &nbsp;</p>
 		<!-- 싫어여 -->
-		<i
-			v-if="!mydislike"
-			@click="onClickLike('dislike')"
-			class="bi bi-emoji-frown-fill"
-		></i>
-		<i
-			v-else
-			@click="onClickUnLike('dislike')"
-			class="active bi bi-emoji-frown-fill"
-		></i>
+		<i v-if="!mydislike" @click="onClickLike('dislike')" class="bi bi-emoji-frown-fill"></i>
+		<i v-else @click="onClickUnLike('dislike')" class="active bi bi-emoji-frown-fill"></i>
 		<p>{{ dislikes }}</p>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import customAlert from '@/utils/customAlert'
-import {
-	deleteLikeInfoAPI,
-	getBoardAPI,
-	getLikeInfoAPI,
-	updateLikeInfoAPI
-} from '@/api/board'
+import { deleteLikeInfoAPI, getBoardAPI, getLikeInfoAPI, updateLikeInfoAPI } from '@/api/board'
 
-export default {
+export default defineComponent({
 	props: {
 		id: {
 			type: Number,
@@ -48,8 +28,8 @@ export default {
 		return {
 			likes: 0,
 			dislikes: 0,
-			mylike: null,
-			mydislike: null
+			mylike: null as boolean | null,
+			mydislike: null as boolean | null
 		}
 	},
 
@@ -77,7 +57,7 @@ export default {
 			}
 		},
 		// 버튼별로 분기처리
-		async onClickLike(mode) {
+		async onClickLike(mode: string) {
 			if (mode === 'like') {
 				// 이미 싫어요를 했는지 검사
 				if (this.mydislike) {
@@ -107,7 +87,7 @@ export default {
 			}
 			this.setBoardInfo()
 		},
-		async onClickUnLike(mode) {
+		async onClickUnLike(mode: string) {
 			if (mode === 'like') {
 				// 좋아요 취소
 				try {
@@ -132,7 +112,7 @@ export default {
 	created() {
 		this.setBoardInfo()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

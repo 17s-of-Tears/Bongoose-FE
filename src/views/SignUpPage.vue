@@ -10,11 +10,13 @@
 	</transition>
 </template>
 
-<script>
-import Logo from '@/components/home/left_side_menu/Logo'
-import SignUpForm from '@/components/login/SignUpForm'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Logo from '@/components/home/left_side_menu/Logo.vue'
+import SignUpForm from '@/components/login/SignUpForm.vue'
+import { CommonMutationTypes } from '@/store/common/mutations'
 
-export default {
+export default defineComponent({
 	components: {
 		Logo,
 		SignUpForm
@@ -35,10 +37,10 @@ export default {
 	},
 
 	created() {
-		this.$store.commit('END_LOADING')
+		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 		this.isShow()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -6,14 +6,15 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 
-export default {
+export default defineComponent({
 	computed: {
 		...mapState(['message'])
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

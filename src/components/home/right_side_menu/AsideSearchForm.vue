@@ -5,23 +5,18 @@
 			<option value="hashtag">#</option>
 			<option value="user">사용자</option>
 		</select>
-		<input
-			v-model="search"
-			@keyup.enter="toSearchPage"
-			type="text"
-			class="form-control"
-			placeholder="검색하기"
-		/>
+		<input v-model="search" @keyup.enter="toSearchPage" type="text" class="form-control" placeholder="검색하기" />
 		<button class="btn btn-dark" :disabled="!vaild">
 			<i @click="toSearchPage" class="bi bi-search" />
 		</button>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import customAlert from '@/utils/customAlert'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			selected: '',
@@ -30,7 +25,7 @@ export default {
 	},
 
 	computed: {
-		vaild() {
+		vaild(): any {
 			return this.selected && this.search
 		}
 	},
@@ -46,7 +41,7 @@ export default {
 			}
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

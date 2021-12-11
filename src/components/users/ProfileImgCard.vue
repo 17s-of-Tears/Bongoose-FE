@@ -2,27 +2,21 @@
 	<div class="card">
 		<span>{{ user.name }}님의 최근 사진</span>
 		<div class="row">
-			<div
-				v-for="(imageUrl, index) in imageUrls"
-				:key="index"
-				class="col-lg-3 col-sm-4 image-box"
-			>
-				<img
-					:src="profileImage(imageUrl)"
-					:alt="`${user.name}님의 최근 사진`"
-				/>
+			<div v-for="(imageUrl, index) in imageUrls" :key="index" class="col-lg-3 col-sm-4 image-box">
+				<img :src="profileImage(imageUrl)" :alt="`${user.name}님의 최근 사진`" />
 			</div>
 		</div>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
-			imageUrls: []
+			imageUrls: [] as string[]
 		}
 	},
 
@@ -43,9 +37,7 @@ export default {
 	methods: {
 		// 최근 사진 8장 뽑는 함수, 8장 이하일 때 부족한 만큼 default 이미지 채우기
 		setImagesInfo() {
-			const imageUrlsInfo = new Array(8).fill('default')
-			const test = this.user.images.reverse()
-			console.log(test)
+			const imageUrlsInfo = new Array(8).fill('default') as string[]
 			for (let i = 0; i < imageUrlsInfo.length; i += 1) {
 				if (this.user.images[i]) {
 					imageUrlsInfo.unshift(this.user.images[i].imageUrl)
@@ -55,7 +47,7 @@ export default {
 			this.imageUrls = imageUrlsInfo
 		},
 		// 이미지 데이터 가공
-		profileImage(imageUrl) {
+		profileImage(imageUrl: string) {
 			if (imageUrl === 'default') {
 				return require('@/assets/images/default_image.png')
 			} else {
@@ -67,7 +59,7 @@ export default {
 	created() {
 		this.setImagesInfo()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

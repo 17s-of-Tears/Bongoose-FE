@@ -33,17 +33,18 @@
 	</transition>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import Header from '@/components/responsive/Header'
-import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu'
-import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu'
-import TopBtn from '@/components/common/TopBtn'
-import LoginNav from '@/components/login/LoginNav'
-import Alerts from '@/components/common/Alerts'
-import GrowSpinner from '@/components/common/GrowSpinner'
+import Header from '@/components/responsive/Header.vue'
+import LeftSideMenu from '@/components/home/left_side_menu/LeftSideMenu.vue'
+import RightSideMenu from '@/components/home/right_side_menu/RightSideMenu.vue'
+import TopBtn from '@/components/common/TopBtn.vue'
+import LoginNav from '@/components/login/LoginNav.vue'
+import Alerts from '@/components/common/Alerts.vue'
+import GrowSpinner from '@/components/common/GrowSpinner.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		Header,
 		LeftSideMenu,
@@ -56,17 +57,17 @@ export default {
 
 	computed: {
 		...mapState(['alert', 'loading']),
-		isLoginPage() {
+		isLoginPage(): boolean {
 			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},
-		isTopBtn() {
+		isTopBtn(): boolean {
 			return this.$route.name === 'home' || this.$route.name === 'profile'
 		},
-		NotFoundPage() {
+		NotFoundPage(): boolean {
 			return this.$route.name === 'NotFound'
 		},
-		isHomePage() {
-			return !this.isLoginPage
+		isHomePage(): boolean {
+			return !(this.$route.name === 'login' || this.$route.name === 'signup')
 		},
 		routerName() {
 			switch (this.$route.name) {
@@ -79,7 +80,7 @@ export default {
 			}
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss">

@@ -1,10 +1,6 @@
 <template>
 	<div class="profile-card card" v-for="user in users" :key="user.id">
-		<img
-			:src="profileImage(user.imageUrl)"
-			alt="프로필 이미지"
-			class="profile-img"
-		/>
+		<img :src="profileImage(user.imageUrl)" alt="프로필 이미지" class="profile-img" />
 		<p>{{ user.name }} 님</p>
 		<p>{{ user.email }}</p>
 		<p>{{ user.description }}</p>
@@ -15,10 +11,13 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { UserActionType } from '@/store/user/actions'
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 
-export default {
+export default defineComponent({
 	computed: {
 		...mapState('user', ['users']),
 		imageURI() {
@@ -38,23 +37,21 @@ export default {
 	methods: {
 		async findFriend() {
 			try {
-				await this.$store.dispatch('user/GET_USERS')
+				await this.$store.dispatch(`user/${UserActionType.GET_USERS}`)
 			} catch (error) {
 				console.error(error)
 			}
 		},
-		profileImage(image) {
-			return image === null
-				? require('@/assets/images/default.png')
-				: `${this.imageURI}/${image}`
+		profileImage(image: string) {
+			return image === null ? require('@/assets/images/default.png') : `${this.imageURI}/${image}`
 		}
 	},
 
 	created() {
-		this.$store.commit('END_LOADING')
+		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 		this.findFriend()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

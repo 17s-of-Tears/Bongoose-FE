@@ -2,35 +2,25 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<h5 class="modal-title">{{ modeInfo }} 삭제 확인</h5>
-			<button
-				type="button"
-				class="btn-close"
-				data-bs-dismiss="modal"
-				aria-label="Close"
-			></button>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		</div>
 		<div class="modal-body">{{ modeInfo }}을 삭제하시겠습니까?</div>
 		<div class="modal-footer">
-			<button class="btn btn-secondary" data-bs-dismiss="modal">
-				취소하기
-			</button>
-			<button
-				@click="onremoveBoardAPI"
-				type="button"
-				class="btn btn-primary subbtn"
-				data-bs-dismiss="modal"
-			>
+			<button class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+			<button @click="onremoveBoardAPI" type="button" class="btn btn-primary subbtn" data-bs-dismiss="modal">
 				삭제하기
 			</button>
 		</div>
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { removeBoardAPI, removeCommentAPI } from '@/api/board'
 import customAlert from '@/utils/customAlert'
+import { ReqDeleteCommentData } from '@/api/board/types'
 
-export default {
+export default defineComponent({
 	props: {
 		id: {
 			type: Number,
@@ -58,22 +48,19 @@ export default {
 		async onremoveBoardAPI() {
 			if (this.mode === 'post') {
 				// 게시물 삭제
-				this.onRemoveFunc(this.id, 'updatePost')
+				this.onRemoveFunc(this.id!, 'updatePost')
 			} else if (this.mode === 'comment') {
 				// 댓글 삭제
-				this.onRemoveFunc(
-					{ boardID: this.id, commentID: this.commentId },
-					'updateComment'
-				)
+				this.onRemoveFunc({ boardID: this.id!, commentID: this.commentId }, 'updateComment')
 			}
 		},
 		// 중복 코드 정리
-		async onRemoveFunc(payload, event) {
+		async onRemoveFunc(payload: number | ReqDeleteCommentData, event: 'updatePost' | 'updateComment') {
 			try {
 				if (this.mode === 'post') {
-					await removeBoardAPI(payload)
+					await removeBoardAPI(payload as number)
 				} else if (this.mode === 'comment') {
-					await removeCommentAPI(payload)
+					await removeCommentAPI(payload as ReqDeleteCommentData)
 				}
 				customAlert(`${this.modeInfo}을 삭제했습니다!`)
 				this.$emit(event)
@@ -82,7 +69,7 @@ export default {
 			}
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

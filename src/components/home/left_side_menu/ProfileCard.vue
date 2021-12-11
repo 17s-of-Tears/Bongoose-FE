@@ -11,11 +11,14 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapGetters } from 'vuex'
 import customAlert from '@/utils/customAlert'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { AuthMutationTypes } from '@/store/auth/mutations'
 
-export default {
+export default defineComponent({
 	computed: {
 		...mapGetters('auth', ['isLogged']),
 		userInfo() {
@@ -24,38 +27,33 @@ export default {
 			const str = JSON.stringify(user)
 			return JSON.parse(str)
 		},
-		imageURI() {
+		imageURI(): string {
 			return process.env.VUE_APP_URI
 		},
-		profileImage() {
+		profileImage(): string {
 			if (this.userInfo.imageUrl) {
 				return `${this.imageURI}/${this.userInfo.imageUrl}`
 			} else {
 				return require('@/assets/images/default.png')
 			}
 		},
-		userEmail() {
+		userEmail(): string | number {
 			// 초기 랜더 에러 방지
 			if (this.userInfo.email === undefined) return 0
-			return /.+(?=@)/.exec(this.userInfo.email)[0]
+			return /.+(?=@)/.exec(this.userInfo.email)![0]
 		}
 	},
 
 	methods: {
 		async logout() {
-			this.$store.commit('START_LOADING')
-			try {
-				await this.$store.commit('auth/LOGOUT')
-				customAlert('로그아웃에 성공하였습니다!')
-				this.$router.push('/login')
-			} catch (error) {
-				customAlert('로그아웃에 실패했습니다!')
-			} finally {
-				this.$store.commit('END_LOADING')
-			}
+			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
+			this.$store.commit(`auth/${AuthMutationTypes.LOGOUT}`)
+			customAlert('로그아웃에 성공하였습니다!')
+			this.$router.push('/login')
+			this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

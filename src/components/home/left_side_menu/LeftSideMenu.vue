@@ -7,20 +7,21 @@
 	</nav>
 </template>
 
-<script>
-import Logo from '@/components/home/left_side_menu/Logo'
-import ProfileCard from '@/components/home/left_side_menu/ProfileCard'
-import NavItem from '@/components/home/left_side_menu/NavItem'
-import Footer from '@/components/home/left_side_menu/Footer'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Logo from '@/components/home/left_side_menu/Logo.vue'
+import ProfileCard from '@/components/home/left_side_menu/ProfileCard.vue'
+import NavItem from '@/components/home/left_side_menu/NavItem.vue'
+import Footer from '@/components/home/left_side_menu/Footer.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		Logo,
 		ProfileCard,
 		NavItem,
 		Footer
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

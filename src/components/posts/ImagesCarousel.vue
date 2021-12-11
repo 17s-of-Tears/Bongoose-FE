@@ -1,9 +1,5 @@
 <template>
-	<div
-		:id="`contentCarousel${imageId}`"
-		class="carousel slide"
-		data-bs-ride="carousel"
-	>
+	<div :id="`contentCarousel${imageId}`" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-indicators">
 			<button
 				v-for="(image, index) in images"
@@ -18,16 +14,8 @@
 			></button>
 		</div>
 		<div class="carousel-inner">
-			<div
-				v-for="(image, index) in images"
-				:key="index"
-				class="carousel-item"
-				:class="activeClass(index)"
-			>
-				<div
-					:style="{ 'background-image': `url(${imageURI}/${image})` }"
-					class="content-img"
-				/>
+			<div v-for="(image, index) in images" :key="index" class="carousel-item" :class="activeClass(index)">
+				<div :style="{ 'background-image': `url(${imageURI}/${image})` }" class="content-img" />
 			</div>
 		</div>
 		<button
@@ -38,17 +26,16 @@
 			:data-bs-target="`#contentCarousel${imageId}`"
 			:data-bs-slide="carousel.type"
 		>
-			<span
-				:class="`carousel-control-${carousel.type}-icon`"
-				aria-hidden="true"
-			></span>
+			<span :class="`carousel-control-${carousel.type}-icon`" aria-hidden="true"></span>
 			<span class="visually-hidden">{{ carousel.content }}</span>
 		</button>
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	props: {
 		images: {
 			type: Array,
@@ -66,7 +53,7 @@ export default {
 	},
 
 	computed: {
-		imageURI() {
+		imageURI(): string {
 			return process.env.VUE_APP_URI
 		},
 		imageId() {
@@ -76,11 +63,11 @@ export default {
 	},
 
 	methods: {
-		activeClass(index) {
+		activeClass(index: number) {
 			return { active: index === 0 }
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

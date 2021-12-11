@@ -1,31 +1,22 @@
 <template>
 	<CommentForm :id="id" @updateComment="updateComment" />
-	<div v-if="comments.length === 0" class="no-comment">
-		댓글이 없네요.. 첫 댓글을 달아주세요!
-	</div>
+	<div v-if="comments.length === 0" class="no-comment">댓글이 없네요.. 첫 댓글을 달아주세요!</div>
 	<template v-else>
 		<ul class="list-group list-group-flush">
-			<li
-				v-for="comment in comments"
-				:key="comment.commentID"
-				class="list-group-item"
-			>
-				<CommentContent
-					:id="id"
-					:comment="comment"
-					@updateComment="updateComment"
-				/>
+			<li v-for="comment in comments" :key="comment.commentID" class="list-group-item">
+				<CommentContent :id="id" :comment="comment" @updateComment="updateComment" />
 			</li>
 		</ul>
 	</template>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { getCommentsAPI } from '@/api/board'
-import CommentForm from '@/components/posts/CommentForm'
-import CommentContent from '@/components/posts/CommentContent'
+import CommentForm from '@/components/posts/CommentForm.vue'
+import CommentContent from '@/components/posts/CommentContent.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		CommentForm,
 		CommentContent
@@ -40,7 +31,14 @@ export default {
 
 	data() {
 		return {
-			comments: []
+			comments: [] as {
+				commentID: number
+				name: string
+				email: string
+				imageUrl: string | null
+				content: string
+				createdAt: string
+			}[]
 		}
 	},
 
@@ -49,6 +47,7 @@ export default {
 	methods: {
 		async getCommentsAPIInfo() {
 			try {
+				// 댓글 페이지 네이션 추가하기!
 				const { data } = await getCommentsAPI(this.id)
 				this.comments = data.comments
 				this.$emit('updateComment')
@@ -64,7 +63,7 @@ export default {
 	created() {
 		this.getCommentsAPIInfo()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

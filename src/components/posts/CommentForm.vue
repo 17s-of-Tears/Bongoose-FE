@@ -10,18 +10,17 @@
 		/>
 		<label for="commentForm">댓글을 작성해 주세요!</label>
 		<div class="comment-btn-flex">
-			<button class="btn btn-primary comment-btn" type="submit">
-				댓글 달기
-			</button>
+			<button class="btn btn-primary comment-btn" type="submit">댓글 달기</button>
 		</div>
 	</form>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { createCommentAPI } from '@/api/board'
 import customAlert from '@/utils/customAlert'
 
-export default {
+export default defineComponent({
 	props: {
 		id: {
 			type: Number,
@@ -49,7 +48,7 @@ export default {
 			}
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

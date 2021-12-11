@@ -4,8 +4,10 @@
 	</a>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	props: {
 		page: {
 			type: String,
@@ -18,7 +20,7 @@ export default {
 			this.$router.push(`/${this.page}`)
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

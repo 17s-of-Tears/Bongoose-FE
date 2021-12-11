@@ -5,28 +5,26 @@
 			<ProfileImgCard />
 		</div>
 		<Skeleton v-if="boardLoading" />
-		<PostCard
-			v-else
-			v-for="board in boards"
-			:key="board.id"
-			:board="board"
-			:mode="'profile'"
-		/>
+		<PostCard v-else v-for="board in boards" :key="board.id" :board="board" :mode="'profile'" />
 		<Default v-if="lastPost || noPost" />
 		<BorderSpinner v-else />
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import ProfileCard from '@/components/users/ProfileCard'
-import ProfileImgCard from '@/components/users/ProfileImgCard'
-import PostCard from '@/components/posts/PostCard'
-import Skeleton from '@/components/posts/Skeleton'
-import Default from '@/components/common/Default'
-import BorderSpinner from '@/components/common/BorderSpinner'
+import ProfileCard from '@/components/users/ProfileCard.vue'
+import ProfileImgCard from '@/components/users/ProfileImgCard.vue'
+import PostCard from '@/components/posts/PostCard/index.vue'
+import Skeleton from '@/components/posts/Skeleton.vue'
+import Default from '@/components/common/Default.vue'
+import BorderSpinner from '@/components/common/BorderSpinner.vue'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
 
-export default {
+export default defineComponent({
 	components: {
 		ProfileCard,
 		ProfileImgCard,
@@ -46,7 +44,7 @@ export default {
 		...mapState(['loading']),
 		...mapState('auth', ['user']),
 		...mapState('board', ['boards', 'lastPost']),
-		noPost() {
+		noPost(): boolean {
 			return this.boards.length === 0
 		}
 	},
@@ -54,26 +52,26 @@ export default {
 	methods: {
 		async myBoardInfo() {
 			this.boardLoading = true
-			this.$store.commit('START_LOADING')
-			this.$store.commit('board/CLEAR_BOARDS')
+			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
+			this.$store.commit(`board/${BoardMutationTypes.CLEAR_BOARDS}`)
 			try {
-				await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 					userId: this.user.id
 				})
 			} catch (error) {
 				console.error(error)
 			} finally {
 				this.boardLoading = false
-				this.$store.commit('END_LOADING')
+				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}
 		}
 	},
 
 	created() {
-		this.$store.commit('END_LOADING')
+		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 		this.myBoardInfo()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

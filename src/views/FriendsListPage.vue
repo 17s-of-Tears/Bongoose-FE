@@ -10,11 +10,12 @@
 	</div>
 </template>
 
-<script>
-import FriendCard from '@/components/friend/FriendCard'
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
+import FriendCard from '@/components/friend/FriendCard.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		FriendCard
 	},
@@ -24,7 +25,7 @@ export default {
 	created() {
 		this.$store.commit('END_LOADING')
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

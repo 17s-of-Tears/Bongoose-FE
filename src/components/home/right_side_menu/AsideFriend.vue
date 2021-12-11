@@ -8,11 +8,7 @@
 		</div>
 		<div v-for="user in users" :key="user.id" class="friend-items">
 			<div class="friend-item">
-				<img
-					:src="profileImage(user.imageUrl)"
-					alt="프로필 이미지"
-					class="friend-img"
-				/>
+				<img :src="profileImage(user.imageUrl)" alt="프로필 이미지" class="friend-img" />
 				<div class="friend-info">
 					<span>{{ user.name }}</span>
 					<span>{{ user.email }}</span>
@@ -23,14 +19,16 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { getRandomFriends } from '@/api/user'
 import { mapState } from 'vuex'
+import { ResRandomUserInfo } from '@/api/user/types'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
-			usersInfo: []
+			usersInfo: [] as ResRandomUserInfo[]
 		}
 	},
 
@@ -53,17 +51,15 @@ export default {
 				console.error(error)
 			}
 		},
-		profileImage(image) {
-			return image === null
-				? require('@/assets/images/default.png')
-				: `${this.imageURI}/${image}`
+		profileImage(image: string) {
+			return image === null ? require('@/assets/images/default.png') : `${this.imageURI}/${image}`
 		},
 		created() {
 			this.getUsers()
 			console.log() //푸쉬되나 재확인
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>
