@@ -10,7 +10,7 @@ export interface ReqUserSearchInfo {
 	keyword: string
 }
 
-export interface ResUserSearchInfo {
+export interface ResUserData {
 	id: number
 	email: string
 	name: string
@@ -18,7 +18,13 @@ export interface ResUserSearchInfo {
 	description: string
 }
 
-export interface ResUserMeInfo extends ResUserSearchInfo {
+export interface ResUserSearchInfo {
+	user: ResUserData[]
+	requestEnd: number
+	lastEnd: number
+}
+
+export interface ResUserMeInfo extends ResUserData {
 	createdAt: Date
 	modifiedAt: Date
 	images: UserImagesType[] | []
@@ -28,7 +34,6 @@ export interface ResUserMeInfo extends ResUserSearchInfo {
 export interface ReqUserInfo {
 	nickname?: string
 	description?: string
-	formData?: File
 }
 
 export interface ResRandomUserInfo {

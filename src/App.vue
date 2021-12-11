@@ -57,17 +57,17 @@ export default defineComponent({
 
 	computed: {
 		...mapState(['alert', 'loading']),
-		isLoginPage() {
+		isLoginPage(): boolean {
 			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},
-		isTopBtn() {
+		isTopBtn(): boolean {
 			return this.$route.name === 'home' || this.$route.name === 'profile'
 		},
-		NotFoundPage() {
+		NotFoundPage(): boolean {
 			return this.$route.name === 'NotFound'
 		},
 		isHomePage(): boolean {
-			return !this.isLoginPage
+			return !(this.$route.name === 'login' || this.$route.name === 'signup')
 		},
 		routerName() {
 			switch (this.$route.name) {

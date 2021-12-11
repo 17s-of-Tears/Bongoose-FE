@@ -1,11 +1,6 @@
 <template>
 	<div class="preview">
-		<div
-			v-for="(url, index) in urls"
-			:key="index"
-			:style="{ 'background-image': `url(${url})` }"
-			class="image"
-		>
+		<div v-for="(url, index) in urls" :key="index" :style="{ 'background-image': `url(${url})` }" class="image">
 			<span class="badge bg-danger" @click="removeImage(index)">
 				<i class="bi bi-x-lg"></i>
 			</span>
@@ -13,8 +8,10 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	props: {
 		urls: {
 			type: Object,
@@ -25,11 +22,11 @@ export default {
 	emits: ['remove'],
 
 	methods: {
-		removeImage(index) {
+		removeImage(index: number) {
 			this.$emit('remove', index)
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

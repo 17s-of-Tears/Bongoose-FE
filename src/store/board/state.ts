@@ -1,4 +1,6 @@
-export default () => ({
+import { BoardState } from '@/store/board'
+
+export default (): BoardState => ({
 	boards: [],
 	watchBoard: false,
 	// 무한 스크롤

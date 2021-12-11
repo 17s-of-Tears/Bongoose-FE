@@ -11,10 +11,11 @@
 	</header>
 </template>
 
-<script>
-import Logo from '@/components/home/left_side_menu/Logo'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Logo from '@/components/home/left_side_menu/Logo.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		Logo
 	},
@@ -33,7 +34,7 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,11 +1,5 @@
 <template>
-	<div
-		v-for="nav in navs"
-		:key="nav.name"
-		class="navitem"
-		type="button btn-close"
-		aria-label="Close"
-	>
+	<div v-for="nav in navs" :key="nav.name" class="navitem" type="button btn-close" aria-label="Close">
 		<RouterLink :to="nav.to" :data-bs-dismiss="offcanvas">
 			<div class="card">
 				<i :class="`bi ${nav.icon}`"></i>
@@ -15,8 +9,10 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	props: {
 		offcanvas: {
 			type: String,
@@ -50,7 +46,7 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

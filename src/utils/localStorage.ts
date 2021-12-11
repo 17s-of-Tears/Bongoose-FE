@@ -1,7 +1,6 @@
-import { ResUserMeType } from '@/api/user/types'
+import { ResUserMeInfo } from '@/api/user/types'
 
-const saveUserLocalStorage = (value: ResUserMeType) =>
-	localStorage.setItem('user', JSON.stringify(value))
+const saveUserLocalStorage = (value: ResUserMeInfo) => localStorage.setItem('user', JSON.stringify(value))
 const getUserLocalStorage = () => JSON.parse(localStorage.getItem('user')!)
 const deleteUserLocalStorage = () => localStorage.removeItem('user')
 

@@ -9,10 +9,11 @@
 	<ImagesCarousel v-else :images="imageInfo" />
 </template>
 
-<script>
-import ImagesCarousel from '@/components/posts/ImagesCarousel'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import ImagesCarousel from '@/components/posts/ImagesCarousel.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		ImagesCarousel
 	},
@@ -28,10 +29,10 @@ export default {
 			return process.env.VUE_APP_URI
 		},
 		imageInfo() {
-			return this.images.map(v => Object.values(v))
+			return this.images.map((v: any) => Object.values(v))
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

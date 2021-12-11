@@ -6,18 +6,19 @@
 	</aside>
 </template>
 
-<script>
-import AsideSearchForm from '@/components/home/right_side_menu/AsideSearchForm'
-import AsideHash from '@/components/home/right_side_menu/AsideHash'
-import AsideFriend from '@/components/home/right_side_menu/AsideFriend'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import AsideSearchForm from '@/components/home/right_side_menu/AsideSearchForm.vue'
+import AsideHash from '@/components/home/right_side_menu/AsideHash.vue'
+import AsideFriend from '@/components/home/right_side_menu/AsideFriend.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		AsideSearchForm,
 		AsideHash,
 		AsideFriend
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

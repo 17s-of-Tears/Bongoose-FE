@@ -9,14 +9,15 @@
 	</div>
 </template>
 
-<script>
-import FriendCard from '@/components/friend/FriendCard'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import FriendCard from '@/components/friend/FriendCard.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		FriendCard
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

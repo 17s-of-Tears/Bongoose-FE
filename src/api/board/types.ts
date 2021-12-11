@@ -1,12 +1,12 @@
 // Board Types
 export interface ReqBoardSearchData {
-	start: number
-	end: number
+	start?: number
+	end?: number
 	keyword?: string
 	userId?: number
 }
 
-export interface ResBoardInfo {
+export interface ResBoardData {
 	id: number
 	userName: string
 	userEmail: string
@@ -16,6 +16,12 @@ export interface ResBoardInfo {
 	dislikes: number
 	content: string
 	createdAt: string
+}
+
+export interface ResBoardInfo {
+	boards: ResBoardData[]
+	requestEnd: number
+	lastEnd: number
 }
 
 export interface ResOneBoardInfo {
@@ -34,8 +40,7 @@ export interface ResOneBoardInfo {
 
 export interface ReqBoardWritingData {
 	content: string
-	hashtags: string[]
-	formData: File
+	hashtags: string[] | null
 }
 
 export interface ReqBoardUpdateData extends ReqBoardWritingData {
@@ -65,9 +70,19 @@ export interface ResCommentInfo {
 	}[]
 }
 
-export interface ReqUpadteCommentData {
+export interface ReqDeleteCommentData {
 	boardID: number
 	commentID: number
 }
 
+export interface ReqUpadteCommentData extends ReqDeleteCommentData {
+	content: string
+}
+
 // Like Types
+
+// Hash Types
+export interface ReqBoardRating {
+	hashtag: string
+	total: number
+}

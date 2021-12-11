@@ -6,10 +6,11 @@
 	</div>
 </template>
 
-<script>
-import ModalContent from '@/components/common/modal/ModalContent'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import ModalContent from '@/components/common/modal/ModalContent/index.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		ModalContent
 	},
@@ -28,7 +29,7 @@ export default {
 			this.$emit('updatePost')
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

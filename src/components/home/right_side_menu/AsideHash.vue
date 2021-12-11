@@ -17,13 +17,15 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { getHashtagRankingAPI } from '@/api/board'
+import { ReqBoardRating } from '@/api/board/types'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
-			hashs: [],
+			hashs: [] as ReqBoardRating[],
 			throttle: false
 		}
 	},
@@ -37,7 +39,7 @@ export default {
 				console.error(error)
 			}
 		},
-		toHashSearch(hash) {
+		toHashSearch(hash: string) {
 			this.$router.push(`/hashtag/${hash}`)
 		},
 		refresh() {
@@ -54,7 +56,7 @@ export default {
 	created() {
 		this.HashtagRankInfo()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

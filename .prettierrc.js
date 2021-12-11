@@ -6,6 +6,6 @@ module.exports = {
 	singleQuote: true, // single 쿼테이션 사용 여부
 	tabWidth: 2, // 탭 너비
 	trailingComma: 'none', // 여러 줄을 사용할 때, 후행 콤마 사용 방식
-	printWidth: 80, // 텍스트 길이 지정
+	printWidth: 120, // 텍스트 길이 지정
 	useTabs: true // 탭 사용 여부
 }

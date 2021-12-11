@@ -11,18 +11,9 @@
 			>
 				<i class="bi bi-list nav-icon"></i>
 			</button>
-			<div
-				class="offcanvas offcanvas-end nav-box"
-				id="offcanvasRight"
-				aria-labelledby="offcanvasRightLabel"
-			>
+			<div class="offcanvas offcanvas-end nav-box" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 				<div class="offcanvas-header nav-close">
-					<button
-						type="button"
-						class="btn-close text-reset"
-						data-bs-dismiss="offcanvas"
-						aria-label="Close"
-					></button>
+					<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 				</div>
 				<div class="offcanvas-body">
 					<ProfileCard />
@@ -33,18 +24,19 @@
 	</header>
 </template>
 
-<script>
-import Logo from '@/components/home/left_side_menu/Logo'
-import NavItem from '@/components/home/left_side_menu/NavItem'
-import ProfileCard from '@/components/home/left_side_menu/ProfileCard'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Logo from '@/components/home/left_side_menu/Logo.vue'
+import NavItem from '@/components/home/left_side_menu/NavItem.vue'
+import ProfileCard from '@/components/home/left_side_menu/ProfileCard.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		Logo,
 		NavItem,
 		ProfileCard
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

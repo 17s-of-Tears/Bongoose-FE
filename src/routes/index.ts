@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, NavigationGuardNext } from 'vue-router'
 import store from '@/store'
+import { CommonMutationTypes } from '@/store/common/mutations'
 
 const routes = [
 	{
@@ -17,7 +18,7 @@ const routes = [
 		name: 'login',
 		component: () => import('@/views/LoginPage.vue'),
 		beforeEnter: (to: any, from: any, next: NavigationGuardNext) => {
-			store.commit('START_LOADING')
+			store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			store.getters['auth/isLogged'] ? next('/home') : next()
 		}
 	},
@@ -26,7 +27,7 @@ const routes = [
 		name: 'signup',
 		component: () => import('@/views/SignUpPage.vue'),
 		beforeEnter: (to: any, from: any, next: NavigationGuardNext) => {
-			store.commit('START_LOADING')
+			store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			store.getters['auth/isLogged'] ? next('/home') : next()
 		}
 	},
@@ -67,7 +68,7 @@ const routes = [
 		name: 'NotFound',
 		component: () => import('@/views/NotFound.vue'),
 		beforeEnter: (to: any, from: any, next: NavigationGuardNext) => {
-			store.commit('START_LOADING')
+			store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			next()
 		}
 	}
@@ -82,7 +83,7 @@ const router = createRouter({
 })
 
 function beforeEnter(to: any, from: any, next: NavigationGuardNext) {
-	store.commit('START_LOADING')
+	store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 	store.getters['auth/isLogged'] ? next() : next('/login')
 }
 

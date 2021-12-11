@@ -1,9 +1,12 @@
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import UploadImages from '@/components/common/modal/UploadImages'
+import UploadImages from '@/components/common/modal/UploadImages.vue'
 import { getBoardAPI, createBoardAPI, updateBoardAPI } from '@/api/board'
 import customAlert from '@/utils/customAlert'
+import { ReqBoardUpdateData, ReqBoardWritingData } from '@/api/board/types'
+import { AuthActionTypes } from '@/store/auth/actions'
 
-export default {
+export default defineComponent({
 	components: {
 		UploadImages
 	},
@@ -24,10 +27,10 @@ export default {
 	data() {
 		return {
 			boardContent: '',
-			images: [],
-			getImageInfo: [],
-			imageId: [],
-			urls: [],
+			images: [] as File[],
+			getImageInfo: [] as any,
+			imageId: [] as number[],
+			urls: [] as string[],
 			imageValid: false
 		}
 	},
@@ -50,7 +53,7 @@ export default {
 			let hashtags = null
 			// 해시태그 있을 때 해시태그 추출
 			if (this.boardContent.includes('#')) {
-				hashtags = this.boardContent.match(/#[^\s#]+/g).map(v => v.substring(1))
+				hashtags = this.boardContent.match(/#[^\s#]+/g)!.map(v => v.substring(1))
 			}
 			console.log(hashtags)
 			// 이미지정보가 있을 경우 (multipart/form-data)
@@ -60,30 +63,30 @@ export default {
 					Array.from(hashtags).forEach(v => formData.append('hashtags', v))
 				formData.append('content', content)
 				// 이미지 수정
-				this.imageId.forEach(v => formData.append('overwrite', v))
+				this.imageId.forEach((v: any) => formData.append('overwrite', v))
 				console.log(formData.getAll('overwrite'))
 				if (this.mode === 'writer') {
-					this.createBoardAPIFunc(formData) // 글 쓰기
+					this.createBoardAPIFunc(formData, 'form') // 글 쓰기
 				} else if (this.mode === 'update') {
-					this.updateBoardAPIFunc(this.id, formData) // 글 수정
+					this.updateBoardAPIFunc(this.id, formData, 'form') // 글 수정
 				}
 				// 이미지가 없는 경우 (application/json)
 			} else {
 				if (this.mode === 'writer') {
-					this.createBoardAPIFunc({ content, hashtags }) // 글 쓰기
+					this.createBoardAPIFunc({ content, hashtags }, 'body') // 글 쓰기
 				} else if (this.mode === 'update') {
-					this.updateBoardAPIFunc(this.id, { content, hashtags }) // 글 수정
+					this.updateBoardAPIFunc(this.id, { content, hashtags }, 'body') // 글 수정
 				}
 			}
 		},
 		// 중복 코드 정리 (글 쓰기)
-		async createBoardAPIFunc(payload) {
+		async createBoardAPIFunc(payload: ReqBoardWritingData | FormData, type: 'form' | 'body') {
 			try {
-				await createBoardAPI(payload)
+				await createBoardAPI(payload, type)
 				customAlert('글 작성이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
-				this.$store.dispatch('auth/USER_INFO')
+				this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
 			} catch {
 				customAlert('글 작성이 실패하였습니다.')
 			} finally {
@@ -91,25 +94,27 @@ export default {
 			}
 		},
 		// 중복 코드 정리 (글 수정)
-		async updateBoardAPIFunc(id, data) {
+		async updateBoardAPIFunc(id: number, data: ReqBoardUpdateData | FormData, type: 'form' | 'body') {
 			try {
-				await updateBoardAPI(id, data)
+				await updateBoardAPI(id, data, type)
 				customAlert('글 수정이 완료되었습니다!')
 				this.$emit('updatePost')
 				this.clearFormData()
-				this.$store.dispatch('auth/USER_INFO')
+				this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
 			} catch {
 				customAlert('글 수정이 실패하였습니다.')
 			}
 		},
 		onClickImageUpload() {
-			this.$refs.imageInput.click()
+			const refImage = this.$refs.imageInput as HTMLInputElement
+			refImage.click()
 		},
 		// 이미지 업로드
-		onChangeImages(e) {
+		onChangeImages(event: Event) {
 			if (this.images.length < 4) {
 				// 이미지 썸네일
-				const file = e.target.files[0]
+				const target = event.target as HTMLInputElement
+				const file: File = (target.files as FileList)[0]
 				this.images.push(file)
 				this.urls.push(URL.createObjectURL(file))
 			} else {
@@ -120,7 +125,7 @@ export default {
 			}
 		},
 		// 해당 이미지 삭제
-		remove(index) {
+		remove(index: number) {
 			this.images.splice(index, 1)
 			this.imageId.splice(index, 1)
 			this.urls.splice(index, 1)
@@ -143,9 +148,7 @@ export default {
 				this.getImageInfo.push(data.images)
 				data.images.forEach(v => this.imageId.push(v.id))
 				console.log(this.imageId)
-				this.urls = data.images.map(
-					v => `${process.env.VUE_APP_URI}/${v.imageUrl}`
-				)
+				this.urls = data.images.map(v => `${process.env.VUE_APP_URI}/${v.imageUrl}`)
 			} catch (error) {
 				console.error(error)
 			}
@@ -155,4 +158,4 @@ export default {
 	created() {
 		this.getOneBoardInfo()
 	}
-}
+})

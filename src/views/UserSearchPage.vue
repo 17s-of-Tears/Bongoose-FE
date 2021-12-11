@@ -16,14 +16,18 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import PostCard from '@/components/posts/PostCard'
-import Skeleton from '@/components/posts/Skeleton'
-import Default from '@/components/common/Default'
-import BorderSpinner from '@/components/common/BorderSpinner'
+import PostCard from '@/components/posts/PostCard/index.vue'
+import Skeleton from '@/components/posts/Skeleton.vue'
+import Default from '@/components/common/Default.vue'
+import BorderSpinner from '@/components/common/BorderSpinner.vue'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
 
-export default {
+export default defineComponent({
 	components: {
 		PostCard,
 		Skeleton,
@@ -41,7 +45,7 @@ export default {
 		...mapState(['loading']),
 		...mapState('auth', ['user']),
 		...mapState('board', ['boards', 'lastPost']),
-		noPost() {
+		noPost(): boolean {
 			return this.boards.length === 0
 		}
 	},
@@ -49,26 +53,26 @@ export default {
 	methods: {
 		async hashtagBoardInfo() {
 			this.boardLoading = true
-			this.$store.commit('START_LOADING')
-			this.$store.commit('board/CLEAR_BOARDS')
+			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
+			this.$store.commit(`board/${BoardMutationTypes.CLEAR_BOARDS}`)
 			try {
-				await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 					keyword: this.$route.params.id
 				})
 			} catch (error) {
 				console.error(error)
 			} finally {
 				this.boardLoading = false
-				this.$store.commit('END_LOADING')
+				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}
 		}
 	},
 
 	created() {
-		this.$store.commit('END_LOADING')
+		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 		this.hashtagBoardInfo()
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped></style>

@@ -2,14 +2,16 @@
 	<span class="logo" @click="toHome">Bongoose</span>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	methods: {
 		toHome() {
 			this.$router.push('/home')
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -20,22 +20,16 @@
 					rows="5"
 				></textarea>
 				<transition name="fade">
-					<span v-if="contentValid" class="valid">
-						내용이 비어있습니다! 입력해 주세요!
-					</span>
+					<span v-if="contentValid" class="valid"> 내용이 비어있습니다! 입력해 주세요! </span>
 				</transition>
 			</div>
 			<!-- 이미지 업로드 버튼 -->
 			<input ref="imageInput" type="file" hidden @change="onChangeImages" />
 			<i class="bi bi-image" type="button" @click="onClickImageUpload" />
-			<small class="text-black-50">
-				&nbsp;* 이미지는 최대 4개 까지 게시가 가능합니다!
-			</small>
+			<small class="text-black-50"> &nbsp;* 이미지는 최대 4개 까지 게시가 가능합니다! </small>
 			<UploadImages v-if="urls" :urls="urls" @remove="remove" />
 			<transition name="fade">
-				<span v-if="imageValid" class="valid">
-					이미지는 4장까지 업로드 가능합니다!
-				</span>
+				<span v-if="imageValid" class="valid"> 이미지는 4장까지 업로드 가능합니다! </span>
 			</transition>
 		</div>
 		<div class="modal-footer">
@@ -52,6 +46,6 @@
 	</div>
 </template>
 
-<script src="./modal.js"></script>
+<script lang="ts" src="./modal.ts"></script>
 
 <style lang="scss" src="./style.scss" scoped></style>

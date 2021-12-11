@@ -11,29 +11,22 @@
 			<label :for="formData.info">{{ formData.label }}</label>
 		</div>
 		<div class="form-check">
-			<input
-				v-model="checkbox"
-				class="form-check-input"
-				type="checkbox"
-				id="checkInput"
-			/>
-			<label class="form-check-label" for="checkInput">
-				이용약관에 동의합니다
-			</label>
+			<input v-model="checkbox" class="form-check-input" type="checkbox" id="checkInput" />
+			<label class="form-check-label" for="checkInput"> 이용약관에 동의합니다 </label>
 		</div>
 		<div class="login-btn">
-			<button type="submit" class="btn btn-primary" :disabled="!valid">
-				가입하기
-			</button>
+			<button type="submit" class="btn btn-primary" :disabled="!valid">가입하기</button>
 		</div>
 	</form>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { signupUser } from '@/api/sign'
 import customAlert from '@/utils/customAlert'
+import { CommonMutationTypes } from '@/store/common/mutations'
 
-export default {
+export default defineComponent({
 	data() {
 		return {
 			checkbox: false,
@@ -67,7 +60,7 @@ export default {
 	},
 
 	computed: {
-		valid() {
+		valid(): boolean {
 			// 빈 칸이 있는지 검사 + 체크박스 여부
 			return this.formDatas.every(v => v.model !== '') && this.checkbox
 		}
@@ -75,7 +68,7 @@ export default {
 
 	methods: {
 		async onSubmitForm() {
-			this.$store.commit('START_LOADING')
+			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			try {
 				const userInfo = {
 					email: this.formDatas[0].model,
@@ -88,11 +81,11 @@ export default {
 			} catch (error) {
 				customAlert('회원가입에 실패했습니다!')
 			} finally {
-				this.$store.commit('END_LOADING')
+				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

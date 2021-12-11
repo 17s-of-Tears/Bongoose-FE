@@ -1,10 +1,5 @@
 <template>
-	<div
-		class="modal fade"
-		id="commentRemoveModal"
-		aria-hidden="true"
-		tabindex="-1"
-	>
+	<div class="modal fade" id="commentRemoveModal" aria-hidden="true" tabindex="-1">
 		<div class="modal-dialog modal-sm">
 			<RemoveModalContent
 				:id="id"
@@ -17,10 +12,11 @@
 	</div>
 </template>
 
-<script>
-import RemoveModalContent from '@/components/common/modal/RemoveModalContent'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import RemoveModalContent from '@/components/common/modal/RemoveModalContent.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		RemoveModalContent
 	},
@@ -46,7 +42,7 @@ export default {
 			this.$emit('updateComment')
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped></style>

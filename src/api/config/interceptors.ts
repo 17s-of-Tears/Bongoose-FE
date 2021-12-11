@@ -1,17 +1,12 @@
-import {
-	deleteAuthCookie,
-	getAuthCookie,
-	saveAuthCookie
-} from '@/utils/cookies'
-import store from '@/store'
+import { AxiosInstance } from 'axios'
+import { deleteAuthCookie, getAuthCookie, saveAuthCookie } from '@/utils/cookies'
 import { refreshUser } from '@/api/sign'
+import store from '@/store'
 
-const setInterceptors = instance => {
+const setInterceptors = (instance: AxiosInstance) => {
 	instance.interceptors.request.use(
 		config => {
-			config.headers.Authorization = `Bearer ${
-				store.state.auth.token || getAuthCookie()
-			}`
+			config.headers!.Authorization = `Bearer ${store.state.auth.token || getAuthCookie()}`
 			return config
 		},
 		error => Promise.reject(error.response)

@@ -17,21 +17,22 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import ProfileModal from '@/components/users/ProfileModal'
+import ProfileModal from '@/components/users/ProfileModal.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		ProfileModal
 	},
 
 	computed: {
 		...mapState('auth', ['user']),
-		imageURI() {
+		imageURI(): string {
 			return process.env.VUE_APP_URI
 		},
-		profileImage() {
+		profileImage(): string {
 			if (this.user.imageUrl) {
 				return `${this.imageURI}/${this.user.imageUrl}`
 			} else {
@@ -39,7 +40,7 @@ export default {
 			}
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

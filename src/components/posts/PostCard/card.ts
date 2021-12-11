@@ -1,14 +1,19 @@
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 import moment from 'moment'
 import customAlert from '@/utils/customAlert'
-import CommentList from '@/components/posts/CommentList'
-import PostContent from '@/components/posts/PostContent'
-import Images from '@/components/posts/Images'
-import PopOver from '@/components/posts/PopOver'
-import Liker from '@/components/posts/Liker'
 import { getCommentsAPI } from '@/api/board'
+import CommentList from '@/components/posts/CommentList.vue'
+import PostContent from '@/components/posts/PostContent.vue'
+import Images from '@/components/posts/Images.vue'
+import PopOver from '@/components/posts/PopOver.vue'
+import Liker from '@/components/posts/Liker.vue'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { AuthActionTypes } from '@/store/auth/actions'
 
-export default {
+export default defineComponent({
 	components: {
 		CommentList,
 		PostContent,
@@ -59,42 +64,41 @@ export default {
 		toggleOnComment() {
 			this.onComment = !this.onComment
 		},
-		toUserFindPage(id) {
-			this.router.push(`/user/${id}`)
+		toUserFindPage(id: string) {
+			this.$router.push(`/user/${id}`)
 		},
 		async getBoardsAPI() {
-			this.$store.commit('START_LOADING')
+			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			try {
 				switch (this.mode) {
 					case 'profile': // 로그인 한 유저의 게시물 불러오기
-						await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+						await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 							userId: this.user.id
 						})
 						break
 					case 'search': // 해쉬태그 검색 결과 게시물 불러오기
-						await this.$store.dispatch('board/GET_LOAD_BOARDS', {
+						await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 							keyword: this.keyword
 						})
 						break
 					case 'home': // 전체 게시물 불러오기
-						await this.$store.dispatch('board/GET_LOAD_BOARDS')
+						await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`)
 						break
 					default:
-						this.$store.commit('END_LOADING')
+						this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 						customAlert('게시물 불러오기를 실패했습니다')
 						break
 				}
 			} catch (error) {
 				console.error(error)
 			} finally {
-				this.$store.commit('END_LOADING')
+				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}
 		},
 		async onScroll() {
 			// 현재 스크롤 높이 계산해서 무한 스크롤 진행
 			const showTrue =
-				window.scrollY + document.documentElement.clientHeight >
-				document.documentElement.scrollHeight - 400
+				window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 400
 			if (showTrue) {
 				if (this.hasMorePost) {
 					this.getBoardsAPI()
@@ -103,23 +107,23 @@ export default {
 		},
 		async updatePost() {
 			// 수정 및 삭제 후 게시판 정보 초기화 후에 정보 갱신하기
-			this.$store.commit('board/CLEAR_BOARDS')
+			this.$store.commit(`board/${BoardMutationTypes.CLEAR_BOARDS}`)
 			this.getBoardsAPI()
-			this.$store.dispatch('auth/USER_INFO')
+			this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
 		},
 		// 매개변수 데이터 가공
-		userEmail(email) {
+		userEmail(email: string) {
 			if (email) {
-				return /.+(?=@)/.exec(email)[0]
+				return /.+(?=@)/.exec(email)![0]
 			}
 		},
-		boardDate(date) {
+		boardDate(date: Date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},
-		profileImage(image) {
+		profileImage(image: string) {
 			return image || require('@/assets/images/default.png')
 		},
-		myPost(boardEmail) {
+		myPost(boardEmail: string) {
 			return this.user.email === boardEmail
 		}
 	},
@@ -135,4 +139,4 @@ export default {
 	beforeUnmount() {
 		window.removeEventListener('scroll', this.onScroll)
 	}
-}
+})

@@ -12,8 +12,10 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
 	props: {
 		board: {
 			type: Object,
@@ -21,11 +23,11 @@ export default {
 		}
 	},
 	methods: {
-		toHashtagFindPage(hashtag) {
+		toHashtagFindPage(hashtag: string) {
 			this.$router.push(`/hashtag/${hashtag}`)
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

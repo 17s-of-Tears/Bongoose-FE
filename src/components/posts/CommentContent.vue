@@ -18,27 +18,22 @@
 			<div class="comment-edit" v-if="isMeComment(comment.email)">
 				<span v-if="!updateShow" @click="commentUpdateShow">수정하기</span>
 				<span v-else @click="commentUpdateCancel">수정취소</span>
-				<span data-bs-toggle="modal" data-bs-target="#commentRemoveModal">
-					삭제하기
-				</span>
-				<CommentRemoveModal
-					@updateComment="updateComment"
-					:id="id"
-					:commentId="comment.commentID"
-				/>
+				<span data-bs-toggle="modal" data-bs-target="#commentRemoveModal"> 삭제하기 </span>
+				<CommentRemoveModal @updateComment="updateComment" :id="id" :commentId="comment.commentID" />
 			</div>
 		</div>
 	</div>
 </template>
 
-<script>
-import moment from 'moment'
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import CommentRemoveModal from '@/components/posts/CommentRemoveModal'
+import moment from 'moment'
 import { updateCommentAPI } from '@/api/board'
 import customAlert from '@/utils/customAlert'
+import CommentRemoveModal from '@/components/posts/CommentRemoveModal.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		CommentRemoveModal
 	},
@@ -75,10 +70,7 @@ export default {
 		},
 		async commentUpdate() {
 			try {
-				await updateCommentAPI(
-					{ boardID: this.id, commentID: this.comment.commentID },
-					{ content: this.content }
-				)
+				await updateCommentAPI({ boardID: this.id, commentID: this.comment.commentID, content: this.content })
 				this.$emit('updateComment')
 				customAlert('댓글 수정이 완료되었습니다!')
 				this.updateShow = false
@@ -90,7 +82,7 @@ export default {
 			this.updateShow = false
 		},
 		// 자신의 댓글 확인
-		isMeComment(commentEmail) {
+		isMeComment(commentEmail: string) {
 			return this.user.email === commentEmail
 		},
 		// 댓글 정보 다시불러오기
@@ -98,17 +90,17 @@ export default {
 			this.$emit('updateComment')
 		},
 		// 데이터 가공
-		userEmail(email) {
-			if (email) return /.+(?=@)/.exec(email)[0]
+		userEmail(email: string) {
+			if (email) return /.+(?=@)/.exec(email)![0]
 		},
-		commentDate(date) {
+		commentDate(date: Date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},
-		profileImage(image) {
+		profileImage(image: string) {
 			return image || require('@/assets/images/default.png')
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>
