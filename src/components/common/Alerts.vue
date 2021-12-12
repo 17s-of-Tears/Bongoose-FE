@@ -12,7 +12,7 @@ import { mapState } from 'vuex'
 
 export default defineComponent({
 	computed: {
-		...mapState(['message'])
+		...mapState('common', ['message'])
 	}
 })
 </script>

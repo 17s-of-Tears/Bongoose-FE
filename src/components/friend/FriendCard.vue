@@ -1,5 +1,5 @@
 <template>
-	<div class="profile-card card" v-for="user in users" :key="user.id">
+	<div class="profile-card card" v-for="user in usersInfo.users" :key="user.id">
 		<img :src="profileImage(user.imageUrl)" alt="프로필 이미지" class="profile-img" />
 		<p>{{ user.name }} 님</p>
 		<p>{{ user.email }}</p>
@@ -12,18 +12,11 @@
 </template>
 
 <script lang="ts">
-import { CommonMutationTypes } from '@/store/common/mutations'
-import { UserActionType } from '@/store/user/actions'
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
+import { CommonMutationTypes } from '@/store/common/mutations'
 
 export default defineComponent({
-	computed: {
-		...mapState('user', ['users']),
-		imageURI() {
-			return process.env.VUE_APP_URI
-		}
-	},
 	props: {
 		btnType: {
 			type: String,
@@ -34,14 +27,15 @@ export default defineComponent({
 			default: ''
 		}
 	},
+
+	computed: {
+		...mapState('user', ['usersInfo']),
+		imageURI() {
+			return process.env.VUE_APP_URI
+		}
+	},
+
 	methods: {
-		async findFriend() {
-			try {
-				await this.$store.dispatch(`user/${UserActionType.GET_USERS}`)
-			} catch (error) {
-				console.error(error)
-			}
-		},
 		profileImage(image: string) {
 			return image === null ? require('@/assets/images/default.png') : `${this.imageURI}/${image}`
 		}
@@ -49,7 +43,6 @@ export default defineComponent({
 
 	created() {
 		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
-		this.findFriend()
 	}
 })
 </script>
@@ -58,7 +51,6 @@ export default defineComponent({
 .profile-card {
 	width: 220px;
 	padding: 20px;
-	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 14px;
@@ -71,12 +63,6 @@ export default defineComponent({
 		width: 80px;
 		height: 80px;
 		border-radius: 50%;
-	}
-	:nth-child(4) {
-		margin-bottom: 10px;
-	}
-	:is(:nth-child(5), :last-child) {
-		width: 80%;
 	}
 }
 </style>

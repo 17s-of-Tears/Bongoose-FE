@@ -6,7 +6,7 @@
 				<i class="bi bi-chevron-right" @click="toFriendPage" />
 			</span>
 		</div>
-		<div v-for="user in users" :key="user.id" class="friend-items">
+		<div v-for="user in usersInfo" :key="user.id" class="friend-items">
 			<div class="friend-item">
 				<img :src="profileImage(user.imageUrl)" alt="프로필 이미지" class="friend-img" />
 				<div class="friend-info">
@@ -53,11 +53,11 @@ export default defineComponent({
 		},
 		profileImage(image: string) {
 			return image === null ? require('@/assets/images/default.png') : `${this.imageURI}/${image}`
-		},
-		created() {
-			this.getUsers()
-			console.log() //푸쉬되나 재확인
 		}
+	},
+
+	created() {
+		this.getUsers()
 	}
 })
 </script>

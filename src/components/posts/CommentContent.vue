@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { mapState } from 'vuex'
 import moment from 'moment'
 import { updateCommentAPI } from '@/api/board'
@@ -40,7 +40,14 @@ export default defineComponent({
 
 	props: {
 		comment: {
-			type: Object,
+			type: Object as PropType<{
+				commentID: number
+				name: string
+				email: string
+				imageUrl: string | null
+				content: string
+				createdAt: string
+			}>,
 			required: true
 		},
 		id: {
@@ -70,11 +77,13 @@ export default defineComponent({
 		},
 		async commentUpdate() {
 			try {
-				await updateCommentAPI({ boardID: this.id, commentID: this.comment.commentID, content: this.content })
+				const commentData = { boardID: this.id, commentID: this.comment.commentID, content: this.content }
+				console.log(commentData)
+				await updateCommentAPI(commentData)
 				this.$emit('updateComment')
 				customAlert('댓글 수정이 완료되었습니다!')
 				this.updateShow = false
-			} catch (error) {
+			} catch {
 				customAlert('댓글 수정을 실패했습니다!')
 			}
 		},

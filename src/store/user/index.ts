@@ -6,7 +6,7 @@ import actions from '@/store/user/actions'
 import { ResUserSearchInfo } from '@/api/user/types'
 
 export interface UserState {
-	users: ResUserSearchInfo | null
+	usersInfo: ResUserSearchInfo | null
 }
 
 export const user: Module<UserState, RootState> = {

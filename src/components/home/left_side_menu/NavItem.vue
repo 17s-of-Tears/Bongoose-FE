@@ -29,11 +29,6 @@ export default defineComponent({
 					to: '/profile'
 				},
 				{
-					name: '채팅 하기',
-					icon: 'bi-chat-fill',
-					to: '/chat'
-				},
-				{
 					name: '친구 목록',
 					icon: 'bi-people-fill',
 					to: '/friends_list'

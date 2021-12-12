@@ -5,9 +5,9 @@ export interface UserImagesType {
 }
 
 export interface ReqUserSearchInfo {
-	start: number
-	end: number
-	keyword: string
+	start?: number
+	end?: number
+	keyword?: string
 }
 
 export interface ResUserData {

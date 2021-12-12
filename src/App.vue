@@ -56,7 +56,7 @@ export default defineComponent({
 	},
 
 	computed: {
-		...mapState(['alert', 'loading']),
+		...mapState('common', ['alert', 'loading']),
 		isLoginPage(): boolean {
 			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},

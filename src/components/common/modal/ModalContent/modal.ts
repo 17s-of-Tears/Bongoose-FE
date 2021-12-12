@@ -22,7 +22,7 @@ export default defineComponent({
 		}
 	},
 
-	emits: ['updatePost'],
+	emits: ['updatePost', 'closePopOver'],
 
 	data() {
 		return {
@@ -137,6 +137,7 @@ export default defineComponent({
 				this.images = []
 				this.urls = []
 			}
+			this.$emit('closePopOver')
 		},
 		// 현재 게시물 정보 가져오기
 		async getOneBoardInfo() {

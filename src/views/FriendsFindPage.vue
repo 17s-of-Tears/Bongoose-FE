@@ -12,10 +12,47 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import FriendCard from '@/components/friend/FriendCard.vue'
+import { getUsersAPI } from '@/api/user'
 
 export default defineComponent({
 	components: {
 		FriendCard
+	},
+
+	data() {
+		return {
+			users: null as
+		}
+	},
+
+	// methods: {
+	// 	async getUsersInfo() {
+	// 		this.$store.commit(`user/${UserMutationsType.CLEAR_USERS}`)
+	// 		try {
+	// 			await this.$store.dispatch(`user/${UserActionType.GET_All_USERS}`)
+	// 		} catch (error) {
+	// 			console.error(error)
+	// 		}
+	// 	}
+	// },
+
+	methods: {
+		async getUsersInfo() {
+			const test = {
+				start: 0,
+				end: 10
+			}
+			try {
+				const { data } = await getUsersAPI(test)
+				console.log(data)
+			} catch (error) {
+				console.error(error)
+			}
+		}
+	},
+
+	created() {
+		this.getUsersInfo()
 	}
 })
 </script>

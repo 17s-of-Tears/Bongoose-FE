@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createRouter, createWebHistory, NavigationGuardNext } from 'vue-router'
 import store from '@/store'
 import { CommonMutationTypes } from '@/store/common/mutations'
@@ -35,11 +36,6 @@ const routes = [
 		path: '/profile',
 		name: 'profile',
 		component: () => import('@/views/ProfilePage.vue'),
-		beforeEnter
-	},
-	{
-		path: '/chat',
-		component: () => import('@/views/ChatPage.vue'),
 		beforeEnter
 	},
 	{

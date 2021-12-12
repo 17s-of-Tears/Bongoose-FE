@@ -13,9 +13,7 @@ import {
 	ResOneBoardInfo
 } from '@/api/board/types'
 
-const formDataConfig = {
-	headers: { 'content-type': 'multipart/form-data' }
-}
+const formDataConfig = { headers: { 'content-type': 'multipart/form-data' } }
 
 // boards
 const getBoardsAPI = (payload: ReqBoardSearchData): AxiosPromise<ResBoardInfo[]> => {
@@ -27,17 +25,21 @@ const getBoardsAPI = (payload: ReqBoardSearchData): AxiosPromise<ResBoardInfo[]>
 // board CRUD
 const getBoardAPI = (boardId: number): AxiosPromise<ResOneBoardInfo> => board.get(`/${boardId}`)
 
-const createBoardAPI = (payload: ReqBoardWritingData | FormData, type: 'form' | 'body') => {
+const createBoardAPI = (payload: ReqBoardWritingData | FormData, type: 'form' | 'body'): AxiosPromise => {
 	// 이미지 업로드 분기처리
 	return type === 'form' ? board.post(`/`, payload, formDataConfig) : board.post(`/`, payload)
 }
 
-const updateBoardAPI = (boardId: number, payload: ReqBoardUpdateData | FormData, type: 'form' | 'body') => {
+const updateBoardAPI = (
+	boardId: number,
+	payload: ReqBoardUpdateData | FormData,
+	type: 'form' | 'body'
+): AxiosPromise => {
 	// 이미지 업로드 분기처리
 	return type === 'form' ? board.put(`/${boardId}`, payload, formDataConfig) : board.put(`/${boardId}`, payload)
 }
 
-const removeBoardAPI = (boardId: number) => board.delete(`/${boardId}`)
+const removeBoardAPI = (boardId: number): AxiosPromise => board.delete(`/${boardId}`)
 
 // comment CRUD
 const getCommentsAPI = (
@@ -45,17 +47,17 @@ const getCommentsAPI = (
 	payload?: AxiosRequestConfig<ReqCommentSearchData>
 ): AxiosPromise<ResCommentInfo> => board.get(`/${boardId}/comment`, payload)
 
-const createCommentAPI = (payload: { boardId: number; content: string }) => {
+const createCommentAPI = (payload: { boardId: number; content: string }): AxiosPromise => {
 	const { boardId, content } = payload
 	return board.post(`/${boardId}/comment`, { content })
 }
 
-const updateCommentAPI = (payload: ReqUpadteCommentData) => {
+const updateCommentAPI = (payload: ReqUpadteCommentData): AxiosPromise => {
 	const { boardID, commentID, content } = payload
-	return board.put(`/${boardID}/comment/${commentID}`, content)
+	return board.put(`/${boardID}/comment/${commentID}`, { content })
 }
 
-const removeCommentAPI = (payload: ReqDeleteCommentData) => {
+const removeCommentAPI = (payload: ReqDeleteCommentData): AxiosPromise => {
 	const { boardID, commentID } = payload
 	return board.delete(`/${boardID}/comment/${commentID}`)
 }
@@ -63,12 +65,12 @@ const removeCommentAPI = (payload: ReqDeleteCommentData) => {
 // like
 const getLikeInfoAPI = (boardId: number): AxiosPromise<{ like: boolean }> => board.get(`/${boardId}/like`)
 
-const updateLikeInfoAPI = (payload: { boardId: number; like: boolean }) => {
+const updateLikeInfoAPI = (payload: { boardId: number; like: boolean }): AxiosPromise => {
 	const { boardId, like } = payload
 	return board.put(`/${boardId}/like`, { like })
 }
 
-const deleteLikeInfoAPI = (boardId: number) => board.delete(`/${boardId}/like`)
+const deleteLikeInfoAPI = (boardId: number): AxiosPromise => board.delete(`/${boardId}/like`)
 
 // hashtag ranking
 const getHashtagRankingAPI = (): AxiosPromise<ReqBoardRating[]> => board.get('/rating')

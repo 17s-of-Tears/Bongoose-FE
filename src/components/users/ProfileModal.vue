@@ -35,7 +35,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { VueEvent } from '@/types'
 import { updateUser } from '@/api/user'
 import { deleteUserLocalStorage } from '@/utils/localStorage'
 import { CommonMutationTypes } from '@/store/common/mutations'

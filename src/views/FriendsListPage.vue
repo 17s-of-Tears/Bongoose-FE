@@ -14,16 +14,20 @@
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 import FriendCard from '@/components/friend/FriendCard.vue'
+import { UserActionType } from '@/store/user/actions'
+import { CommonMutationTypes } from '@/store/common/mutations'
 
 export default defineComponent({
 	components: {
 		FriendCard
 	},
+
 	computed: {
 		...mapState('auth', ['user'])
 	},
+
 	created() {
-		this.$store.commit('END_LOADING')
+		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 	}
 })
 </script>

@@ -1,7 +1,7 @@
 <template>
 	<div class="modal fade" id="updateModal" aria-hidden="true" tabindex="-1">
 		<div class="modal-dialog modal-lg">
-			<ModalContent @updatePost="updatePost" mode="update" :id="id" />
+			<ModalContent @updatePost="updatePost" @closePopOver="closePopOver" mode="update" :id="id" />
 		</div>
 	</div>
 </template>
@@ -22,11 +22,14 @@ export default defineComponent({
 		}
 	},
 
-	emits: ['updatePost'],
+	emits: ['updatePost', 'closePopOver'],
 
 	methods: {
 		updatePost() {
 			this.$emit('updatePost')
+		},
+		closePopOver() {
+			this.$emit('closePopOver')
 		}
 	}
 })

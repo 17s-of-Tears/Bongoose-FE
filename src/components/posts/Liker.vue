@@ -13,8 +13,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import customAlert from '@/utils/customAlert'
 import { deleteLikeInfoAPI, getBoardAPI, getLikeInfoAPI, updateLikeInfoAPI } from '@/api/board'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	props: {

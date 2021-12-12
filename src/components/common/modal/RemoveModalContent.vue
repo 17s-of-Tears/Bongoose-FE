@@ -2,11 +2,11 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<h5 class="modal-title">{{ modeInfo }} 삭제 확인</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closePopOver"></button>
 		</div>
 		<div class="modal-body">{{ modeInfo }}을 삭제하시겠습니까?</div>
 		<div class="modal-footer">
-			<button class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+			<button class="btn btn-secondary" data-bs-dismiss="modal" @click="closePopOver">취소하기</button>
 			<button @click="onremoveBoardAPI" type="button" class="btn btn-primary subbtn" data-bs-dismiss="modal">
 				삭제하기
 			</button>
@@ -36,7 +36,7 @@ export default defineComponent({
 		}
 	},
 
-	emits: ['updatePost', 'updateComment'],
+	emits: ['updatePost', 'updateComment', 'closePopOver'],
 
 	computed: {
 		modeInfo() {
@@ -67,6 +67,9 @@ export default defineComponent({
 			} catch (error) {
 				customAlert(`${this.modeInfo} 삭제를 실패했습니다!`)
 			}
+		},
+		closePopOver() {
+			this.$emit('closePopOver')
 		}
 	}
 })

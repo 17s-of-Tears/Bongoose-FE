@@ -2,6 +2,7 @@
 	<main>
 		<div class="user-card card">
 			<div class="user">
+				<!-- 유저 이미지 벡엔드에서 받으면 설정하기 -->
 				<img :src="profileImage()" alt="프로필 사진" class="user-img" />
 				<div class="user-content">
 					<div class="user-info">
