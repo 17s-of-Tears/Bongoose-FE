@@ -8,7 +8,7 @@ export enum UserMutationsType {
 
 export default {
 	[UserMutationsType.SET_USERS](state: UserState, payload: ResUserSearchInfo): void {
-		state.users = state.users.concat(payload.users as any)
+		state.users = state.users.concat(payload.users as unknown as ConcatArray<never>)
 		state.start = state.start + state.end
 		if (payload.users.length % state.end !== 0 || state.users.length === payload.lastEnd) {
 			state.hasMoreUser = false

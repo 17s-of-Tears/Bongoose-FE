@@ -30,8 +30,8 @@ export default defineComponent({
 			default: null
 		},
 		images: {
-			type: [] as PropType<string[]>,
-			default: []
+			type: Array as PropType<string[]>,
+			default: () => []
 		}
 	},
 
@@ -49,8 +49,10 @@ export default defineComponent({
 	},
 
 	watch: {
-		user(val) {
-			console.log('test', val)
+		user() {
+			this.setImagesInfo()
+		},
+		images() {
 			this.setImagesInfo()
 		}
 	},

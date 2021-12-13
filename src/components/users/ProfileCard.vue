@@ -1,6 +1,6 @@
 <template>
 	<div class="card profile-card">
-		<img class="profile-img" :src="profileImage" alt="user" />
+		<img class="profile-img" :src="userImage" alt="user" />
 		<span>{{ userName }} 님</span>
 		<span v-if="another">@{{ userEmail }}</span>
 		<span>{{ userDescription }}</span>
@@ -32,6 +32,10 @@ export default defineComponent({
 		another: {
 			type: Boolean,
 			default: false
+		},
+		image: {
+			type: String,
+			default: null
 		},
 		name: {
 			type: String,
@@ -67,12 +71,14 @@ export default defineComponent({
 		imageURI(): string {
 			return process.env.VUE_APP_URI
 		},
-		profileImage(): string {
-			if (this.user.imageUrl) {
-				return `${this.imageURI}/${this.user.imageUrl}`
-			} else {
-				return require('@/assets/images/default.png')
-			}
+		userImage(): string {
+			return this.another
+				? this.image
+					? `${this.imageURI}/${this.image}`
+					: require('@/assets/images/default.png')
+				: this.user.imageUrl
+				? `${this.imageURI}/${this.user.imageUrl}`
+				: require('@/assets/images/default.png')
 		}
 	}
 })

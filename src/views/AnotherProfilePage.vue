@@ -1,7 +1,13 @@
 <template>
 	<div class="container profile-container">
 		<div class="profile-box">
-			<ProfileCard :another="true" :name="userInfo.name" :email="userInfo.email" :description="userInfo.description" />
+			<ProfileCard
+				:another="true"
+				:image="userInfo.imageUrl"
+				:name="userInfo.name"
+				:email="userInfo.email"
+				:description="userInfo.description"
+			/>
 			<ProfileImgCard :another="true" :name="userInfo.name" :images="userInfo.images" />
 		</div>
 		<Skeleton v-if="boardLoading" />
@@ -23,6 +29,8 @@ import PostCard from '@/components/posts/PostCard/index.vue'
 import Skeleton from '@/components/posts/Skeleton.vue'
 import Default from '@/components/common/Default.vue'
 import BorderSpinner from '@/components/common/BorderSpinner.vue'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
 
 export default defineComponent({
 	components: {
@@ -49,6 +57,12 @@ export default defineComponent({
 		}
 	},
 
+	watch: {
+		userInfo() {
+			this.userBoardInfo()
+		}
+	},
+
 	methods: {
 		async fetchUserProfileInfo() {
 			try {
@@ -57,6 +71,21 @@ export default defineComponent({
 				this.userInfo = data
 			} catch (error) {
 				console.error(error)
+			}
+		},
+		async userBoardInfo() {
+			this.boardLoading = true
+			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
+			this.$store.commit(`board/${BoardMutationTypes.CLEAR_BOARDS}`)
+			try {
+				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
+					userId: this.userInfo.id
+				})
+			} catch (error) {
+				console.error(error)
+			} finally {
+				this.boardLoading = false
+				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}
 		}
 	},

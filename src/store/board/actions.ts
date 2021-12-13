@@ -18,6 +18,8 @@ export default {
 				if (payload !== undefined) {
 					// 유저 또는 해시태그 게시물 검색결과
 					const { userId, keyword } = payload
+					console.log(payload)
+
 					const { data } = await getBoardsAPI({ start, end, userId, keyword })
 					commit(BoardMutationTypes.SET_LOAD_BOARDS, data)
 					return data

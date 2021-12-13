@@ -14,16 +14,19 @@
 					<span>{{ user.email }}</span>
 				</div>
 			</div>
-			<i class="bi bi-plus-lg"></i>
+			<i class="bi bi-plus-lg friend-plus-icon" @click="onClickAddFollow(user.id, user.name)"></i>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { getRandomFriends } from '@/api/user'
+import { addFollowAPI, getRandomFriends } from '@/api/user'
 import { mapState } from 'vuex'
 import { ResRandomUserInfo } from '@/api/user/types'
+import customAlert from '@/utils/customAlert'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { UserActionType } from '@/store/user/actions'
 
 export default defineComponent({
 	data() {
@@ -40,9 +43,6 @@ export default defineComponent({
 	},
 
 	methods: {
-		toFriendPage() {
-			this.$router.push('/friends_find')
-		},
 		async getUsers() {
 			try {
 				const { data } = await getRandomFriends()
@@ -50,6 +50,22 @@ export default defineComponent({
 			} catch (error) {
 				console.error(error)
 			}
+		},
+		// 친구 추가
+		async onClickAddFollow(id: number, name: string) {
+			try {
+				await addFollowAPI(id)
+				customAlert(`${name}님을 친구로 추가했습니다!`)
+				this.getUsers() // 다시 무작위 3명 추천
+				if (this.$route.path === '/friends_list') {
+					this.$router.go(0) // 만약 친구 목록 페이지 였다면 페이지 갱신
+				}
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		toFriendPage() {
+			this.$router.push('/friends_find')
 		},
 		profileImage(image: string) {
 			return image === null ? require('@/assets/images/default.png') : `${this.imageURI}/${image}`
@@ -105,6 +121,12 @@ export default defineComponent({
 			font-size: 20px;
 			color: $white;
 			cursor: pointer;
+		}
+		.friend-plus-icon {
+			transition: 0.5s;
+			&:hover {
+				color: #888;
+			}
 		}
 	}
 }

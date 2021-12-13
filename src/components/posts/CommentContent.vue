@@ -1,6 +1,6 @@
 <template>
 	<div class="comment-box">
-		<img :src="profileImage()" alt="프로필사진" />
+		<img :src="profileImage(comment.imageUrl)" alt="프로필사진" />
 		<div class="comment-user">
 			<div class="comment-user-inner">
 				<span>{{ comment.name }}</span>
@@ -66,7 +66,10 @@ export default defineComponent({
 	},
 
 	computed: {
-		...mapState('auth', ['user'])
+		...mapState('auth', ['user']),
+		imageURI(): string {
+			return process.env.VUE_APP_URI
+		}
 	},
 
 	methods: {
@@ -78,7 +81,6 @@ export default defineComponent({
 		async commentUpdate() {
 			try {
 				const commentData = { boardID: this.id, commentID: this.comment.commentID, content: this.content }
-				console.log(commentData)
 				await updateCommentAPI(commentData)
 				this.$emit('updateComment')
 				customAlert('댓글 수정이 완료되었습니다!')
@@ -106,7 +108,7 @@ export default defineComponent({
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},
 		profileImage(image: string) {
-			return image || require('@/assets/images/default.png')
+			return `${this.imageURI}/${image}` || require('@/assets/images/default.png')
 		}
 	}
 })

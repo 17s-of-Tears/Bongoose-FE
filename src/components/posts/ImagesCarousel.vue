@@ -72,9 +72,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .content-img {
-	$width: 830px;
-	width: $width;
-	height: $width * 3 / 5;
+	// $width: 100%;
+	// width: $width;
+	// height: $width * 3 / 5;
+	height: 500px;
 	background-size: cover;
 	background-position: center;
 	border-radius: 10px;

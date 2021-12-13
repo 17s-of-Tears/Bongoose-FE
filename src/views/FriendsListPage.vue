@@ -26,10 +26,12 @@ import { UserMutationsType } from '@/store/user/mutations'
 import { UserActionType } from '@/store/user/actions'
 import { CommonMutationTypes } from '@/store/common/mutations'
 import FriendCard from '@/components/friend/FriendCard.vue'
+import BorderSpinner from '@/components/common/BorderSpinner.vue'
 
 export default defineComponent({
 	components: {
-		FriendCard
+		FriendCard,
+		BorderSpinner
 	},
 
 	computed: {
