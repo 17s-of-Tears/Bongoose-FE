@@ -1,10 +1,11 @@
 <template>
 	<div class="card profile-card">
 		<img class="profile-img" :src="profileImage" alt="user" />
-		<span>{{ user.name }} 님</span>
-		<span>{{ user.title }}</span>
-		<span>{{ user.description || '소개글이 비어 있습니다!' }}</span>
+		<span>{{ userName }} 님</span>
+		<span v-if="another">@{{ userEmail }}</span>
+		<span>{{ userDescription }}</span>
 		<button
+			v-if="!another"
 			type="button"
 			class="btn btn-primary"
 			data-bs-toggle="modal"
@@ -27,8 +28,42 @@ export default defineComponent({
 		ProfileModal
 	},
 
+	props: {
+		another: {
+			type: Boolean,
+			default: false
+		},
+		name: {
+			type: String,
+			default: null
+		},
+		email: {
+			type: String,
+			default: null
+		},
+		description: {
+			type: String,
+			default: null
+		}
+	},
+
 	computed: {
 		...mapState('auth', ['user']),
+		userName() {
+			return this.another ? this.name : this.user.name
+		},
+		userDescription() {
+			return this.another
+				? this.description || '소개글이 비어 있습니다!'
+				: this.user.description || '소개글이 비어 있습니다!'
+		},
+		userEmail() {
+			if (this.email !== null) {
+				return /.+(?=@)/.exec(this.email)![0]
+			} else {
+				return null
+			}
+		},
 		imageURI(): string {
 			return process.env.VUE_APP_URI
 		},

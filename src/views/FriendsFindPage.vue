@@ -4,7 +4,7 @@
 			<h2>이런 사람들은 어때요?</h2>
 		</div>
 		<div class="friends-list-box">
-			<FriendCard v-for="user in users" :key="user.id" :user="user" :btn-type="'친구 요청'" />
+			<FriendCard v-for="user in users" :key="user.id" :user="user" :btn-type="'친구 추가'" />
 			<BorderSpinner v-if="!(lastUser || noUser)" />
 		</div>
 	</div>
@@ -36,7 +36,7 @@ export default defineComponent({
 		async getUsersInfo() {
 			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			try {
-				await this.$store.dispatch(`user/${UserActionType.GET_All_USERS}`)
+				await this.$store.dispatch(`user/${UserActionType.GET_All_USERS}`, 0)
 			} catch (error) {
 				console.error(error)
 			} finally {

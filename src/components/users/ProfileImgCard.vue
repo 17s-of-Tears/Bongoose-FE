@@ -1,16 +1,16 @@
 <template>
 	<div class="card">
-		<span>{{ user.name }}님의 최근 사진</span>
+		<span>{{ userName }}님의 최근 사진</span>
 		<div class="row">
 			<div v-for="(imageUrl, index) in imageUrls" :key="index" class="col-lg-3 col-sm-4 image-box">
-				<img :src="profileImage(imageUrl)" :alt="`${user.name}님의 최근 사진`" />
+				<img :src="profileImage(imageUrl)" :alt="`${userName}님의 최근 사진`" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { mapState } from 'vuex'
 
 export default defineComponent({
@@ -20,10 +20,31 @@ export default defineComponent({
 		}
 	},
 
+	props: {
+		another: {
+			type: Boolean,
+			default: false
+		},
+		name: {
+			type: String,
+			default: null
+		},
+		images: {
+			type: [] as PropType<string[]>,
+			default: []
+		}
+	},
+
 	computed: {
 		...mapState('auth', ['user']),
 		imageURI() {
 			return process.env.VUE_APP_URI
+		},
+		userName() {
+			return this.another ? this.name : this.user.name
+		},
+		userImages() {
+			return this.another ? this.images : this.user.images
 		}
 	},
 
@@ -39,8 +60,8 @@ export default defineComponent({
 		setImagesInfo() {
 			const imageUrlsInfo = new Array(8).fill('default') as string[]
 			for (let i = 0; i < imageUrlsInfo.length; i += 1) {
-				if (this.user.images[i]) {
-					imageUrlsInfo.unshift(this.user.images[i].imageUrl)
+				if (this.userImages[i]) {
+					imageUrlsInfo.unshift(this.userImages[i].imageUrl)
 					imageUrlsInfo.pop()
 				}
 			}

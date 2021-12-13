@@ -10,13 +10,16 @@ export enum UserActionType {
 }
 
 export default {
-	[UserActionType.GET_All_USERS]: throttle(async ({ state, commit }: ActionContext<UserState, RootState>) => {
-		const { start, end, hasMoreUser } = state
-		if (hasMoreUser) {
-			// 전체 유저 정보 불러오기
-			const { data } = await getUsersAPI({ start, end })
-			commit(UserMutationsType.SET_USERS, data)
-			return data
-		}
-	}, 2000)
+	[UserActionType.GET_All_USERS]: throttle(
+		async ({ state, commit }: ActionContext<UserState, RootState>, myFollow: 0 | 1) => {
+			const { start, end, hasMoreUser } = state
+			if (hasMoreUser) {
+				// 전체 유저 정보 불러오기
+				const { data } = await getUsersAPI({ start, end }, myFollow)
+				commit(UserMutationsType.SET_USERS, data)
+				return data
+			}
+		},
+		2000
+	)
 }

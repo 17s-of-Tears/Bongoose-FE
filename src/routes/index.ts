@@ -39,6 +39,12 @@ const routes = [
 		beforeEnter
 	},
 	{
+		path: '/user_profile/:id',
+		name: 'user_profile',
+		component: () => import('@/views/AnotherProfilePage.vue'),
+		beforeEnter
+	},
+	{
 		path: '/friends_list',
 		component: () => import('@/views/FriendsListPage.vue'),
 		beforeEnter
