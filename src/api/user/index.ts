@@ -1,4 +1,4 @@
-import { AxiosPromise, AxiosRequestConfig } from 'axios'
+import { AxiosPromise } from 'axios'
 import { user } from '@/api'
 import { ReqUserInfo, ReqUserSearchInfo, ResRandomUserInfo, ResUserMeInfo, ResUserSearchInfo } from '@/api/user/types'
 
@@ -15,8 +15,10 @@ const updateUser = (payload: ReqUserInfo | FormData, type: 'form' | 'body'): Axi
 }
 
 // 유저 정보 가져오기
-const getUsersAPI = (payload: ReqUserSearchInfo): AxiosPromise<ResUserSearchInfo> =>
-	user.get('', payload as AxiosRequestConfig)
+const getUsersAPI = (payload: ReqUserSearchInfo): AxiosPromise<ResUserSearchInfo> => {
+	const { start, end, keyword } = payload
+	return user.get(`/?start=${start}&end=${end}${keyword ? `&keyword=${keyword}` : ''}`)
+}
 
 // 친구 추천 (무작위 3명)
 const getRandomFriends = (): AxiosPromise<ResRandomUserInfo[]> => user.get('random')

@@ -1,5 +1,5 @@
 <template>
-	<div class="profile-card card" v-for="user in usersInfo.users" :key="user.id">
+	<div class="profile-card card">
 		<img :src="profileImage(user.imageUrl)" alt="프로필 이미지" class="profile-img" />
 		<p>{{ user.name }} 님</p>
 		<p>{{ user.email }}</p>
@@ -12,12 +12,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { mapState } from 'vuex'
+import { defineComponent, PropType } from 'vue'
 import { CommonMutationTypes } from '@/store/common/mutations'
+import { ResUserData } from '@/api/user/types'
 
 export default defineComponent({
 	props: {
+		user: {
+			type: Object as PropType<ResUserData>
+		},
 		btnType: {
 			type: String,
 			default: ''
@@ -29,7 +32,6 @@ export default defineComponent({
 	},
 
 	computed: {
-		...mapState('user', ['usersInfo']),
 		imageURI() {
 			return process.env.VUE_APP_URI
 		}

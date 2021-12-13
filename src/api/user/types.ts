@@ -19,7 +19,7 @@ export interface ResUserData {
 }
 
 export interface ResUserSearchInfo {
-	user: ResUserData[]
+	users: ResUserData[]
 	requestEnd: number
 	lastEnd: number
 }

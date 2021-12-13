@@ -13,9 +13,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import FriendCard from '@/components/friend/FriendCard.vue'
-import { UserActionType } from '@/store/user/actions'
 import { CommonMutationTypes } from '@/store/common/mutations'
+import FriendCard from '@/components/friend/FriendCard.vue'
 
 export default defineComponent({
 	components: {
