@@ -71,18 +71,16 @@ export default defineComponent({
 		async onClickUpdateProfile() {
 			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			// 이미지수정 경우 분기처리
-			if (this.image || this.noImageUpdate) {
+			if (this.image) {
 				try {
 					const formData = new FormData()
 					formData.append('nickname', this.nickname)
 					formData.append('description', this.description)
-					/* 이미지삭제 어캐하누? */
-					formData.append('image', this.image || '')
+					formData.append('image', this.image)
 					await updateUser(formData, 'form')
 					// 유저 정보 갱신
 					deleteUserLocalStorage()
 					this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
-					this.noImageUpdate = false
 				} catch (error) {
 					console.error(error)
 				} finally {
@@ -90,16 +88,12 @@ export default defineComponent({
 				}
 			} else {
 				try {
-					await updateUser(
-						{
-							nickname: this.nickname,
-							description: this.description
-						},
-						'body'
-					)
+					const userData = { nickname: this.nickname, description: this.description, defaultImage: this.noImageUpdate }
+					await updateUser(userData, 'body')
 					// 유저 정보 갱신
 					deleteUserLocalStorage()
 					this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
+					this.noImageUpdate = false
 				} catch (error) {
 					console.error(error)
 				} finally {

@@ -39,12 +39,12 @@ export default defineComponent({
 	computed: {
 		...mapState('auth', ['user']),
 		viewport() {
-			if (this.width >= 1100) {
+			if (this.width > 1024) {
 				return 8
 			} else if (this.width >= 584) {
 				return 6
 			} else {
-				return 4
+				return 5
 			}
 		},
 		imageURI() {
@@ -116,6 +116,8 @@ export default defineComponent({
 	border-radius: 20px !important;
 	@include media-breakpoint-down(md) {
 		width: 100%;
+		padding: 10px;
+		justify-content: space-between;
 	}
 	> span {
 		@include rem(20);
@@ -129,8 +131,10 @@ export default defineComponent({
 			flex-wrap: wrap;
 			justify-content: center;
 			padding: 10px;
-			@media (max-width: 1500px) {
-				height: 100px;
+			@include media-breakpoint-down(sm) {
+				flex-direction: column;
+				flex-wrap: nowrap;
+				width: auto;
 			}
 			img {
 				width: 100px;
@@ -138,11 +142,18 @@ export default defineComponent({
 				border-radius: 20px;
 				object-fit: cover;
 				box-shadow: 5px 5px 12px 0 #bbb;
+				padding-bottom: 0 !important;
 				@media (max-width: 1500px) {
 					width: 80px;
+					height: 80px;
 				}
 				@media (max-width: 1250px) {
-					width: 65px;
+					width: 100%;
+					border-radius: 10px;
+				}
+				@include media-breakpoint-down(md) {
+					width: 60px;
+					height: 60px;
 				}
 				@media (max-width: 584px) {
 					padding-bottom: 10px;

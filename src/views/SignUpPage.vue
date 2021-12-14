@@ -46,10 +46,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-box {
 	margin: 50px auto;
-	width: 85%;
+	width: 1000px;
 	border-radius: 20px;
 	background: #fff;
 	box-shadow: 5px 5px 10px $gray-400;
+	@include media-breakpoint-down(lg) {
+		width: 85%;
+	}
 	.login-inner {
 		padding: 50px 180px 100px;
 		display: flex;

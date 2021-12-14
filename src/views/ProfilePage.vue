@@ -14,6 +14,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
 import ProfileCard from '@/components/users/ProfileCard.vue'
 import ProfileImgCard from '@/components/users/ProfileImgCard.vue'
 import PostCard from '@/components/posts/PostCard/index.vue'
@@ -21,8 +23,6 @@ import Skeleton from '@/components/posts/Skeleton.vue'
 import Default from '@/components/common/Default.vue'
 import BorderSpinner from '@/components/common/BorderSpinner.vue'
 import { CommonMutationTypes } from '@/store/common/mutations'
-import { BoardMutationTypes } from '@/store/board/mutations'
-import { BoardActionTypes } from '@/store/board/actions'
 
 export default defineComponent({
 	components: {
@@ -77,6 +77,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .profile-container {
 	margin-top: 40px;
+	@include media-breakpoint-down(sm) {
+		margin-top: 10px;
+	}
 	.profile-box {
 		display: flex;
 		justify-content: space-between;

@@ -99,7 +99,7 @@ export default defineComponent({
 		margin-bottom: 0 !important;
 	}
 	span {
-		@include rem(20);
+		@include rem(18);
 	}
 	.profile-img {
 		width: 100px !important;

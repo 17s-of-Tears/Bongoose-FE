@@ -34,6 +34,7 @@ export interface ResUserMeInfo extends ResUserData {
 export interface ReqUserInfo {
 	nickname?: string
 	description?: string
+	defaultImage?: boolean
 }
 
 export interface ResRandomUserInfo {

@@ -29,6 +29,7 @@ export default defineComponent({
 			return process.env.VUE_APP_URI
 		},
 		imageInfo() {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			return this.images.map((v: any) => Object.values(v))
 		}
 	}
@@ -37,9 +38,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .content-img {
-	// $width: 100%;
-	// width: $width;
-	// height: $width * 3 / 5;
 	height: 500px;
 	background-size: cover;
 	background-position: center;
