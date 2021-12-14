@@ -40,6 +40,7 @@ import { updateUser } from '@/api/user'
 import { deleteUserLocalStorage } from '@/utils/localStorage'
 import { CommonMutationTypes } from '@/store/common/mutations'
 import { AuthActionTypes } from '@/store/auth/actions'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	props: {
@@ -81,8 +82,8 @@ export default defineComponent({
 					// 유저 정보 갱신
 					deleteUserLocalStorage()
 					this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
-				} catch (error) {
-					console.error(error)
+				} catch {
+					customAlert('유저 정보 불러오기를 실패했습니다')
 				} finally {
 					this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 				}
@@ -94,8 +95,8 @@ export default defineComponent({
 					deleteUserLocalStorage()
 					this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
 					this.noImageUpdate = false
-				} catch (error) {
-					console.error(error)
+				} catch {
+					customAlert('유저 정보 불러오기를 실패했습니다')
 				} finally {
 					this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 				}

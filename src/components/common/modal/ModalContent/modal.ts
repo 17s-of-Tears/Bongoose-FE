@@ -62,8 +62,8 @@ export default defineComponent({
 					Array.from(hashtags).forEach(v => formData.append('hashtags', v))
 				formData.append('content', content)
 				// 이미지 수정
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				this.imageId.forEach((v: any) => formData.append('overwrite', v))
-				console.log(formData.getAll('overwrite'))
 				if (this.mode === 'writer') {
 					this.createBoardAPIFunc(formData, 'form') // 글 쓰기
 				} else if (this.mode === 'update') {
@@ -147,10 +147,9 @@ export default defineComponent({
 				this.boardContent = data.content + hashtags.join(' ')
 				this.getImageInfo.push(data.images)
 				data.images.forEach(v => this.imageId.push(v.id))
-				console.log(this.imageId)
 				this.urls = data.images.map(v => `${process.env.VUE_APP_URI}/${v.imageUrl}`)
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('게시물 정보를 불러오는데 실패했습니다.')
 			}
 		}
 	},

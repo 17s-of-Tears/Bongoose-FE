@@ -1,5 +1,5 @@
 <template>
-	<span class="logo" @click="toHome">Bongoose</span>
+	<img :src="require('@/assets/images/logo.png')" alt="Bongoose" @click="toHome" />
 </template>
 
 <script lang="ts">
@@ -15,11 +15,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-span {
-	color: $primary;
-	font-family: 'PT Sans', sans-serif;
-	font-size: 40px;
-	font-weight: 600;
-	cursor: pointer;
+img {
+	width: 230px;
 }
 </style>

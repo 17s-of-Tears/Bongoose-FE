@@ -18,6 +18,7 @@ import { UserMutationsType } from '@/store/user/mutations'
 import { UserActionType } from '@/store/user/actions'
 import FriendCard from '@/components/friend/FriendCard.vue'
 import BorderSpinner from '@/components/common/BorderSpinner.vue'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	components: {
@@ -37,8 +38,8 @@ export default defineComponent({
 			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			try {
 				await this.$store.dispatch(`user/${UserActionType.GET_All_USERS}`, 0)
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다')
 			} finally {
 				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}

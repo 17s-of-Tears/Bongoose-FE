@@ -51,8 +51,8 @@ export default defineComponent({
 					try {
 						await addFollowAPI(id)
 						customAlert(`${name}님을 친구로 추가했습니다!`)
-					} catch (error) {
-						console.error(error)
+					} catch {
+						customAlert('친구추가를 실패했습니다.')
 					}
 					break
 				case '프로필 보기':
@@ -67,8 +67,8 @@ export default defineComponent({
 				await removeFollowAPI(id)
 				customAlert(`${name}님을 친구에서 삭제했습니다!`)
 				this.$emit('updateFollow')
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('친구삭제를 실패했습니다.')
 			}
 		}
 	},

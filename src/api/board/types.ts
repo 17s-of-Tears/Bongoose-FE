@@ -8,8 +8,10 @@ export interface ReqBoardSearchData {
 
 export interface ResBoardData {
 	id: number
+	userId: number
 	userName: string
 	userEmail: string
+	userImageUrl: string | null
 	images: string | null
 	hashtags: string[]
 	likes: number

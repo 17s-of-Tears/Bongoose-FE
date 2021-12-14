@@ -1,31 +1,38 @@
-# Bongoose 👩‍👦‍👦
-`Bongoose(봉구스)`는 소셜 네트워크 서비스(SNS)를 제공하는 웹 애플리케이션 입니다. <br />
+<p align="middle" >
+  <img src="https://user-images.githubusercontent.com/80776262/146028348-2b50ea3e-dcc1-454c-b087-777b3a67b9f5.png" width="150px" />
+</p>
 
-> 개발 기간: 2021.09.13 ~ ing <br />
+<h1 align="middle">봉구스!</h1>
+<p align="middle">Bongoose(봉구스) 는 소셜 네트워크 서비스(SNS)를 제공하는 웹 애플리케이션 입니다.</p>
+<br /><br />
+
+> 개발 기간: 2021.09.13 ~ 2021.12.15 (총 3개월) <br />
 > 개발 인원: 3명
 
-[Bongoose-BE 리포지토리](https://github.com/codingjoa/Bongoose-BE)
+[Bongoose 바로가기]() <br />
+[Bongoose 시연 영상]() <br />
+[Bongoose-BE 리포지토리](https://github.com/codingjoa/Bongoose-BE) <br />
 
 ## Index 📖
+
 1. 팀 포지션
 1. 사용기술
 1. 시스템 프로세스
 1. 시스템 기본 플로우
-1. 화면 미리보기
+1. 주요기능 미리보기
 
 ## 팀 포지션 👨‍💻
 
-이름 | 포지션
---- | ---
-오택현 | Back-End 
-여찬규 | Front-End, Design
-고기현 | Front-End
+[오택현](https://github.com/codingjoa) | [여찬규](https://github.com/changyuyeo) | [고기현](https://github.com/Gihyun-developSpace)
+:---: | :---: | :---:
+<img src="https://avatars.githubusercontent.com/u/49907913?v=4" width="100px" /> | <img src="https://avatars.githubusercontent.com/u/80776262?v=4" width="100px" /> | <img src="https://avatars.githubusercontent.com/u/90171399?v=4" width="100px" />
+Back-End | Front-End<br /> Design | Front-End
 
 ## 사용기술 🔍
 
 ### Front-End
 ![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
@@ -53,18 +60,6 @@
 
 정리중 입니다!
 
-## 화면 미리보기 🖥
+## 주요기능 미리보기 🖥
 
 준비중 입니다!
-
-## etc... 📝
-
-```
-node -v 
-v16.13.0
-```
-
-```
-.env
-VUE_APP_URI=...
-```

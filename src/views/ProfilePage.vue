@@ -23,6 +23,7 @@ import Skeleton from '@/components/posts/Skeleton.vue'
 import Default from '@/components/common/Default.vue'
 import BorderSpinner from '@/components/common/BorderSpinner.vue'
 import { CommonMutationTypes } from '@/store/common/mutations'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	components: {
@@ -58,8 +59,8 @@ export default defineComponent({
 				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 					userId: this.user.id
 				})
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다')
 			} finally {
 				this.boardLoading = false
 				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)

@@ -31,6 +31,7 @@ import Default from '@/components/common/Default.vue'
 import BorderSpinner from '@/components/common/BorderSpinner.vue'
 import { BoardMutationTypes } from '@/store/board/mutations'
 import { BoardActionTypes } from '@/store/board/actions'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	components: {
@@ -69,8 +70,8 @@ export default defineComponent({
 				const id = parseInt(this.$route.params.id as string, 10)
 				const { data } = await getUserProfileAPI(id)
 				this.userInfo = data
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다')
 			}
 		},
 		async userBoardInfo() {
@@ -81,8 +82,8 @@ export default defineComponent({
 				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 					userId: this.userInfo.id
 				})
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다')
 			} finally {
 				this.boardLoading = false
 				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)

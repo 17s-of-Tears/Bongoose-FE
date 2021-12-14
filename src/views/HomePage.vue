@@ -24,6 +24,7 @@ import BorderSpinner from '@/components/common/BorderSpinner.vue'
 import { CommonMutationTypes } from '@/store/common/mutations'
 import { BoardMutationTypes } from '@/store/board/mutations'
 import { BoardActionTypes } from '@/store/board/actions'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	components: {
@@ -56,8 +57,8 @@ export default defineComponent({
 			this.$store.commit(`board/${BoardMutationTypes.CLEAR_BOARDS}`)
 			try {
 				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`)
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다')
 			} finally {
 				this.boardLoading = false
 				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)

@@ -57,8 +57,8 @@ export default defineComponent({
 			try {
 				const { data } = await getCommentsAPI(this.board.id)
 				this.count = data.comments.length
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('잠시 후에 시도해주세요.')
 			}
 		},
 		async getBoardsAPI() {
@@ -84,7 +84,7 @@ export default defineComponent({
 						break
 				}
 			} catch (error) {
-				console.error(error)
+				customAlert('게시물 불러오기를 실패했습니다')
 			} finally {
 				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
 			}

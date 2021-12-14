@@ -43,8 +43,8 @@ export default defineComponent({
 				this.comment = ''
 				this.$emit('updateComment')
 				customAlert('댓글이 등록되었습니다!')
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('댓글등록에 실패했습니다.')
 			}
 		}
 	}

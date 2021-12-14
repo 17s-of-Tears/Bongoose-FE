@@ -26,6 +26,7 @@ const setInterceptors = (instance: AxiosInstance) => {
 					store.commit('auth/SET_TOKEN', data.accessToken)
 					config.headers.Authorization = `Bearer ${data.accessToken}`
 					return instance(config)
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				} catch (error: any) {
 					console.error(error.response.data.message)
 					return Promise.reject(error)

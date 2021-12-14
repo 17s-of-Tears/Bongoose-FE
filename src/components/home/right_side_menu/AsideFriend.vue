@@ -48,7 +48,7 @@ export default defineComponent({
 				const { data } = await getRandomFriends()
 				this.usersInfo = data
 			} catch (error) {
-				console.error(error)
+				customAlert(`정보를 불러오는데 실패했습니다.`)
 			}
 		},
 		// 친구 추가
@@ -60,8 +60,8 @@ export default defineComponent({
 				if (this.$route.path === '/friends_list') {
 					this.$router.go(0) // 만약 친구 목록 페이지 였다면 페이지 갱신
 				}
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('친구추가를 실패했습니다.')
 			}
 		},
 		toFriendPage() {

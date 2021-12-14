@@ -1,7 +1,10 @@
 <template>
 	<div class="container">
-		<h2>유저 검색 페이지</h2>
-		<div>{{ $route.params.id }} 검색함</div>
+		<div class="card user_search_card">
+			<h2>
+				<span>{{ $route.params.id }}</span> 검색결과
+			</h2>
+		</div>
 		<Skeleton v-if="boardLoading" />
 		<PostCard
 			v-else
@@ -26,6 +29,7 @@ import BorderSpinner from '@/components/common/BorderSpinner.vue'
 import { CommonMutationTypes } from '@/store/common/mutations'
 import { BoardMutationTypes } from '@/store/board/mutations'
 import { BoardActionTypes } from '@/store/board/actions'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	components: {
@@ -59,8 +63,8 @@ export default defineComponent({
 				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
 					keyword: this.$route.params.id
 				})
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다')
 			} finally {
 				this.boardLoading = false
 				this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
@@ -75,4 +79,18 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.user_search_card {
+	border-radius: 20px;
+	margin-top: 40px;
+	padding: 25px 30px;
+	h2 {
+		font-weight: 400;
+		@include rem(25);
+		margin: 0;
+		span {
+			color: $primary;
+		}
+	}
+}
+</style>

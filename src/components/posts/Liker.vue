@@ -41,8 +41,8 @@ export default defineComponent({
 				this.likes = data.likes
 				this.dislikes = data.dislikes
 				this.boardLike()
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다.')
 			}
 		},
 		// 좋아요 여부 상태 정보 불러오기
@@ -52,8 +52,8 @@ export default defineComponent({
 				if (data.like !== null) {
 					data.like ? (this.mylike = true) : (this.mydislike = true)
 				}
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다.')
 			}
 		},
 		// 버튼별로 분기처리
@@ -68,7 +68,7 @@ export default defineComponent({
 						await updateLikeInfoAPI({ boardId: this.id, like: true })
 						this.mylike = true
 					} catch (error) {
-						console.error(error)
+						customAlert('잠시 후에 시도해주세요.')
 					}
 				}
 			} else if (mode === 'dislike') {
@@ -81,7 +81,7 @@ export default defineComponent({
 						await updateLikeInfoAPI({ boardId: this.id, like: false })
 						this.mydislike = true
 					} catch (error) {
-						console.error(error)
+						customAlert('잠시 후에 시도해주세요.')
 					}
 				}
 			}
@@ -93,16 +93,16 @@ export default defineComponent({
 				try {
 					await deleteLikeInfoAPI(this.id)
 					this.mylike = null
-				} catch (error) {
-					console.error(error)
+				} catch {
+					customAlert('잠시 후에 시도해주세요.')
 				}
 			} else if (mode === 'dislike') {
 				// 싫어요 취소
 				try {
 					await deleteLikeInfoAPI(this.id)
 					this.mydislike = null
-				} catch (error) {
-					console.error(error)
+				} catch {
+					customAlert('잠시 후에 시도해주세요.')
 				}
 			}
 			this.setBoardInfo()

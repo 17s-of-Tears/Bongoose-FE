@@ -21,6 +21,7 @@
 import { defineComponent } from 'vue'
 import { getHashtagRankingAPI } from '@/api/board'
 import { ReqBoardRating } from '@/api/board/types'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	data() {
@@ -35,8 +36,8 @@ export default defineComponent({
 			try {
 				const { data } = await getHashtagRankingAPI()
 				this.hashs = data
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다.')
 			}
 		},
 		toHashSearch(hash: string) {

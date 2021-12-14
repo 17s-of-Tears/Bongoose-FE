@@ -15,6 +15,7 @@ import { defineComponent } from 'vue'
 import { getCommentsAPI } from '@/api/board'
 import CommentForm from '@/components/posts/CommentForm.vue'
 import CommentContent from '@/components/posts/CommentContent.vue'
+import customAlert from '@/utils/customAlert'
 
 export default defineComponent({
 	components: {
@@ -47,12 +48,11 @@ export default defineComponent({
 	methods: {
 		async getCommentsAPIInfo() {
 			try {
-				// 댓글 페이지 네이션 추가하기!
 				const { data } = await getCommentsAPI(this.id)
 				this.comments = data.comments
 				this.$emit('updateComment')
-			} catch (error) {
-				console.error(error)
+			} catch {
+				customAlert('정보를 불러오는데 실패했습니다.')
 			}
 		},
 		updateComment() {
