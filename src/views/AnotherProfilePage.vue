@@ -1,8 +1,14 @@
 <template>
 	<div class="container profile-container">
 		<div class="profile-box">
-			<ProfileCard />
-			<ProfileImgCard />
+			<ProfileCard
+				:another="true"
+				:image="userInfo.imageUrl"
+				:name="userInfo.name"
+				:email="userInfo.email"
+				:description="userInfo.description"
+			/>
+			<ProfileImgCard :another="true" :name="userInfo.name" :images="userInfo.images" />
 		</div>
 		<Skeleton v-if="boardLoading" />
 		<PostCard v-else v-for="board in boards" :key="board.id" :board="board" :mode="'profile'" />
@@ -14,15 +20,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import { BoardMutationTypes } from '@/store/board/mutations'
-import { BoardActionTypes } from '@/store/board/actions'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { ResUserMeInfo } from '@/api/user/types'
+import { getUserProfileAPI } from '@/api/user'
 import ProfileCard from '@/components/users/ProfileCard.vue'
 import ProfileImgCard from '@/components/users/ProfileImgCard.vue'
 import PostCard from '@/components/posts/PostCard/index.vue'
 import Skeleton from '@/components/posts/Skeleton.vue'
 import Default from '@/components/common/Default.vue'
 import BorderSpinner from '@/components/common/BorderSpinner.vue'
-import { CommonMutationTypes } from '@/store/common/mutations'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
 
 export default defineComponent({
 	components: {
@@ -36,27 +44,42 @@ export default defineComponent({
 
 	data() {
 		return {
-			boardLoading: false
+			boardLoading: false,
+			userInfo: {} as ResUserMeInfo
 		}
 	},
 
 	computed: {
 		...mapState(['loading']),
-		...mapState('auth', ['user']),
 		...mapState('board', ['boards', 'lastPost']),
 		noPost(): boolean {
 			return this.boards.length === 0
 		}
 	},
 
+	watch: {
+		userInfo() {
+			this.userBoardInfo()
+		}
+	},
+
 	methods: {
-		async myBoardInfo() {
+		async fetchUserProfileInfo() {
+			try {
+				const id = parseInt(this.$route.params.id as string, 10)
+				const { data } = await getUserProfileAPI(id)
+				this.userInfo = data
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		async userBoardInfo() {
 			this.boardLoading = true
 			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			this.$store.commit(`board/${BoardMutationTypes.CLEAR_BOARDS}`)
 			try {
 				await this.$store.dispatch(`board/${BoardActionTypes.GET_LOAD_BOARDS}`, {
-					userId: this.user.id
+					userId: this.userInfo.id
 				})
 			} catch (error) {
 				console.error(error)
@@ -69,7 +92,7 @@ export default defineComponent({
 
 	created() {
 		this.$store.commit(`common/${CommonMutationTypes.END_LOADING}`)
-		this.myBoardInfo()
+		this.fetchUserProfileInfo()
 	}
 })
 </script>
@@ -77,17 +100,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .profile-container {
 	margin-top: 40px;
-	@include media-breakpoint-down(sm) {
-		margin-top: 10px;
-	}
 	.profile-box {
 		display: flex;
 		justify-content: space-between;
 		gap: 30px;
 		@include media-breakpoint-down(sm) {
-			flex-direction: column;
-			align-items: center;
-			gap: 10px;
+			display: block;
 		}
 	}
 }

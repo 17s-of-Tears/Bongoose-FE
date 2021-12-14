@@ -3,15 +3,15 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 import customAlert from '@/utils/customAlert'
 import { getCommentsAPI } from '@/api/board'
+import { CommonMutationTypes } from '@/store/common/mutations'
+import { BoardActionTypes } from '@/store/board/actions'
+import { BoardMutationTypes } from '@/store/board/mutations'
+import { AuthActionTypes } from '@/store/auth/actions'
 import CommentList from '@/components/posts/CommentList.vue'
 import PostContent from '@/components/posts/PostContent.vue'
 import Images from '@/components/posts/Images.vue'
 import PopOver from '@/components/posts/PopOver.vue'
 import Liker from '@/components/posts/Liker.vue'
-import { CommonMutationTypes } from '@/store/common/mutations'
-import { BoardActionTypes } from '@/store/board/actions'
-import { BoardMutationTypes } from '@/store/board/mutations'
-import { AuthActionTypes } from '@/store/auth/actions'
 
 export default defineComponent({
 	components: {
@@ -46,7 +46,10 @@ export default defineComponent({
 
 	computed: {
 		...mapState('auth', ['user']),
-		...mapState('board', ['boards', 'hasMorePost', 'lastPost'])
+		...mapState('board', ['boards', 'hasMorePost', 'lastPost']),
+		imageURI() {
+			return process.env.VUE_APP_URI
+		}
 	},
 
 	methods: {
@@ -57,15 +60,6 @@ export default defineComponent({
 			} catch (error) {
 				console.error(error)
 			}
-		},
-		updateComment() {
-			this.commentCount()
-		},
-		toggleOnComment() {
-			this.onComment = !this.onComment
-		},
-		toUserFindPage(id: string) {
-			this.$router.push(`/user/${id}`)
 		},
 		async getBoardsAPI() {
 			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
@@ -111,6 +105,15 @@ export default defineComponent({
 			this.getBoardsAPI()
 			this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
 		},
+		updateComment() {
+			this.commentCount()
+		},
+		toggleOnComment() {
+			this.onComment = !this.onComment
+		},
+		toUserFindPage(id: string) {
+			this.$router.push(`/user_profile/${id}`)
+		},
 		// 매개변수 데이터 가공
 		userEmail(email: string) {
 			if (email) {
@@ -120,8 +123,8 @@ export default defineComponent({
 		boardDate(date: Date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},
-		profileImage(image: string) {
-			return image || require('@/assets/images/default.png')
+		profileImage(image: string | null) {
+			return image !== null ? `${this.imageURI}/${image}` : require('@/assets/images/default.png')
 		},
 		myPost(boardEmail: string) {
 			return this.user.email === boardEmail

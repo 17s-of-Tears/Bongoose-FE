@@ -43,5 +43,8 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	padding: 40px 40px 0 28px;
+	@include media-breakpoint-down(lg) {
+		display: none;
+	}
 }
 </style>

@@ -7,7 +7,7 @@
 	</template>
 	<template v-else-if="isHomePage && !NotFoundPage">
 		<div class="row">
-			<div class="col-12 col-lg-3 responsive-side">
+			<div class="col-lg-3 responsive-side">
 				<LeftSideMenu />
 			</div>
 			<div id="header" class="col-12 col-lg-6">
@@ -17,7 +17,7 @@
 					</transition>
 				</RouterView>
 			</div>
-			<div class="col-12 col-lg-3 responsive-side">
+			<div class="col-lg-3 responsive-side">
 				<RightSideMenu />
 			</div>
 		</div>
@@ -56,7 +56,7 @@ export default defineComponent({
 	},
 
 	computed: {
-		...mapState(['alert', 'loading']),
+		...mapState('common', ['alert', 'loading']),
 		isLoginPage(): boolean {
 			return this.$route.name === 'login' || this.$route.name === 'signup'
 		},

@@ -5,9 +5,9 @@ export interface UserImagesType {
 }
 
 export interface ReqUserSearchInfo {
-	start: number
-	end: number
-	keyword: string
+	start?: number
+	end?: number
+	keyword?: string
 }
 
 export interface ResUserData {
@@ -19,7 +19,7 @@ export interface ResUserData {
 }
 
 export interface ResUserSearchInfo {
-	user: ResUserData[]
+	users: ResUserData[]
 	requestEnd: number
 	lastEnd: number
 }
@@ -34,6 +34,7 @@ export interface ResUserMeInfo extends ResUserData {
 export interface ReqUserInfo {
 	nickname?: string
 	description?: string
+	defaultImage?: boolean
 }
 
 export interface ResRandomUserInfo {

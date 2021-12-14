@@ -1,10 +1,11 @@
 <template>
 	<div class="card profile-card">
-		<img class="profile-img" :src="profileImage" alt="user" />
-		<span>{{ user.name }} 님</span>
-		<span>{{ user.title }}</span>
-		<span>{{ user.description || '소개글이 비어 있습니다!' }}</span>
+		<img class="profile-img" :src="userImage" alt="user" />
+		<span>{{ userName }} 님</span>
+		<span v-if="another">@{{ userEmail }}</span>
+		<span>{{ userDescription }}</span>
 		<button
+			v-if="!another"
 			type="button"
 			class="btn btn-primary"
 			data-bs-toggle="modal"
@@ -27,17 +28,57 @@ export default defineComponent({
 		ProfileModal
 	},
 
+	props: {
+		another: {
+			type: Boolean,
+			default: false
+		},
+		image: {
+			type: String,
+			default: null
+		},
+		name: {
+			type: String,
+			default: null
+		},
+		email: {
+			type: String,
+			default: null
+		},
+		description: {
+			type: String,
+			default: null
+		}
+	},
+
 	computed: {
 		...mapState('auth', ['user']),
+		userName() {
+			return this.another ? this.name : this.user.name
+		},
+		userDescription() {
+			return this.another
+				? this.description || '소개글이 비어 있습니다!'
+				: this.user.description || '소개글이 비어 있습니다!'
+		},
+		userEmail() {
+			if (this.email !== null) {
+				return /.+(?=@)/.exec(this.email)![0]
+			} else {
+				return null
+			}
+		},
 		imageURI(): string {
 			return process.env.VUE_APP_URI
 		},
-		profileImage(): string {
-			if (this.user.imageUrl) {
-				return `${this.imageURI}/${this.user.imageUrl}`
-			} else {
-				return require('@/assets/images/default.png')
-			}
+		userImage(): string {
+			return this.another
+				? this.image
+					? `${this.imageURI}/${this.image}`
+					: require('@/assets/images/default.png')
+				: this.user.imageUrl
+				? `${this.imageURI}/${this.user.imageUrl}`
+				: require('@/assets/images/default.png')
 		}
 	}
 })
@@ -53,6 +94,13 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 	gap: 15px;
+	@include media-breakpoint-down(md) {
+		width: 100%;
+		margin-bottom: 0 !important;
+	}
+	span {
+		@include rem(18);
+	}
 	.profile-img {
 		width: 100px !important;
 		height: 100px !important;

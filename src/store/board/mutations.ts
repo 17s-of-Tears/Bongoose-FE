@@ -7,7 +7,7 @@ export enum BoardMutationTypes {
 }
 
 export default {
-	[BoardMutationTypes.SET_LOAD_BOARDS](state: BoardState, payload: ResBoardInfo) {
+	[BoardMutationTypes.SET_LOAD_BOARDS](state: BoardState, payload: ResBoardInfo): void {
 		state.boards = state.boards.concat(payload.boards as any)
 		state.start = state.start + state.end
 		// 불러올 데이터의 갯수가 state.end 이하면
@@ -18,7 +18,7 @@ export default {
 		}
 		state.watchBoard = !state.watchBoard
 	},
-	[BoardMutationTypes.CLEAR_BOARDS](state: BoardState) {
+	[BoardMutationTypes.CLEAR_BOARDS](state: BoardState): void {
 		state.boards = []
 		state.watchBoard = false
 		state.start = 0

@@ -1,35 +1,71 @@
 <template>
 	<div class="card">
-		<span>{{ user.name }}님의 최근 사진</span>
+		<span>{{ userName }}님의 최근 사진</span>
 		<div class="row">
 			<div v-for="(imageUrl, index) in imageUrls" :key="index" class="col-lg-3 col-sm-4 image-box">
-				<img :src="profileImage(imageUrl)" :alt="`${user.name}님의 최근 사진`" />
+				<img :src="profileImage(imageUrl)" :alt="`${userName}님의 최근 사진`" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { mapState } from 'vuex'
 
 export default defineComponent({
 	data() {
 		return {
-			imageUrls: [] as string[]
+			imageUrls: [] as string[],
+			width: window.innerWidth
+		}
+	},
+
+	props: {
+		another: {
+			type: Boolean,
+			default: false
+		},
+		name: {
+			type: String,
+			default: null
+		},
+		images: {
+			type: Array as PropType<string[]>,
+			default: () => []
 		}
 	},
 
 	computed: {
 		...mapState('auth', ['user']),
+		viewport() {
+			if (this.width > 1024) {
+				return 8
+			} else if (this.width >= 584) {
+				return 6
+			} else {
+				return 5
+			}
+		},
 		imageURI() {
 			return process.env.VUE_APP_URI
+		},
+		userName() {
+			return this.another ? this.name : this.user.name
+		},
+		userImages() {
+			return this.another ? this.images : this.user.images
 		}
 	},
 
 	watch: {
-		user(val) {
-			console.log('test', val)
+		user() {
+			this.setImagesInfo()
+		},
+		images() {
+			this.setImagesInfo()
+		},
+		viewport() {
 			this.setImagesInfo()
 		}
 	},
@@ -37,10 +73,10 @@ export default defineComponent({
 	methods: {
 		// 최근 사진 8장 뽑는 함수, 8장 이하일 때 부족한 만큼 default 이미지 채우기
 		setImagesInfo() {
-			const imageUrlsInfo = new Array(8).fill('default') as string[]
+			const imageUrlsInfo = new Array(this.viewport).fill('default') as string[]
 			for (let i = 0; i < imageUrlsInfo.length; i += 1) {
-				if (this.user.images[i]) {
-					imageUrlsInfo.unshift(this.user.images[i].imageUrl)
+				if (this.userImages[i]) {
+					imageUrlsInfo.unshift(this.userImages[i].imageUrl)
 					imageUrlsInfo.pop()
 				}
 			}
@@ -53,11 +89,22 @@ export default defineComponent({
 			} else {
 				return `${this.imageURI}/${imageUrl}`
 			}
+		},
+		handleResize() {
+			this.width = window.innerWidth
 		}
 	},
 
 	created() {
 		this.setImagesInfo()
+	},
+
+	mounted() {
+		window.addEventListener('resize', this.handleResize)
+	},
+
+	beforeUnmount() {
+		window.removeEventListener('resize', this.handleResize)
 	}
 })
 </script>
@@ -67,6 +114,11 @@ export default defineComponent({
 	width: 600px;
 	padding: 25px;
 	border-radius: 20px !important;
+	@include media-breakpoint-down(md) {
+		width: 100%;
+		padding: 10px;
+		justify-content: space-between;
+	}
 	> span {
 		@include rem(20);
 		color: $primary;
@@ -75,25 +127,33 @@ export default defineComponent({
 	}
 	.row {
 		.image-box {
-			height: auto;
 			display: flex;
+			flex-wrap: wrap;
 			justify-content: center;
 			padding: 10px;
-			@media (max-width: 1500px) {
-				height: 100px;
+			@include media-breakpoint-down(sm) {
+				flex-direction: column;
+				flex-wrap: nowrap;
+				width: auto;
 			}
 			img {
-				$width: 100px;
-				width: $width;
-				height: $width;
+				width: 100px;
+				height: 100px;
 				border-radius: 20px;
 				object-fit: cover;
 				box-shadow: 5px 5px 12px 0 #bbb;
+				padding-bottom: 0 !important;
 				@media (max-width: 1500px) {
 					width: 80px;
+					height: 80px;
 				}
 				@media (max-width: 1250px) {
-					width: 65px;
+					width: 100%;
+					border-radius: 10px;
+				}
+				@include media-breakpoint-down(md) {
+					width: 60px;
+					height: 60px;
 				}
 				@media (max-width: 584px) {
 					padding-bottom: 10px;

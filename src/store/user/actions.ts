@@ -1,21 +1,25 @@
 import { ActionContext } from 'vuex'
-import { AxiosRequestConfig } from 'axios'
+import throttle from 'lodash.throttle'
+import { getUsersAPI } from '@/api/user'
 import { RootState } from '@/store'
 import { UserState } from '@/store/user'
-import { getUsers } from '@/api/user'
-import { ReqUserSearchInfo } from '@/api/user/types'
+import { UserMutationsType } from '@/store/user/mutations'
 
 export enum UserActionType {
-	GET_USERS = 'GET_USERS'
+	GET_All_USERS = 'GET_All_USERS'
 }
 
 export default {
-	async [UserActionType.GET_USERS](
-		{ commit }: ActionContext<UserState, RootState>,
-		payload: AxiosRequestConfig<ReqUserSearchInfo>
-	) {
-		const { data } = await getUsers(payload)
-		commit('SET_USERS', data)
-		return data
-	}
+	[UserActionType.GET_All_USERS]: throttle(
+		async ({ state, commit }: ActionContext<UserState, RootState>, myFollow: 0 | 1) => {
+			const { start, end, hasMoreUser } = state
+			if (hasMoreUser) {
+				// 전체 유저 정보 불러오기
+				const { data } = await getUsersAPI({ start, end }, myFollow)
+				commit(UserMutationsType.SET_USERS, data)
+				return data
+			}
+		},
+		2000
+	)
 }

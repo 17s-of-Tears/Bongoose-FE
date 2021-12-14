@@ -7,7 +7,7 @@ import actions from '@/store/board/actions'
 
 export interface BoardState {
 	boards: ResBoardData[] | []
-	watchBoard: Boolean
+	watchBoard: boolean
 	start: number
 	end: number
 	hasMorePost: boolean

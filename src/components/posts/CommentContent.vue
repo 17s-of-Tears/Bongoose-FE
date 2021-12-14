@@ -1,6 +1,6 @@
 <template>
 	<div class="comment-box">
-		<img :src="profileImage()" alt="프로필사진" />
+		<img :src="profileImage(comment.imageUrl)" alt="프로필사진" />
 		<div class="comment-user">
 			<div class="comment-user-inner">
 				<span>{{ comment.name }}</span>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { mapState } from 'vuex'
 import moment from 'moment'
 import { updateCommentAPI } from '@/api/board'
@@ -40,7 +40,14 @@ export default defineComponent({
 
 	props: {
 		comment: {
-			type: Object,
+			type: Object as PropType<{
+				commentID: number
+				name: string
+				email: string
+				imageUrl: string | null
+				content: string
+				createdAt: string
+			}>,
 			required: true
 		},
 		id: {
@@ -59,7 +66,10 @@ export default defineComponent({
 	},
 
 	computed: {
-		...mapState('auth', ['user'])
+		...mapState('auth', ['user']),
+		imageURI(): string {
+			return process.env.VUE_APP_URI
+		}
 	},
 
 	methods: {
@@ -70,11 +80,12 @@ export default defineComponent({
 		},
 		async commentUpdate() {
 			try {
-				await updateCommentAPI({ boardID: this.id, commentID: this.comment.commentID, content: this.content })
+				const commentData = { boardID: this.id, commentID: this.comment.commentID, content: this.content }
+				await updateCommentAPI(commentData)
 				this.$emit('updateComment')
 				customAlert('댓글 수정이 완료되었습니다!')
 				this.updateShow = false
-			} catch (error) {
+			} catch {
 				customAlert('댓글 수정을 실패했습니다!')
 			}
 		},
@@ -96,8 +107,8 @@ export default defineComponent({
 		commentDate(date: Date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},
-		profileImage(image: string) {
-			return image || require('@/assets/images/default.png')
+		profileImage(image: string | null) {
+			return image !== null ? `${this.imageURI}/${image}` : require('@/assets/images/default.png')
 		}
 	}
 })

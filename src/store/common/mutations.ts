@@ -9,19 +9,19 @@ export enum CommonMutationTypes {
 }
 
 export default {
-	[CommonMutationTypes.OPEN_ALERT](state: CommonState) {
+	[CommonMutationTypes.OPEN_ALERT](state: CommonState): void {
 		state.alert = true
 	},
-	[CommonMutationTypes.CLOSE_ALERT](state: CommonState) {
+	[CommonMutationTypes.CLOSE_ALERT](state: CommonState): void {
 		state.alert = false
 	},
-	[CommonMutationTypes.SET_MESSAGE](state: CommonState, message: string) {
+	[CommonMutationTypes.SET_MESSAGE](state: CommonState, message: string): void {
 		state.message = message
 	},
-	[CommonMutationTypes.START_LOADING](state: CommonState) {
+	[CommonMutationTypes.START_LOADING](state: CommonState): void {
 		state.loading = true
 	},
-	[CommonMutationTypes.END_LOADING](state: CommonState) {
+	[CommonMutationTypes.END_LOADING](state: CommonState): void {
 		state.loading = false
 	}
 }

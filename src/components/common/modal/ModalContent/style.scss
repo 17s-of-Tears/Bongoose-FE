@@ -14,10 +14,10 @@
 
 textarea {
 	&.form-control {
-		height: 200px;
+		height: 220px;
 	}
 	&::placeholder {
-		font-size: 20px;
+		@include rem(20);
 	}
 }
 
