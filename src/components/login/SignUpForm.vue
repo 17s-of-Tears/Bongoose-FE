@@ -90,7 +90,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .login-input {
-	width: 635px;
+	width: 80%;
 	display: flex;
 	flex-direction: column;
 	gap: 30px;

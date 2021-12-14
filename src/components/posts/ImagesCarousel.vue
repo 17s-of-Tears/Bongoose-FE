@@ -80,5 +80,11 @@ export default defineComponent({
 	background-position: center;
 	border-radius: 10px;
 	position: relative;
+	@include media-breakpoint-down(md) {
+		height: 350px;
+	}
+	@include media-breakpoint-down(lg) {
+		height: 400px;
+	}
 }
 </style>

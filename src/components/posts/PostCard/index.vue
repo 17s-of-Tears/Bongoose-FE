@@ -3,10 +3,10 @@
 		<div class="user-card card">
 			<div class="user">
 				<!-- 유저 이미지 벡엔드에서 받으면 설정하기 -->
-				<img :src="profileImage()" alt="프로필 사진" class="user-img" />
+				<img :src="profileImage(board.userImageUrl)" alt="프로필 사진" class="user-img" />
 				<div class="user-content">
 					<div class="user-info">
-						<div class="user-nickname" @click="toUserFindPage(board.userName || board.name)">
+						<div class="user-nickname" @click="toUserFindPage(board.userId)">
 							{{ board.userName || board.name }}
 						</div>
 						<div class="user-id">@{{ userEmail(board.userEmail || board.userEmail) }}</div>

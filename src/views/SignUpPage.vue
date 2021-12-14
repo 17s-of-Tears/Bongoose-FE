@@ -46,7 +46,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-box {
 	margin: 50px auto;
-	width: 1000px;
+	width: 85%;
 	border-radius: 20px;
 	background: #fff;
 	box-shadow: 5px 5px 10px $gray-400;
@@ -57,6 +57,9 @@ export default defineComponent({
 		justify-content: center;
 		align-items: center;
 		gap: 30px;
+		@include media-breakpoint-down(lg) {
+			padding: 30px 0;
+		}
 		.login-logo {
 			pointer-events: none;
 		}

@@ -82,10 +82,9 @@ export default defineComponent({
 		justify-content: space-between;
 		gap: 30px;
 		@include media-breakpoint-down(sm) {
-			display: block;
-			:first-child {
-				margin-bottom: 30px;
-			}
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
 		}
 	}
 }

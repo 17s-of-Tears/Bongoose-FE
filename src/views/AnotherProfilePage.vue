@@ -106,9 +106,6 @@ export default defineComponent({
 		gap: 30px;
 		@include media-breakpoint-down(sm) {
 			display: block;
-			:first-child {
-				margin-bottom: 30px;
-			}
 		}
 	}
 }

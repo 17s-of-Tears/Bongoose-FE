@@ -107,8 +107,8 @@ export default defineComponent({
 		commentDate(date: Date) {
 			return moment(date).format('YYYY년 MM월 DD일 hh:mm')
 		},
-		profileImage(image: string) {
-			return `${this.imageURI}/${image}` || require('@/assets/images/default.png')
+		profileImage(image: string | null) {
+			return image !== null ? `${this.imageURI}/${image}` : require('@/assets/images/default.png')
 		}
 	}
 })

@@ -44,6 +44,10 @@ export default defineComponent({
 		background-position: center;
 		border-radius: 10px;
 		position: relative;
+		@include media-breakpoint-down(md) {
+			width: 90px;
+			height: 90px * 3 / 4;
+		}
 		> span {
 			position: absolute;
 			right: 0;

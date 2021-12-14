@@ -97,4 +97,10 @@ export default defineComponent({
 		border-radius: 50%;
 	}
 }
+
+@include media-breakpoint-down(md) {
+	.profile-card {
+		width: 48.5%;
+	}
+}
 </style>

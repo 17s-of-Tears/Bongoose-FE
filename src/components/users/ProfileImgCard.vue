@@ -16,7 +16,8 @@ import { mapState } from 'vuex'
 export default defineComponent({
 	data() {
 		return {
-			imageUrls: [] as string[]
+			imageUrls: [] as string[],
+			width: window.innerWidth
 		}
 	},
 
@@ -37,6 +38,15 @@ export default defineComponent({
 
 	computed: {
 		...mapState('auth', ['user']),
+		viewport() {
+			if (this.width >= 1100) {
+				return 8
+			} else if (this.width >= 584) {
+				return 6
+			} else {
+				return 4
+			}
+		},
 		imageURI() {
 			return process.env.VUE_APP_URI
 		},
@@ -54,13 +64,16 @@ export default defineComponent({
 		},
 		images() {
 			this.setImagesInfo()
+		},
+		viewport() {
+			this.setImagesInfo()
 		}
 	},
 
 	methods: {
 		// 최근 사진 8장 뽑는 함수, 8장 이하일 때 부족한 만큼 default 이미지 채우기
 		setImagesInfo() {
-			const imageUrlsInfo = new Array(8).fill('default') as string[]
+			const imageUrlsInfo = new Array(this.viewport).fill('default') as string[]
 			for (let i = 0; i < imageUrlsInfo.length; i += 1) {
 				if (this.userImages[i]) {
 					imageUrlsInfo.unshift(this.userImages[i].imageUrl)
@@ -76,11 +89,22 @@ export default defineComponent({
 			} else {
 				return `${this.imageURI}/${imageUrl}`
 			}
+		},
+		handleResize() {
+			this.width = window.innerWidth
 		}
 	},
 
 	created() {
 		this.setImagesInfo()
+	},
+
+	mounted() {
+		window.addEventListener('resize', this.handleResize)
+	},
+
+	beforeUnmount() {
+		window.removeEventListener('resize', this.handleResize)
 	}
 })
 </script>
@@ -90,6 +114,9 @@ export default defineComponent({
 	width: 600px;
 	padding: 25px;
 	border-radius: 20px !important;
+	@include media-breakpoint-down(md) {
+		width: 100%;
+	}
 	> span {
 		@include rem(20);
 		color: $primary;
@@ -98,17 +125,16 @@ export default defineComponent({
 	}
 	.row {
 		.image-box {
-			height: auto;
 			display: flex;
+			flex-wrap: wrap;
 			justify-content: center;
 			padding: 10px;
 			@media (max-width: 1500px) {
 				height: 100px;
 			}
 			img {
-				$width: 100px;
-				width: $width;
-				height: $width;
+				width: 100px;
+				height: 100px;
 				border-radius: 20px;
 				object-fit: cover;
 				box-shadow: 5px 5px 12px 0 #bbb;

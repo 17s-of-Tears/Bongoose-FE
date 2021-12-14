@@ -41,6 +41,7 @@ export default defineComponent({
 	border-radius: 10px;
 	height: 50px;
 }
+
 .modal-body {
 	position: relative;
 }

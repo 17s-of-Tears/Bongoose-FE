@@ -94,6 +94,13 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 	gap: 15px;
+	@include media-breakpoint-down(md) {
+		width: 100%;
+		margin-bottom: 0 !important;
+	}
+	span {
+		@include rem(20);
+	}
 	.profile-img {
 		width: 100px !important;
 		height: 100px !important;

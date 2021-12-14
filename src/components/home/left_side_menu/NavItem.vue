@@ -1,7 +1,7 @@
 <template>
 	<div v-for="nav in navs" :key="nav.name" class="navitem" type="button btn-close" aria-label="Close">
 		<RouterLink :to="nav.to" :data-bs-dismiss="offcanvas">
-			<div class="card">
+			<div class="card" @click="onClickToPage(nav.to)">
 				<i :class="`bi ${nav.icon}`"></i>
 				<span>{{ nav.name }}</span>
 			</div>
@@ -39,6 +39,14 @@ export default defineComponent({
 					to: '/friends_find'
 				}
 			]
+		}
+	},
+
+	methods: {
+		onClickToPage(to: string) {
+			if (this.offcanvas === 'offcanvas') {
+				this.$router.push(to)
+			}
 		}
 	}
 })

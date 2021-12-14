@@ -72,7 +72,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container {
-	margin: 40px 0;
+	@media (max-width: 1025px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.friends-title {
+			justify-self: center;
+		}
+	}
 	.friends-title {
 		display: flex;
 		gap: 10px;

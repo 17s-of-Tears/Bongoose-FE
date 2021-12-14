@@ -1,10 +1,10 @@
 import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
-import UploadImages from '@/components/common/modal/UploadImages.vue'
 import { getBoardAPI, createBoardAPI, updateBoardAPI } from '@/api/board'
-import customAlert from '@/utils/customAlert'
 import { ReqBoardUpdateData, ReqBoardWritingData } from '@/api/board/types'
 import { AuthActionTypes } from '@/store/auth/actions'
+import customAlert from '@/utils/customAlert'
+import UploadImages from '@/components/common/modal/UploadImages.vue'
 
 export default defineComponent({
 	components: {
@@ -50,12 +50,11 @@ export default defineComponent({
 			const formData = new FormData()
 			// 해시태그 제외한 내용을 content에 저장
 			const content = this.boardContent.replace(/#[^\s#]+/g, '')
-			let hashtags = null
+			let hashtags: string[] | [] = []
 			// 해시태그 있을 때 해시태그 추출
 			if (this.boardContent.includes('#')) {
 				hashtags = this.boardContent.match(/#[^\s#]+/g)!.map(v => v.substring(1))
 			}
-			console.log(hashtags)
 			// 이미지정보가 있을 경우 (multipart/form-data)
 			if (this.images.length > 0 || this.getImageInfo.length > 0) {
 				Array.from(this.images).forEach(v => formData.append('images', v))

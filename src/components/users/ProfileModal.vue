@@ -8,11 +8,12 @@
 				<div class="modal-body">
 					<form>
 						<img
-							:src="url || profileImage(user.imageUrl)"
+							:src="url || profileImage(userImageUrl)"
 							:alt="user.name"
 							class="profile-img"
 							@click="onClickImageUpload"
 						/>
+						<div class="badge bg-danger profile-remove-img" @click="onclickImageClear">이미지 삭제</div>
 						<input ref="imageInput" type="file" hidden @change="onChangeImages" />
 						<div class="mb-3">
 							<label class="col-form-label">닉네임</label>
@@ -54,7 +55,9 @@ export default defineComponent({
 			description: this.user.description,
 			imageToggle: false,
 			image: null as File | null,
-			url: null as string | null
+			url: null as string | null,
+			userImageUrl: (this.user.imageUrl || null) as string | null,
+			noImageUpdate: false as boolean
 		}
 	},
 
@@ -68,16 +71,18 @@ export default defineComponent({
 		async onClickUpdateProfile() {
 			this.$store.commit(`common/${CommonMutationTypes.START_LOADING}`)
 			// 이미지수정 경우 분기처리
-			if (this.image) {
+			if (this.image || this.noImageUpdate) {
 				try {
 					const formData = new FormData()
 					formData.append('nickname', this.nickname)
 					formData.append('description', this.description)
-					formData.append('image', this.image)
+					/* 이미지삭제 어캐하누? */
+					formData.append('image', this.image || '')
 					await updateUser(formData, 'form')
 					// 유저 정보 갱신
 					deleteUserLocalStorage()
 					this.$store.dispatch(`auth/${AuthActionTypes.USER_INFO}`)
+					this.noImageUpdate = false
 				} catch (error) {
 					console.error(error)
 				} finally {
@@ -103,7 +108,7 @@ export default defineComponent({
 			}
 		},
 		// 이미지 추출
-		profileImage(image: string): string {
+		profileImage(image: string | null): string {
 			return image === null ? require('@/assets/images/default.png') : `${this.imageURI}/${image}`
 		},
 		onClickImageUpload() {
@@ -123,6 +128,14 @@ export default defineComponent({
 			const file: File = (target.files as FileList)[0]
 			this.image = file
 			this.url = URL.createObjectURL(file)
+		},
+		// 이미지 초기화
+		onclickImageClear() {
+			this.image = null
+			this.url = null
+			this.userImageUrl = null
+			this.profileImage(null)
+			this.noImageUpdate = true
 		}
 	}
 })
@@ -141,5 +154,16 @@ export default defineComponent({
 		-webkit-filter: brightness(0.3);
 		filter: brightness(0.3);
 	}
+}
+
+.profile-remove-img {
+	cursor: pointer;
+	display: block;
+	width: 85px;
+	margin-left: auto;
+}
+
+button {
+	margin: 0;
 }
 </style>
