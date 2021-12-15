@@ -1,6 +1,7 @@
 <p align="middle" >
   <img src="https://user-images.githubusercontent.com/80776262/146182043-18830d68-5bae-4fd7-a424-d35901fc50ed.png" width="330px" />
 </p>
+<br />
 
 # Bongoose 👩‍👦‍👦
 `Bongoose(봉구스)` 는 소셜 네트워크 서비스(SNS)를 제공하는 웹 애플리케이션 입니다.
@@ -10,16 +11,20 @@
 > 개발 인원: 3명
 
 [Bongoose 바로가기](https://codingjoa.kro.kr:48000/) <br />
-[Bongoose 시연 영상]() <br />
-[Bongoose-BE 리포지토리](https://github.com/codingjoa/Bongoose-BE) <br />
+[Bongoose 시연 영상 준비중..](https://github.com/17s-of-Tears/Bongoose-FE) <br />
+[Bongoose-BE 리포지토리](https://github.com/codingjoa/Bongoose-BE) 
+
+<br />
 
 ## Index 📖
 
-1. 팀 포지션
-1. 사용기술
-1. 시스템 프로세스
-1. 시스템 기본 플로우
+1. 팀원 소개 및 포지션
+1. 프로젝트 기술 스택
+1. BackEnd 구조
+1. ERD (ER 다이어그램)
 1. 주요기능 미리보기
+1. Lesson Learned
+<br />
 
 ## 팀원 소개 및 포지션 👨‍💻
 
@@ -28,18 +33,26 @@
 <img src="https://avatars.githubusercontent.com/u/49907913?v=4" width="100px" /> | <img src="https://avatars.githubusercontent.com/u/80776262?v=4" width="100px" /> | <img src="https://avatars.githubusercontent.com/u/90171399?v=4" width="100px" />
 Back-End | Front-End<br /> Design | Front-End
 
-## 사용기술 🛠
+<br />
 
-![iPhone 12, 12 Pro – 3](https://user-images.githubusercontent.com/80776262/146191428-22d62ff8-6956-4129-923f-dcb4d29ed519.png)
+## 프로젝트 기술 스택 🛠
+
+![사용기술](https://user-images.githubusercontent.com/80776262/146191428-22d62ff8-6956-4129-923f-dcb4d29ed519.png)
+
+<br />
 
 
-## 시스템 프로세스 📃
+## BackEnd 구조 📃
 
-정리중 입니다!
+![iPhone 12, 12 Pro – 10](https://user-images.githubusercontent.com/80776262/146218277-1712a794-0910-4aa6-80b9-2469078136b8.png)
 
-## 시스템 기본 플로우 📝
+<br />
 
-정리중 입니다!
+## ERD (ER 다이어그램) 📝
+
+![boongoose drawio_1](https://user-images.githubusercontent.com/80776262/146206285-0e34c642-b65f-4124-8f39-44b596d3c111.png)
+
+<br />
 
 ## 주요기능 미리보기 🖥
 
@@ -170,6 +183,56 @@ Back-End | Front-End<br /> Design | Front-End
       - 해시태그 또는 유저닉네임으로 검색을 해서 검색결과를 볼 수 있습니다.
     </td>
   </tr>
-
 </table>
+<br />
 
+## Lesson Learned ✏
+이번 프로젝트를 하면서 많은 이슈를 경험했습니다. <br />
+그중 제일 힘들었던 부분이 **JWT** 로그인 부분 이였는데 <br />
+토큰의 유효기간이 끝나면 리플래쉬 토큰을 이용해 재발급을 받아야 했지만 <br />
+리플래쉬 토큰은 쿠키로 공유가 되기 때문에 여러 번의 CORS를 겪었습니다.
+
+첫 번째는 클라이언트에서 백엔드와 쿠키를 공유하기 위해 axios에 `withCredentials: true` 옵션을 줬음에도 쿠키가 공유가 안되는 문제 <br />
+이 문제는 `Access-control-Allow-Origin: *`로 설정되어 있기 때문에 백엔드 개발자에게 부탁을 해서 이 부분을 해결했습니다. <br />
+하지만 이 문제점을 해결하고도 쿠키 공유가 되지 않았기 때문에 다른 문제점을 찾아볼 수밖에 없었는데요..
+
+두 번째 문제인 **SameSite=Lax 가 기본값**이었기에 공유가 안된 문제였습니다. <br />
+`SameSite`는 웹 애플리케이션에서 CSRF 공격을 방지하기 위해 HTTP 쿠키에서 설정할 수 있는 속성입니다. <br />
+처음 마추친 문제에 많은 시간이 투자하여 공부하였고 문제를 해결해 보며  <br /> 쿠키에 대한 전체적인 흐름을 이해하는데 많은 도움이 된 것 같습니다.
+<br />
+
+---
+<br />
+
+### (추가) 좋은 UX를 위해 로딩 스피너, 스켈레톤 UI를 추가! 👀
+![Hnet com-image (1)](https://user-images.githubusercontent.com/80776262/146219563-2b67dc42-1b9a-415b-9ea1-0827aaf09365.gif)
+
+<br />
+
+### (추가) 모바일 반응형 디자인! 👀
+모바일 환경에서도 이용할 수 있도록 반응형 디자인을 제공합니다!
+
+<table>
+  <tr>
+    <td>
+      <img src="https://user-images.githubusercontent.com/80776262/146205897-f9eb0919-b67a-4af9-a569-9299e40d381b.png">
+    </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/80776262/146205991-0f48fae4-9dea-4ac5-bc66-af4706261908.png">
+    </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/80776262/146205996-b772dbab-5fd9-483b-81b3-c51e65ca33fa.png">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://user-images.githubusercontent.com/80776262/146206012-06d60de9-5c82-4943-9212-0c2d10cdaa9f.png">
+    </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/80776262/146206019-17ecd7fd-ea68-4744-92c4-7c8d906b39ee.png">
+    </td>
+    <td>
+      <img src="https://user-images.githubusercontent.com/80776262/146206017-d5eb1858-f077-4bd0-ae64-8f658418a3c1.png">
+    </td>
+  </tr>
+</table>
