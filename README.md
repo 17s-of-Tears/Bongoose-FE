@@ -37,14 +37,14 @@ Back-End | Front-End<br /> Design | Front-End
 
 ## 프로젝트 기술 스택 🛠
 
-![사용기술](https://user-images.githubusercontent.com/80776262/146191428-22d62ff8-6956-4129-923f-dcb4d29ed519.png)
+![사용기술](https://user-images.githubusercontent.com/80776262/146226591-073b8d87-941a-42b3-8ea0-8672669b737a.png)
 
 <br />
 
 
 ## BackEnd 구조 📃
 
-![iPhone 12, 12 Pro – 10](https://user-images.githubusercontent.com/80776262/146218277-1712a794-0910-4aa6-80b9-2469078136b8.png)
+![iPhone 12, 12 Pro – 10](https://user-images.githubusercontent.com/80776262/146226681-36ea5744-bc34-4c30-9b55-44b0e8c2ade8.png)
 
 <br />
 
@@ -192,8 +192,8 @@ Back-End | Front-End<br /> Design | Front-End
 토큰의 유효기간이 끝나면 리플래쉬 토큰을 이용해 재발급을 받아야 했지만 <br />
 리플래쉬 토큰은 쿠키로 공유가 되기 때문에 여러 번의 CORS를 겪었습니다.
 
-첫 번째는 클라이언트에서 백엔드와 쿠키를 공유하기 위해 axios에 `withCredentials: true` 옵션을 줬음에도 쿠키가 공유가 안되는 문제 <br />
-이 문제는 `Access-control-Allow-Origin: *`로 설정되어 있기 때문에 백엔드 개발자에게 부탁을 해서 이 부분을 해결했습니다. <br />
+첫 번째는 클라이언트에서 백엔드와 쿠키를 공유하기 위해 <br /> axios에 `withCredentials: true` 옵션을 줬음에도 쿠키가 공유가 안되는 문제 <br />
+이 문제는 `Access-control-Allow-Origin: *`로 설정되어 있기 때문에 <br /> 백엔드 개발자에게 부탁을 해서 이 부분을 해결했습니다. <br />
 하지만 이 문제점을 해결하고도 쿠키 공유가 되지 않았기 때문에 다른 문제점을 찾아볼 수밖에 없었는데요..
 
 두 번째 문제인 **SameSite=Lax 가 기본값**이었기에 공유가 안된 문제였습니다. <br />
